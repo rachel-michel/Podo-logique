@@ -1,0 +1,141 @@
+<div x-data="prescriber()" class="row justify-content-around gy-5">
+  <span class="h3 text-center">Ajouter un prescripteur</span>
+  <div class="col-10">
+    <form class="row pb-4" @submit.prevent="addPrescriber()">
+      <div class="col-12 col-md-4">
+        <label for="prescriberFullname" class="form-label">Nom complet</label>
+        <input class="form-control" id="prescriberFullname" rows="3" x-model="inputPrescriber.fullname" />
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label for="prescriberMail" class="form-label">Mail</label>
+        <input class="form-control" id="prescriberMail" rows="3" x-model="inputPrescriber.mail" />
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <label for="prescriberPhoneNumber" class="form-label">Téléphone</label>
+        <input class="form-control" id="prescriberPhoneNumber" rows="3" x-model="inputPrescriber.phoneNumber" />
+      </div>
+
+      <div class="col-12">
+        <label for="prescriberAddress" class="form-label">Adresse</label>
+        <textarea class="form-control" id="prescriberAddress" rows="3" x-model="inputPrescriber.address"></textarea>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary col-12 mt-3">Ajouter</button>
+      </div>
+    </form>
+
+    <span class="h3 text-center d-block pb-3">Répertoire des prescripteurs</span>
+    <div x-cloak x-show="prescriberList.length" class="prescriber-list mt-3">
+      <template x-for="prescriber in prescriberList" :key="prescriber.id">
+        <div class="card mb-3">
+          <div class="card-body">
+            <!-- FULLNAME -->
+            <div class="mb-2">
+              <template x-if="inputEditPrescriber.id === prescriber.id">
+                <input
+                  type="text"
+                  class="form-control"
+                  x-model="inputEditPrescriber.fullname"
+                  x-init="editingField === 'fullname' && $nextTick(() => $el.focus())"
+                  @keydown.enter.prevent="editPrescriber()"
+                  placeholder="John Doe"
+                />
+              </template>
+
+              <template x-if="inputEditPrescriber.id !== prescriber.id">
+                <div x-text="prescriber.fullname" @click="onClickPrescriber(prescriber, 'fullname')"></div>
+              </template>
+            </div>
+
+            <!-- MAIL -->
+            <div class="mb-2">
+              <template x-if="inputEditPrescriber.id === prescriber.id">
+                <input
+                  type="email"
+                  class="form-control"
+                  x-model="inputEditPrescriber.mail"
+                  x-init="editingField === 'mail' && $nextTick(() => $el.focus())"
+                  @keydown.enter.prevent="editPrescriber()"
+                  placeholder="mail@exemple.fr"
+                />
+              </template>
+
+              <template x-if="inputEditPrescriber.id !== prescriber.id">
+                <div x-text="prescriber.mail" @click="onClickPrescriber(prescriber,'mail')"></div>
+              </template>
+            </div>
+
+            <!-- PHONE NUMBER -->
+            <div class="mb-2">
+              <template x-if="inputEditPrescriber.id === prescriber.id">
+                <input
+                  type="text"
+                  class="form-control"
+                  x-model="inputEditPrescriber.phoneNumber"
+                  x-init="editingField === 'phoneNumber' && $nextTick(() => $el.focus())"
+                  @keydown.enter.prevent="editPrescriber()"
+                  placeholder="0628523366"
+                />
+              </template>
+
+              <template x-if="inputEditPrescriber.id !== prescriber.id">
+                <div x-text="prescriber.phoneNumber" @click="onClickPrescriber(prescriber, 'phoneNumber')"></div>
+              </template>
+            </div>
+
+            <!-- ADRESSE -->
+            <div class="mb-2">
+              <template x-if="inputEditPrescriber.id === prescriber.id">
+                <textarea
+                  class="form-control"
+                  x-model="inputEditPrescriber.address"
+                  x-init="editingField === 'address' && $nextTick(() => $el.focus())"
+                  @keydown.enter.prevent="editPrescriber()"
+                  placeholder="13 Rue des prescripteurs"
+                ></textarea>
+              </template>
+
+              <template x-if="inputEditPrescriber.id !== prescriber.id">
+                <div x-text="prescriber.address" @click="onClickPrescriber(prescriber, 'address')"></div>
+              </template>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="d-flex justify-content-end mt-2">
+              <template x-if="inputEditPrescriber.id !== prescriber.id">
+                <div class="d-flex gap-2">
+                  <img
+                    src="assets/edit.png"
+                    alt="edit icon"
+                    class="icon-table-edit"
+                    @click="onClickPrescriber(prescriber)"
+                  />
+                  <img
+                    src="assets/trash.png"
+                    alt="delete icon"
+                    class="icon-table-delete"
+                    @click="removePrescriber(prescriber.id)"
+                  />
+                </div>
+              </template>
+
+              <template x-if="inputEditPrescriber.id === prescriber.id">
+                <div class="d-flex gap-2">
+                  <img
+                    src="assets/save.png"
+                    alt="validate icon"
+                    class="icon-table-save"
+                    @click="editPrescriber(prescriber)"
+                  />
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>

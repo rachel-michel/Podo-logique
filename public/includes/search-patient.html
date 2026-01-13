@@ -1,0 +1,31 @@
+<div
+  class="row justify-content-start align-items-center"
+  x-data="searchPatient()"
+  x-on:close-patient.document="resetSearchBar()"
+>
+  <div class="col-12 col-sm-auto pb-2">
+    <input
+      autocomplete="off"
+      type="text"
+      id="search"
+      class="form-control"
+      placeholder="Trouver un patient"
+      x-model="query"
+      @input="onSearchPatients"
+    />
+  </div>
+
+  <div class="col-12 col-sm-auto pb-2" x-cloak>
+    <select
+      class="form-select"
+      id="patientSelect"
+      x-show="patientList.length > 0"
+      @change="onSelectPatient($event.target.value)"
+    >
+      <option value="" selected>Sélectionnez un patient</option>
+      <template x-for="patient in patientList" :key="patient.id">
+        <option :value="patient.id" x-text="patient.lastname + ' ' + patient.firstname"></option>
+      </template>
+    </select>
+  </div>
+</div>

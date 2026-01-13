@@ -1,0 +1,119 @@
+<div
+  x-data="anamnesis()"
+  x-on:create-patient.document="loadPatient($event.detail.patientId)"
+  x-on:select-patient.document="loadPatient($event.detail.patientId)"
+  x-on:close-patient.document="loadPatient(null)"
+>
+  <form @submit.prevent="onSave">
+    <div class="row py-4 gy-3">
+      <div class="col-12 col-sm-2">
+        <label for="gender" class="form-label">Genre</label>
+        <select class="form-select" id="gender" x-model="patient.gender">
+          <option value="M.">Homme</option>
+          <option value="Mme">Femme</option>
+        </select>
+      </div>
+      <div class="col-12 col-sm-5">
+        <label for="lastname" class="form-label">Nom *</label>
+        <input type="text" id="lastname" class="form-control" placeholder="" x-model="patient.lastname" required />
+      </div>
+      <div class="col-12 col-sm-5">
+        <label for="firstname" class="form-label">Prénom *</label>
+        <input type="text" id="firstname" class="form-control" placeholder="" x-model="patient.firstname" required />
+      </div>
+
+      <div class="col-12 col-sm-6">
+        <label for="dateOfBirth" class="form-label">Date de naissance *</label>
+        <input type="date" id="dateOfBirth" class="form-control" x-model="patient.dateOfBirth" required />
+      </div>
+      <div class="col-12 col-sm-6">
+        <label for="phoneNumber" class="form-label">Téléphone</label>
+        <input type="tel" id="phoneNumber" class="form-control" placeholder="" x-model="patient.phoneNumber" />
+      </div>
+
+      <div class="col-12 col-sm-12">
+        <label for="address" class="form-label">Adresse</label>
+        <textarea id="address" class="form-control" rows="2" placeholder="" x-model="patient.address"></textarea>
+      </div>
+
+      <div class="col-12 col-sm-6">
+        <label for="folderPrefixFormat" class="form-label">Format du nom de dossier</label>
+        <select class="form-select" id="folderPrefixFormat" x-model="patient.folderPrefixFormat">
+          <option value="date">Date de création</option>
+          <option value="dateHour">Date et heure de création</option>
+          <option value="prefix">Préfixe</option>
+          <option value="prefixDate">Préfixe et date de création</option>
+          <option value="prefixDateHour">Préfixe et date et heure de création</option>
+        </select>
+      </div>
+      <div class="col-12 col-sm-6">
+        <label for="folderPrefix" class="form-label">Préfixe (*)</label>
+        <input type="text" id="folderPrefix" class="form-control" placeholder="" x-model="patient.folderPrefix" />
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row py-4 gy-3">
+      <div class="col-12 col-sm-4">
+        <label for="weight" class="form-label">Poids</label>
+        <input type="number" id="weight" class="form-control" placeholder="kg" x-model="patient.weight" />
+      </div>
+      <div class="col-12 col-sm-4">
+        <label for="height" class="form-label">Taille</label>
+        <input type="number" id="height" class="form-control" placeholder="cm" x-model="patient.height" />
+      </div>
+      <div class="col-12 col-sm-4">
+        <label for="shoeSize" class="form-label">Pointure</label>
+        <input type="number" id="shoeSize" class="form-control" placeholder="" x-model="patient.shoeSize" />
+      </div>
+
+      <div class="col-12 col-sm-6">
+        <label for="job" class="form-label">Métier</label>
+        <input type="text" id="job" class="form-control" placeholder="" x-model="patient.job" />
+      </div>
+      <div class="col-12 col-sm-6">
+        <label for="physicalActivity" class="form-label">Activité physique</label>
+        <input
+          type="text"
+          id="physicalActivity"
+          class="form-control"
+          placeholder=""
+          x-model="patient.physicalActivity"
+        />
+      </div>
+
+      <div class="col-12 col-sm-12">
+        <label for="pathology" class="form-label">Pathologie</label>
+        <textarea id="pathology" class="form-control" rows="2" placeholder="" x-model="patient.pathology"></textarea>
+      </div>
+
+      <div class="col-12 col-sm-12">
+        <label for="medicalHistory" class="form-label">Antécédents</label>
+        <textarea
+          id="medicalHistory"
+          class="form-control"
+          rows="2"
+          placeholder=""
+          x-model="patient.medicalHistory"
+        ></textarea>
+      </div>
+
+      <div class="col-12 col-sm-12">
+        <label for="notices" class="form-label">Notes</label>
+        <textarea id="notices" class="form-control" rows="2" placeholder="" x-model="patient.notices"></textarea>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary d-block mx-auto"
+      x-text="patient.id ? 'Modifier' : 'Créer le patient'"
+    ></button>
+
+    <div class="d-flex flex-column text-end my-3">
+      <span x-show="patient.createdAt" x-text="'Patient créé le : ' + getFormatedDate(patient.createdAt)"></span>
+      <span x-show="patient.updatedAt" x-text="'Patient mis à jour le : ' + getFormatedDate(patient.updatedAt)"></span>
+    </div>
+  </form>
+</div>

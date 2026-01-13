@@ -1,0 +1,215 @@
+<div
+  x-data="report()"
+  x-on:create-patient.document="loadFolder($event.detail.folderId)"
+  x-on:select-patient.document="loadFolder(null)"
+  x-on:close-patient.document="loadFolder(null)"
+  x-on:select-folder.document="loadFolder($event.detail.folderId)"
+  x-on:update-folder.document="loadFolder($event.detail.folderId)"
+>
+  <div id="configuration" class="my-4">
+    <form @submit.prevent="onSavePdfParameter" @input="isEdit = true">
+      <div class="row py-4 gy-4">
+        <div class="col-12">
+          <label for="office" class="form-label">Informations du cabinet</label>
+          <textarea class="form-control" id="office" rows="3" x-model="pdfParameter.office"></textarea>
+        </div>
+
+        <span>Informations du prescripteur</span>
+
+        <div class="col-12 col-sm-4">
+          <label for="prescriberFullname" class="form-label">Nom complet</label>
+          <input class="form-control" id="prescriberFullname" rows="3" x-model="pdfParameter.prescriber_fullname" />
+        </div>
+
+        <div class="col-12 col-sm-4">
+          <label for="prescriberAddress" class="form-label">Adresse</label>
+          <input class="form-control" id="prescriberAddress" rows="3" x-model="pdfParameter.prescriber_address" />
+        </div>
+
+        <div class="col-12 col-sm-4">
+          <label for="prescriberMail" class="form-label">Mail</label>
+          <input class="form-control" id="prescriberMail" rows="3" x-model="pdfParameter.prescriber_mail" />
+        </div>
+
+        <button
+          x-cloak
+          x-show="isShowAddPrescriberToLibraryButton()"
+          type="button"
+          class="btn btn-outline-primary col-11 mx-auto"
+        >
+          Ajouter le médecin au répertoire de suggestion
+        </button>
+
+        <div class="col-12">
+          <label for="subject" class="form-label">Objet du compte rendu</label>
+          <input type="text" class="form-control" id="subject" rows="3" x-model="pdfParameter.subject" />
+        </div>
+
+        <div class="col-12">
+          <label for="notesPrescriber" class="form-label">Notes pour le médecin</label>
+          <textarea class="form-control" id="notesPrescriber" rows="3" x-model="pdfParameter.notes"></textarea>
+        </div>
+
+        <div class="col-12">
+          <span class="form-label d-block">Tableaux à afficher</span>
+
+          <div class="d-flex flex-wrap">
+            <div class="form-check form-switch col-12 col-sm-6">
+              <input class="form-check-input" type="checkbox" id="switchExamenVisuel" x-model="pdfParameter.showTabA" />
+              <label class="form-check-label" for="switchExamenVisuel">Examen visuel</label>
+            </div>
+
+            <div class="form-check form-switch col-12 col-sm-6">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="switchExamenPalpatoire"
+                x-model="pdfParameter.showTabB"
+              />
+              <label class="form-check-label" for="switchExamenPalpatoire">Examen palpatoire</label>
+            </div>
+
+            <div class="form-check form-switch col-12 col-sm-6">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="switchExamenPodoscopique"
+                x-model="pdfParameter.showTabC"
+              />
+              <label class="form-check-label" for="switchExamenPodoscopique">Examen podoscopique</label>
+            </div>
+
+            <div class="form-check form-switch col-12 col-sm-6">
+              <input class="form-check-input" type="checkbox" id="switchEtudeMarche" x-model="pdfParameter.showTabD" />
+              <label class="form-check-label" for="switchEtudeMarche">Étude de la marche</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button x-show="isEdit" type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="pdfTemplateWrapper">
+    <div
+      id="pdfTemplate"
+      x-ref="pdfTemplate"
+      style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; color: #000"
+    >
+      <!-- HEADER -->
+      <div style="margin-bottom: 12px">
+        <div style="margin-bottom: 4px">
+          <span x-text="pdfParameter.office"></span>
+        </div>
+
+        <div>
+          <span x-text="pdfParameter.prescriber"></span>
+        </div>
+      </div>
+
+      <!-- OBJET -->
+      <div style="margin-bottom: 12px; font-weight: bold">
+        <span x-text="pdfParameter.subject"></span>
+      </div>
+
+      <!-- TABLEAU APPAREILLAGE -->
+      <table style="border-collapse: collapse; width: 100%; margin-bottom: 16px">
+        <colgroup>
+          <col style="width: 30%" />
+          <col style="width: 70%" />
+        </colgroup>
+
+        <thead>
+          <tr>
+            <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">Appareillage</th>
+            <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">Details</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <template x-for="(row, index) in equipmentPlan" :key="index">
+            <tr>
+              <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+                <div>
+                  <template x-for="part in getSplitedInput(row, 'localisation')" :key="part">
+                    <div x-text="part" style="margin-bottom: 2px"></div>
+                  </template>
+                </div>
+              </td>
+
+              <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+                <div>
+                  <template x-for="obs in getSplitedInput(row, 'observation')" :key="obs">
+                    <div x-text="obs" style="margin-bottom: 2px"></div>
+                  </template>
+                </div>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+
+      <!-- Note au médecin -->
+      <div style="margin-bottom: 16px; white-space: pre-line">
+        <span x-text="pdfParameter.notes"></span>
+      </div>
+
+      <!-- Tableau d'examens -->
+      <template x-for="examen in examinations" :key="examen.name">
+        <template x-if="examen.show">
+          <div style="margin-bottom: 20px">
+            <span x-text="examen.name" style="font-weight: bold; display: inline-block; margin-bottom: 6px"></span>
+
+            <table style="border-collapse: collapse; width: 100%">
+              <colgroup>
+                <col style="width: 30%" />
+                <col style="width: 70%" />
+              </colgroup>
+
+              <thead>
+                <tr>
+                  <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">
+                    Localisation
+                  </th>
+                  <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">
+                    Observation
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <template x-for="(row, index) in examen.rows" :key="index">
+                  <tr>
+                    <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+                      <div>
+                        <template x-for="part in getSplitedInput(row, 'localisation')" :key="part">
+                          <div x-text="part" style="margin-bottom: 2px"></div>
+                        </template>
+                      </div>
+                    </td>
+
+                    <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+                      <div>
+                        <template x-for="obs in getSplitedInput(row, 'observation')" :key="obs">
+                          <div x-text="obs" style="margin-bottom: 2px"></div>
+                        </template>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </template>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-around">
+    <button type="button" @click="window.print()" class="btn btn-primary">Générer le PDF</button>
+    <button type="button" @click="sendToMail()" class="btn btn-primary">Envoyer un email</button>
+  </div>
+</div>

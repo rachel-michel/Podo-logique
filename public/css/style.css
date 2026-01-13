@@ -1,0 +1,226 @@
+/************************************************
+******************* Main CSS ********************
+*************************************************/
+
+@font-face {
+  font-family: "Lexend";
+  src: url("./../fonts/Lexend.ttf") format("TrueType");
+}
+
+body {
+  font-family: Lexend, Arial;
+
+  background-image: url("./../assets/bkg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed; /* effet parallax */
+}
+
+body,
+.pt-custom {
+  padding-top: 160px;
+}
+
+header {
+  font-family: Lexend, Arial;
+  color: #f3f3f3;
+
+  background-image: url("./../assets/bkg-header.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  box-shadow: 0px 3px 10px #0c2033;
+}
+
+.icon-header {
+  width: 25px;
+}
+
+header .logo {
+  width: 35px;
+}
+
+.header-container,
+.main-container {
+  max-width: 900px;
+}
+
+.main-container {
+  min-height: 900px;
+  margin-bottom: 20px;
+}
+
+main {
+  background: #f3f3f3;
+  color: #0f3d6e;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #0c2033;
+}
+
+[class^="icon"] {
+  cursor: pointer;
+}
+.icon-nav {
+  width: 40px;
+}
+.icon-add-folder {
+  width: 32px;
+}
+.icon-add-folder:hover {
+  content: url("./../assets/add-folder-hover.png");
+}
+[class^="icon-table"] {
+  width: 25px;
+}
+.icon-table-save:hover {
+  content: url("./../assets/save-hover.png");
+}
+.icon-table-edit:hover {
+  content: url("./../assets/edit-hover.png");
+}
+.icon-table-delete:hover {
+  content: url("./../assets/trash-hover.png");
+}
+.icon-table-archived:hover {
+  content: url("./../assets/archived-hover.png");
+}
+.icon-table-unarchived:hover {
+  content: url("./../assets/unarchived-hover.png");
+}
+
+.table-scrollbar {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/*******************************************************/
+/********************** PRINT PDF ***********************/
+/*******************************************************/
+
+#pdfTemplateWrapper {
+  width: 100%;
+  overflow: auto;
+}
+
+#pdfTemplate {
+  width: 794px;
+  padding: 20px;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  * {
+    background: transparent !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #pdfTemplate,
+  #pdfTemplate * {
+    visibility: visible !important;
+  }
+
+  #pdfTemplate {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%; /* ou largeur A4 */
+  }
+}
+
+/*******************************************************/
+/***************** Overwrite bootstrap *****************/
+/*******************************************************/
+
+#headerTab.nav-tabs {
+  --bs-nav-tabs-border-width: 0px;
+}
+
+#headerTab .nav-link {
+  color: #f3f3f3;
+}
+
+#headerTab .nav-link.active,
+#headerTab .nav-link:hover {
+  background-color: #0f3d6e;
+}
+
+#mainAppTab [class^="nav"] {
+  color: #0f3d6e;
+}
+
+#mainAppTab .nav-link {
+  padding-right: 1vw;
+  padding-left: 1vw;
+}
+
+#mainAppTab .nav-link.active,
+#mainAppTab .nav-link:hover {
+  background-color: #d6e5f3;
+}
+
+#headerTab .nav-link,
+#mainAppTab .nav-link {
+  font-size: 0.8rem;
+}
+
+.table {
+  min-width: 350px;
+  --bs-table-bg: #f3f3f3;
+  --bs-table-hover-bg: #d6e5f3;
+}
+
+.table th {
+  color: #0f3d6e;
+}
+
+th {
+  font-weight: normal;
+}
+
+.btn-primary {
+  --bs-btn-bg: #0f3d6e;
+  --bs-btn-hover-bg: #3b74ad;
+  --bs-btn-border-color: #0f3d6e;
+  --bs-btn-hover-border-color: #3b74ad;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #0f3d6e;
+  --bs-btn-border-color: #0f3d6e;
+  --bs-btn-hover-bg: #0f3d6e;
+  --bs-btn-hover-border-color: #0f3d6e;
+}
+
+/**********************************************/
+/***************** Responsive *****************/
+/**********************************************/
+
+/* Bootstrap values :
+SM  @media (max-width: 540px)
+MD  @media (min-width: 541px) and (max-width: 720px)
+LG  @media (min-width: 721px) and (max-width: 960px)
+XL  @media (min-width: 961px) and (max-width: 1140px)
+XXL @media (min-width: 1140px)
+*/
+
+@media (max-width: 767px) {
+  .icon-header {
+    width: 35px;
+  }
+}

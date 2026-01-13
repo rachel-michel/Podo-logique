@@ -1,0 +1,170 @@
+<ul
+  x-cloak
+  x-show="display"
+  id="mainAppTab"
+  class="nav nav-tabs justify-content-center"
+  role="tablist"
+  x-data="{ display: false, lock: true}"
+  x-on:display-tab.document="display = $event.detail.display"
+  x-on:lock-tab.document="lock = $event.detail.lock"
+>
+  <div class="row g-0 flex-nowrap">
+    <!-- Folder managment -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="folderManagmentTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="folderManagment"
+        aria-selected="false"
+        data-bs-toggle="tab"
+        data-bs-target="#folderManagment"
+      >
+        <img class="icon-nav" src="assets/folder-managment.png" alt="folder icon" />
+        <span class="d-block mb-0 mt-2">Dossiers</span>
+      </button>
+    </li>
+
+    <!-- Anamnesis -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="anamnesisTab"
+        class="nav-link active"
+        data-bs-toggle="tab"
+        data-bs-target="#anamnesis"
+        type="button"
+        role="tab"
+        aria-controls="anamnesis"
+        aria-selected="true"
+      >
+        <img src="assets/identity-card.png" alt="identity card icon" class="icon-nav" />
+        <span class="d-block mb-0 mt-2">Anamnèse</span>
+      </button>
+    </li>
+
+    <!-- Visual examination -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="visualExaminationTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="visualExamination"
+        aria-selected="false"
+        :class="{ 'disabled': lock }"
+        :data-bs-toggle="lock ? null : 'tab'"
+        :data-bs-target="lock ? null : '#visualExamination'"
+        :tabindex="lock ? -1 : 0"
+      >
+        <img class="icon-nav" :src="lock ? ' assets/eye-disabled.png' : ' assets/eye.png'" alt="eye icon" />
+        <span class="d-block mb-0 mt-2">Visuel</span>
+      </button>
+    </li>
+
+    <!-- Palpatory examination -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="palpatoryExaminationTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="palpatoryExamination"
+        aria-selected="false"
+        :class="{ 'disabled': lock }"
+        :data-bs-toggle="lock ? null : 'tab'"
+        :data-bs-target="lock ? null : '#palpatoryExamination'"
+        :tabindex="lock ? -1 : 0"
+      >
+        <img class="icon-nav" :src="lock ? ' assets/hand-disabled.png' : ' assets/hand.png'" alt="hand icon" />
+        <span class="d-block mb-0 mt-2">Palpatoire</span>
+      </button>
+    </li>
+  </div>
+
+  <div class="row g-0 flex-nowrap">
+    <!-- Podoscopic examination-->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="podoscopicExaminationTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="podoscopicExamination"
+        aria-selected="false"
+        :class="{ 'disabled': lock }"
+        :data-bs-toggle="lock ? null : 'tab'"
+        :data-bs-target="lock ? null : '#podoscopicExamination'"
+        :tabindex="lock ? -1 : 0"
+      >
+        <img
+          class="icon-nav"
+          :src="lock ? ' assets/podoscope-disabled.png' : ' assets/podoscope.png'"
+          alt="podoscope icon"
+        />
+        <span class="d-block mb-0 mt-2">Podoscope</span>
+      </button>
+    </li>
+
+    <!-- Walk study -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="walkStudyTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="walkStudy"
+        aria-selected="false"
+        :class="{ 'disabled': lock }"
+        :data-bs-toggle="lock ? null : 'tab'"
+        :data-bs-target="lock ? null : '#walkStudy'"
+        :tabindex="lock ? -1 : 0"
+      >
+        <img class="icon-nav" :src="lock ? ' assets/walk-disabled.png' : ' assets/walk.png'" alt="walk icon" />
+        <span class="d-block mb-0 mt-2">Marche</span>
+      </button>
+    </li>
+
+    <!-- Equipment plan -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="equipmentPlanTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="equipmentPlan"
+        aria-selected="false"
+        :class="{ 'disabled': lock }"
+        :data-bs-toggle="lock ? null : 'tab'"
+        :data-bs-target="lock ? null : '#equipmentPlan'"
+        :tabindex="lock ? -1 : 0"
+      >
+        <img class="icon-nav" :src="lock ? ' assets/sole-disabled.png' : ' assets/sole.png'" alt="sole icon" />
+        <span class="d-block mb-0 mt-2">Appareillage</span>
+      </button>
+    </li>
+
+    <!-- Podiatric assessment -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="reportTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="report"
+        aria-selected="false"
+        :class="{ 'disabled': lock }"
+        :data-bs-toggle="lock ? null : 'tab'"
+        :data-bs-target="lock ? null : '#report'"
+        :tabindex="lock ? -1 : 0"
+      >
+        <img
+          class="icon-nav"
+          :src="lock ? ' assets/document-disabled.png' : ' assets/document.png'"
+          alt="document icon"
+        />
+        <span class="d-block mb-0 mt-2">CR</span>
+      </button>
+    </li>
+  </div>
+</ul>

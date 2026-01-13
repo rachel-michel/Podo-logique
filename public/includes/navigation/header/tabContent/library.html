@@ -1,0 +1,45 @@
+<div x-data="library()" class="row justify-content-around gy-5">
+  <span class="h3 pt-3 text-center">Répertoire des listes de suggestion</span>
+  <template x-for="list in libraries" :key="list.name">
+    <div class="col-10">
+      <form class="row" @submit.prevent="addSuggestion(list.name, $event.target.querySelector('input'))">
+        <div class="col-10">
+          <input type="text" @keyup.enter="addSuggestion(list.name, $event.target)" class="form-control mb-2" />
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </div>
+      </form>
+
+      <div class="table-responsive table-scrollbar">
+        <table class="table table-striped table-hover">
+          <colgroup>
+            <col style="width: 90%" />
+            <col style="width: 10%" />
+          </colgroup>
+          <thead class="sticky-header">
+            <tr>
+              <th x-text="librariesNames[list.name]"></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(suggestion, index) in list.suggestions" :key="index">
+              <tr>
+                <td x-text="suggestion.value"></td>
+                <td class="text-end">
+                  <img
+                    src="assets/trash.png"
+                    alt="delete icon"
+                    class="icon-table-delete"
+                    @click="removeSuggestion(suggestion.name, suggestion.id)"
+                  />
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </template>
+</div>

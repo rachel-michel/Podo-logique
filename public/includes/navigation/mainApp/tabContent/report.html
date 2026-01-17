@@ -18,17 +18,36 @@
 
         <div class="col-12 col-sm-4">
           <label for="prescriberFullname" class="form-label">Nom complet</label>
-          <input class="form-control" id="prescriberFullname" rows="3" x-model="pdfParameter.prescriber_fullname" />
+          <input class="form-control" id="prescriberFullname" rows="3" x-model="pdfParameter.prescriberFullname" />
+
+          <!-- SUGGESTION -->
+          <ul class="list-group w-100 z-10" x-show="getPrescribers().length > 0">
+            <template x-for="p in getPrescribers()" :key="p.fullname">
+              <li class="list-group-item list-group-item-action" @click="selectPrescriber(p)">
+                <span x-text="p.fullname"></span>
+              </li>
+            </template>
+          </ul>
         </div>
 
         <div class="col-12 col-sm-4">
           <label for="prescriberAddress" class="form-label">Adresse</label>
-          <input class="form-control" id="prescriberAddress" rows="3" x-model="pdfParameter.prescriber_address" />
+          <input class="form-control" id="prescriberAddress" rows="3" x-model="pdfParameter.prescriberAddress" />
         </div>
 
         <div class="col-12 col-sm-4">
           <label for="prescriberMail" class="form-label">Mail</label>
-          <input class="form-control" id="prescriberMail" rows="3" x-model="pdfParameter.prescriber_mail" />
+          <input class="form-control" id="prescriberMail" rows="3" x-model="pdfParameter.prescriberMail" />
+        </div>
+
+        <div class="col-12 col-sm-4">
+          <label for="prescriberPhoneNumber" class="form-label">Téléphone</label>
+          <input
+            class="form-control"
+            id="prescriberPhoneNumber"
+            rows="3"
+            x-model="pdfParameter.prescriberPhoneNumber"
+          />
         </div>
 
         <button

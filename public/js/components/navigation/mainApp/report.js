@@ -3,6 +3,7 @@ function report() {
     pdfParameter: {},
     examinations: [],
     equipmentPlan: [],
+    prescriberList: [],
     isEdit: false,
 
     async load(folder, pdfParameter) {
@@ -43,10 +44,34 @@ function report() {
           rows: examinations.filter((e) => e.name == "walkStudy").sort((a, b) => a.id - b.id),
         },
       ];
+
+      if (!this.prescriberList.length) {
+        await this.loadPrescriber();
+      }
+    },
+
+    async loadPrescriber() {
+      this.prescriberList = await getAllPrescriber();
     },
 
     isShowAddPrescriberToLibraryButton() {
       return false;
+    },
+
+    getPrescribers() {
+      if (!this.prescriberList.length || this.pdfParameter.prescriberFullname.trim() == "") return [];
+      if (this.prescriberList.find((p) => p.fullname === this.pdfParameter.prescriberFullname)) return [];
+
+      return this.prescriberList
+        .filter((p) => p.fullname.toLowerCase().includes(this.pdfParameter.prescriberFullname.toLowerCase()))
+        .slice(0, 8);
+    },
+
+    selectPrescriber(prescriber) {
+      this.pdfParameter.prescriberFullname = prescriber.fullname;
+      this.pdfParameter.prescriberAddress = prescriber.address;
+      this.pdfParameter.prescriberMail = prescriber.mail;
+      this.pdfParameter.prescriberPhoneNumber = prescriber.phoneNumber;
     },
 
     getSplitedInput(row, field) {

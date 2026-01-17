@@ -2,11 +2,13 @@
   id="mainAppTabContent"
   class="tab-content py-3"
   x-data="examination()"
-  x-on:create-patient.document="loadFolder($event.detail.folderId)"
-  x-on:select-patient.document="loadFolder(null)"
-  x-on:close-patient.document="loadFolder(null)"
-  x-on:select-folder.document="loadFolder($event.detail.folderId)"
-  x-on:update-folder.document="loadFolder($event.detail.folderId)">
+  x-on:create-patient.document="load($event.detail.folder)"
+  x-on:select-patient.document="load(null)"
+  x-on:close-patient.document="load(null)"
+  x-on:select-folder.document="load($event.detail.folder)"
+  x-on:update-examination.document="load($event.detail.folder)"
+  x-on:update-suggestion.document="loadSuggestion()">
+
   <!-- Folder managment tab -->
   <div
     id="folderManagment"

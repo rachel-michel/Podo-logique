@@ -14,9 +14,9 @@
       x-cloak
       x-show="isSelectedPatient"
       x-data="reset()"
-      x-on:create-patient.document="loadPatient($event.detail.patientId)"
-      x-on:select-patient.document="loadPatient($event.detail.patientId)"
-      x-on:close-patient.document="loadPatient(null)">
+      x-on:create-patient.document="load($event.detail.patient)"
+      x-on:select-patient.document="load($event.detail.patient)"
+      x-on:close-patient.document="load(null)">
       <button class="btn btn-close" @click="onClose"></button>
     </div>
 

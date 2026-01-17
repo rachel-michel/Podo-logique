@@ -1,12 +1,14 @@
 # Podo-logique
+
 Créé par une orthopédiste, pour les orthopédistes. Cette application a pour vocation de simplifier la gestion des dossiers patient, la prise de note ainsi que la génération d'un compte rendu prescripteur lors des bilans podologiques !
 
 Todo :
-- optimisation (contrôler les requêtes en db et leur indispensabilité)
+
+- optimisation : passer les informations possible lors des dispatch (patient, folder...) pour éviter le sur-requêtage
+- toujours enregistrer l'objet entier et pas juste l'id
 - les onglets du header (library et prescriber) doivent reload les onglet examination (pour library) et pdf parameter (pour prescriber)
 - modifier la table des pdf parameter, elle ne doit pas contenir un prescriber_id mais les données fullname, address, mail, phoneNumber qui seront pré-rempli
 - rendre le CR joli
-
 
 ### Erreur au lancement "VCRUNTIME140.dll"
 

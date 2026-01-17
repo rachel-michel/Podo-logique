@@ -1,22 +1,24 @@
 function report() {
   return {
-    folderId: null,
     pdfParameter: {},
     examinations: [],
     equipmentPlan: [],
     isEdit: false,
 
-    async loadFolder(folderId) {
-      console.log("loadFolder report.js", folderId);
-
-      if (!folderId) {
+    async load(folder, pdfParameter) {
+      if (!folder) {
         return;
       }
 
-      this.folderId = folderId;
+      if (pdfParameter && folder.pdf_parameter_id === pdfParameter.id) {
+        this.pdfParameter = pdfParameter;
+      } else {
+        console.log("getPdfParameterByFolder report.js", folder.id);
+        this.pdfParameter = await getPdfParameterByFolder(folder.id);
+      }
 
-      this.pdfParameter = await getPdfParameterByFolder(folderId);
-      const examinations = await getExaminationByFolder(folderId);
+      const examinations = await getExaminationByFolder(folder.id);
+      console.log("getExaminationByFolder report.js", folder.id);
 
       this.equipmentPlan = examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
       this.examinations = [
@@ -57,7 +59,7 @@ function report() {
     async onSavePdfParameter() {
       await updatePdfParameter(this.pdfParameter);
       this.isEdit = false;
-      this.loadFolder(this.pdfParameter.folder_id);
+      this.load(this.pdfParameter.folder_id);
     },
 
     async htmlToClipboard() {

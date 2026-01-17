@@ -1,6 +1,7 @@
 function examination() {
   return {
-    folderId: null,
+    folder: null,
+    suggestionList: null,
     templateTabs: [
       {
         name: "visualExamination",
@@ -54,8 +55,8 @@ function examination() {
         name: "equipmentPlan",
         rows: [],
         suggestion: {
-          first: "equipments",
-          second: "equipmentsDetails",
+          first: "equipmentList",
+          second: "equipmentDetail",
         },
         column: {
           first: "Appareillage",
@@ -63,28 +64,22 @@ function examination() {
         },
       },
     ],
-    suggestions: {
-      localisation: [],
-      observation: [],
-      equipments: [],
-      equipmentsDetails: [],
-    },
 
-    async loadFolder(folderId) {
-      console.log("loadFolder examination.js");
-
-      if (!folderId) {
+    async load(folder) {
+      if (!folder) {
+        this.folder = null;
         return;
       }
 
-      this.folderId = folderId;
+      this.folder = folder;
 
-      const suggestions = await getAllSuggestion();
-      for (let s of suggestions) {
-        this.suggestions[s.name] = s.list;
+      if (!this.suggestionList) {
+        this.loadSuggestion();
       }
 
-      const examinations = await getExaminationByFolder(folderId);
+      console.log("getExaminationByFolder examination.js");
+      const examinations = await getExaminationByFolder(folder.id);
+
       let examinationList = {
         visualExamination: examinations
           .filter((e) => e.name == "visualExamination")
@@ -149,6 +144,19 @@ function examination() {
       }
     },
 
+    async loadSuggestion() {
+      if (!this.folder) return;
+
+      console.log("getAllSuggestion examination.js");
+      const suggestions = await getAllSuggestion();
+      this.suggestionList = {
+        localisation: suggestions.filter((s) => s.name == "localisation").map((s) => s.value),
+        observation: suggestions.filter((s) => s.name == "observation").map((s) => s.value),
+        equipmentList: suggestions.filter((s) => s.name == "equipmentList").map((s) => s.value),
+        equipmentDetail: suggestions.filter((s) => s.name == "equipmentDetail").map((s) => s.value),
+      };
+    },
+
     getTemplateTab(name) {
       return this.templateTabs.find((tab) => tab.name === name);
     },
@@ -178,7 +186,7 @@ function examination() {
       const lastPart = parts[parts.length - 1] || "";
 
       // Filter suggets with every part and current entry
-      const list = this.suggestions[suggestionListName] || [];
+      const list = this.suggestionList[suggestionListName] || [];
       return list.filter((s) => s.toLowerCase().includes(lastPart) && !parts.includes(s.toLowerCase())).slice(0, 8);
     },
 
@@ -212,7 +220,7 @@ function examination() {
       if (row.localisationInput.trim() == "" && row.observationInput.trim() == "") {
         if (row?.id != null) {
           await deleteExamination(row.id);
-          customDispatch("update-folder", { folderId: this.folderId });
+          customDispatch("update-examination", { folder: this.folder });
 
           return;
         } else {
@@ -221,7 +229,7 @@ function examination() {
       }
 
       let data = {
-        folder_id: this.folderId,
+        folder_id: this.folder.id,
         name: templateName,
         localisation: row.localisationInput,
         observation: row.observationInput,
@@ -230,19 +238,19 @@ function examination() {
       if (row?.id != null) {
         data.id = row.id;
         await updateExamination(data);
-        customDispatch("update-folder", { folderId: this.folderId });
+        customDispatch("update-examination", { folder: this.folder });
 
         return;
       }
 
       await createExamination(data);
-      customDispatch("update-folder", { folderId: this.folderId });
+      customDispatch("update-examination", { folder: this.folder });
     },
 
     async onDeleteRow(index, templateName) {
       const row = this.getTemplateTab(templateName).rows[index];
       await deleteExamination(row.id);
-      customDispatch("update-folder", { folderId: this.folderId });
+      customDispatch("update-examination", { folder: this.folder });
     },
   };
 }

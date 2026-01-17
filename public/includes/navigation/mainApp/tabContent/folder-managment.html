@@ -1,9 +1,9 @@
 <div
   x-data="folderManagment()"
-  x-on:create-patient.document="loadPatient($event.detail.patientId)"
-  x-on:select-patient.document="loadPatient($event.detail.patientId)"
-  x-on:select-folder.document="loadPatient($event.detail.patientId)"
-  x-on:close-patient.document="loadPatient(null)"
+  x-on:create-patient.document="load($event.detail.patient)"
+  x-on:select-patient.document="load($event.detail.patient)"
+  x-on:select-folder.document="load($event.detail.patient, $event.detail.ignore)"
+  x-on:close-patient.document="load(null)"
 >
   <div class="table-responsive">
     <table class="table table-striped table-hover">

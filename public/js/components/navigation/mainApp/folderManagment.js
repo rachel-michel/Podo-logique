@@ -1,19 +1,20 @@
 function folderManagment() {
   return {
-    patientId: null,
+    patient: null,
     folderList: [],
 
-    async loadPatient(patientId) {
-      console.log("loadPatient folderManagment.js");
+    async load(patient, ignore = false) {
+      if (ignore) return;
 
-      if (!patientId) {
+      if (!patient) {
+        this.patient = null;
         return;
       }
 
-      this.patientId = patientId;
+      this.patient = patient;
 
-      // Sort by descending order id
-      const results = await getFoldersByPatient(patientId);
+      console.log("getFoldersByPatient folderManagment.js");
+      const results = await getFoldersByPatient(this.patient.id);
       this.folderList = results.sort((a, b) => b.id - a.id);
     },
 
@@ -44,15 +45,15 @@ function folderManagment() {
         return;
       }
 
-      await archivedFolder(folder);
-      customDispatch("archived-folder", { folderId: folder.id });
-      this.loadPatient(folder.patient_id);
+      const updatedFolder = await archivedFolder(folder);
+      this.folderList = this.folderList.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
+      customDispatch("archived-folder", { folder: updatedFolder });
     },
 
     async onUnarchived(folder) {
-      await unarchivedFolder(folder);
-      customDispatch("unarchived-folder", { patientId: this.patientId });
-      this.loadPatient(folder.patient_id);
+      const updatedFolder = await unarchivedFolder(folder);
+      this.folderList = this.folderList.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
+      customDispatch("unarchived-folder", { patient: this.patient });
     },
   };
 }

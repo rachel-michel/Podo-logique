@@ -43,8 +43,8 @@ function searchPatient() {
       customDispatch("lock-tab", { lock: true });
 
       // Reload all tab value with patient selected
-      customDispatch("select-patient", { patientId: id });
-      customDispatch("select-folder", { patientId: id, folderId: lastPatientFolder.id });
+      customDispatch("select-patient", { patient, folder: lastPatientFolder });
+      customDispatch("select-folder", { patient, folder: lastPatientFolder, ignore: true });
     },
 
     resetSearchBar() {

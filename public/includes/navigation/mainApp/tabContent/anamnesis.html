@@ -1,8 +1,8 @@
 <div
   x-data="anamnesis()"
-  x-on:create-patient.document="loadPatient($event.detail.patientId)"
-  x-on:select-patient.document="loadPatient($event.detail.patientId)"
-  x-on:close-patient.document="loadPatient(null)"
+  x-on:create-patient.document="load($event.detail.patient)"
+  x-on:select-patient.document="load($event.detail.patient)"
+  x-on:close-patient.document="load(null)"
 >
   <form @submit.prevent="onSave">
     <div class="row py-4 gy-3">

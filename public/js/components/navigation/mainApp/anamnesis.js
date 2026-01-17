@@ -22,15 +22,13 @@ function anamnesis() {
       updatedAt: null,
     },
 
-    async loadPatient(patientId) {
-      console.log("loadPatient anamnesis.js");
-
-      if (!patientId) {
+    async load(patient) {
+      if (!patient) {
         this.resetPatient();
         return;
       }
 
-      this.patient = await getPatient(patientId);
+      this.patient = patient;
     },
 
     getFormatedDate(dateString) {
@@ -52,15 +50,11 @@ function anamnesis() {
     async onSave() {
       const now = new Date();
       const isNewPatient = !this.patient.id;
-
-      this.patient.createdAt = isNewPatient ? now.toLocaleString("fr-FR") : this.patient.createdAt;
-      this.patient.updatedAt = isNewPatient ? null : now.toLocaleString("fr-FR");
+      this.patient.updatedAt = isNewPatient ? null : now.toISOString();
 
       try {
         if (isNewPatient) {
           const patient = await createPatient({ ...this.patient });
-
-          // Create new pdf parameters for the folder
           const globalPdfParameter = await getGlobalPdfParameter();
           const pdfParameter = await createPdfParameter({
             office: globalPdfParameter.office,
@@ -82,14 +76,14 @@ function anamnesis() {
           });
 
           // Reload all the tabs with the new values
-          customDispatch("create-patient", { patientId: patient.id, folderId: folder.id });
+          customDispatch("create-patient", { patient, folder, pdfParameter });
           customDispatch("display-tab", { display: true }); // Show tabs
           customDispatch("notify", { message: "Patient ajouté", type: "alert-success" });
         } else {
-          await updatePatient(this.patient.id, { ...this.patient });
+          const patient = await updatePatient(this.patient.id, { ...this.patient });
 
           // Reload tab values
-          customDispatch("update-patient", { patientId: this.patient.id, resetFolder: false });
+          customDispatch("update-patient", { patient });
           customDispatch("notify", { message: "Patient modifié", type: "alert-warning" });
         }
       } catch (err) {

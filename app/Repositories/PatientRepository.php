@@ -65,8 +65,7 @@ class PatientRepository
       throw new \RuntimeException('PatientRepository::save() ne doit être utilisé que pour créer un patient sans id. Utilise update().');
     }
 
-    $now = date('c');
-    $patient->setCreatedAt($now);
+    $patient->setCreatedAt(date('c'));
 
     $stmt = $this->pdo->prepare("
         INSERT INTO patient (

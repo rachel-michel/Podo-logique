@@ -2,8 +2,8 @@ function reset() {
   return {
     isSelectedPatient: false,
 
-    loadPatient(patientId) {
-      this.isSelectedPatient = !!patientId;
+    load(patient) {
+      this.isSelectedPatient = patient && patient.id;
     },
 
     onClose() {

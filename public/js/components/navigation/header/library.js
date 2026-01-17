@@ -45,6 +45,7 @@ function library() {
       });
 
       input.value = "";
+      customDispatch("update-suggestion");
       this.init();
     },
 
@@ -60,6 +61,7 @@ function library() {
       }
 
       await deleteSuggestion(id);
+      customDispatch("update-suggestion");
       this.init();
     },
   };

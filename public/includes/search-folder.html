@@ -3,13 +3,13 @@
   x-cloak
   x-show="Object.keys(patient).length > 0"
   class="row border-bot pb-3"
-  x-on:create-patient.document="loadPatient($event.detail.patientId, $event.detail.folderId)"
-  x-on:update-patient.document="loadPatient($event.detail.patientId)"
-  x-on:select-patient.document="loadPatient($event.detail.patientId)"
+  x-on:create-patient.document="loadPatient($event.detail.patient, $event.detail.folder)"
+  x-on:update-patient.document="loadPatient($event.detail.patient)"
+  x-on:select-patient.document="loadPatient($event.detail.patient, $event.detail.folder)"
   x-on:close-patient.document="loadPatient(null)"
-  x-on:select-folder.document="loadPatient($event.detail.patientId, $event.detail.folderId)"
-  x-on:archived-folder.document="onArchivedFolder($event.detail.folderId)"
-  x-on:unarchived-folder.document="loadPatient($event.detail.patientId)"
+  x-on:select-folder.document="loadFolder($event.detail.folder, $event.detail.ignore)"
+  x-on:archived-folder.document="onArchivedFolder($event.detail.folder)"
+  x-on:unarchived-folder.document="loadPatient($event.detail.patient)"
 >
   <div class="py-3 text-center h2">
     <span x-text="getPatientFullname"></span>

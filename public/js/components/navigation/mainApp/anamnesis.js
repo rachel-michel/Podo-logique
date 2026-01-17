@@ -42,9 +42,12 @@ function anamnesis() {
           const globalPdfParameter = await getGlobalPdfParameter();
           const pdfParameter = await createPdfParameter({
             office: globalPdfParameter.office,
-            prescriber_id: null,
+            prescriberFullname: globalPdfParameter.prescriberFullname,
+            prescriberAddress: globalPdfParameter.prescriberAddress,
+            prescriberMail: globalPdfParameter.prescriberMail,
+            prescriberPhoneNumber: globalPdfParameter.prescriberPhoneNumber,
             subject: globalPdfParameter.subject,
-            notes: "",
+            notes: globalPdfParameter.notes,
             showTabA: globalPdfParameter.showTabA,
             showTabB: globalPdfParameter.showTabB,
             showTabC: globalPdfParameter.showTabC,

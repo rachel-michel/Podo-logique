@@ -37,7 +37,7 @@ class LibraryController
     $library = Library::fromArray($this->readJsonInput());
     $saved = $this->repo->create($library);
 
-    $this->json(['success' => true, 'library' => $saved->toArray()], 201);
+    $this->json(['success' => true, 'library' => $saved->toArray()], 200);
   }
 
   public function delete(int $id): void

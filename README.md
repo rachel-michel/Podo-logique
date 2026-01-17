@@ -4,7 +4,6 @@ Créé par une orthopédiste, pour les orthopédistes. Cette application a pour 
 
 Todo :
 
-- modifier la table des pdf parameter, elle ne doit pas contenir un prescriber_id mais les données fullname, address, mail, phoneNumber
 - faire fonctionner le pré-remplissage des prescribers
 - modifier/ajouter/supprimer un prescriber doit reload la liste des prescriber de l'onglet CR
 - rendre le CR joli

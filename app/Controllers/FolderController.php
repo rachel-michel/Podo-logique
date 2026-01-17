@@ -67,7 +67,7 @@ class FolderController
 
     $saved = $this->repo->create($folder);
 
-    $this->json(['success' => true, 'folder' => $saved->toArray()], 201);
+    $this->json(['success' => true, 'folder' => $saved->toArray()], 200);
   }
 
   public function update(int $id): void

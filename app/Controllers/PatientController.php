@@ -61,7 +61,7 @@ class PatientController
     $patient = Patient::fromArray($input);
     $saved   = $this->repo->create($patient);
 
-    $this->json(['success' => true, 'patient' => $saved->toArray()], 201);
+    $this->json(['success' => true, 'patient' => $saved->toArray()], 200);
   }
 
   public function update(int $id): void

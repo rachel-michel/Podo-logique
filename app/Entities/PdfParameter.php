@@ -5,9 +5,12 @@ namespace App\Entities;
 class PdfParameter
 {
   private ?int $id = null;
-  private ?int $prescriberId = null;
   private string $type = 'custom';
   private ?string $office = null;
+  private ?string $prescriberFullname = '';
+  private ?string $prescriberAddress = '';
+  private ?string $prescriberMail = '';
+  private ?string $prescriberPhoneNumber = '';
   private string $subject = 'Compte rendu';
   private ?string $notes = null;
   private bool $showTabA = true;
@@ -20,9 +23,12 @@ class PdfParameter
     $e = new self();
 
     if (isset($data['id'])) $e->setId((int)$data['id']);
-    if (isset($data['prescriber_id'])) $e->setPrescriberId($data['prescriber_id']);
     if (isset($data['type'])) $e->setType($data['type']);
     if (isset($data['office'])) $e->setOffice($data['office']);
+    if (isset($data['prescriberFullname'])) $e->setPrescriberFullname($data['prescriberFullname']);
+    if (isset($data['prescriberAddress'])) $e->setPrescriberAddress($data['prescriberAddress']);
+    if (isset($data['prescriberMail'])) $e->setPrescriberMail($data['prescriberMail']);
+    if (isset($data['prescriberPhoneNumber'])) $e->setPrescriberPhoneNumber($data['prescriberPhoneNumber']);
     if (isset($data['subject'])) $e->setSubject($data['subject']);
     if (isset($data['notes'])) $e->setNotes($data['notes']);
     if (isset($data['showTabA'])) $e->setShowTabA((bool)$data['showTabA']);
@@ -36,16 +42,19 @@ class PdfParameter
   public function toArray(): array
   {
     return [
-      'id'            => $this->id,
-      'prescriber_id' => $this->prescriberId,
-      'type'          => $this->type,
-      'office'        => $this->office,
-      'subject'       => $this->subject,
-      'notes'         => $this->notes,
-      'showTabA'    => $this->showTabA,
-      'showTabB'    => $this->showTabB,
-      'showTabC'    => $this->showTabC,
-      'showTabD'    => $this->showTabD,
+      'id'                    => $this->id,
+      'type'                  => $this->type,
+      'office'                => $this->office,
+      'prescriberFullname'    => $this->prescriberFullname,
+      'prescriberAddress'     => $this->prescriberAddress,
+      'prescriberMail'        => $this->prescriberMail,
+      'prescriberPhoneNumber' => $this->prescriberPhoneNumber,
+      'subject'               => $this->subject,
+      'notes'                 => $this->notes,
+      'showTabA'              => $this->showTabA,
+      'showTabB'              => $this->showTabB,
+      'showTabC'              => $this->showTabC,
+      'showTabD'              => $this->showTabD,
     ];
   }
 
@@ -58,13 +67,40 @@ class PdfParameter
     $this->id = $id;
   }
 
-  public function getPrescriberId(): ?int
+  public function getPrescriberFullname(): ?string
   {
-    return $this->prescriberId;
+    return $this->prescriberFullname;
   }
-  public function setPrescriberId(int $v): void
+  public function setPrescriberFullname(string $v): void
   {
-    $this->prescriberId = $v;
+    $this->prescriberFullname = $v;
+  }
+
+  public function getPrescriberAddress(): ?string
+  {
+    return $this->prescriberAddress;
+  }
+  public function setPrescriberAddress(string $v): void
+  {
+    $this->prescriberAddress = $v;
+  }
+
+  public function getPrescriberMail(): ?string
+  {
+    return $this->prescriberMail;
+  }
+  public function setPrescriberMail(string $v): void
+  {
+    $this->prescriberMail = $v;
+  }
+
+  public function getPrescriberPhoneNumber(): ?string
+  {
+    return $this->prescriberPhoneNumber;
+  }
+  public function setPrescriberPhoneNumber(string $v): void
+  {
+    $this->prescriberPhoneNumber = $v;
   }
 
   public function getType(): string

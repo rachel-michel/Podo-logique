@@ -55,7 +55,7 @@ class ExaminationController
 
     $saved = $this->repo->create($examination);
 
-    $this->json(['success' => true, 'examination' => $saved->toArray()], 201);
+    $this->json(['success' => true, 'examination' => $saved->toArray()], 200);
   }
 
   public function update(int $id): void

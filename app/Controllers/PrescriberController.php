@@ -47,7 +47,7 @@ class PrescriberController
     $prescriber = Prescriber::fromArray($input);
     $saved = $this->repo->create($prescriber);
 
-    $this->json(['success' => true, 'prescriber' => $saved->toArray()], 201);
+    $this->json(['success' => true, 'prescriber' => $saved->toArray()], 200);
   }
 
   public function update(int $id): void

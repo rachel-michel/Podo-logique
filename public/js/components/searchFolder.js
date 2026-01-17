@@ -80,7 +80,10 @@ function searchFolder() {
       const globalPdfParameter = await getGlobalPdfParameter();
       const pdfParameter = await createPdfParameter({
         office: globalPdfParameter.office,
-        prescriber_id: null,
+        prescriberFullname: "",
+        prescriberAddress: "",
+        prescriberMail: "",
+        prescriberPhoneNumber: "",
         subject: globalPdfParameter.subject,
         notes: "",
         showTabA: globalPdfParameter.showTabA,

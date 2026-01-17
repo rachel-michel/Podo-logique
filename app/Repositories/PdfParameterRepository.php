@@ -17,9 +17,12 @@ class PdfParameterRepository
     $this->pdo->exec("
         CREATE TABLE IF NOT EXISTS pdf_parameter (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            prescriber_id INTEGER NULL,
             type TEXT NOT NULL DEFAULT 'custom',
             office TEXT NULL,
+            prescriberFullname TEXT NULL,
+            prescriberAddress TEXT NULL,
+            prescriberMail TEXT NULL,
+            prescriberPhoneNumber TEXT NULL,
             subject TEXT NULL DEFAULT 'Compte rendu',
             notes TEXT NULL,
             showTabA INTEGER NOT NULL DEFAULT 1,
@@ -35,13 +38,11 @@ class PdfParameterRepository
     if ($count === 0) {
       $this->pdo->exec("
           INSERT INTO pdf_parameter (
-              office, prescriber_id, subject, notes,
-              showTabA, showTabB, showTabC, showTabD,
-              type
+              office, prescriberFullname, prescriberAddress, prescriberMail, prescriberPhoneNumber,
+              subject, notes, showTabA, showTabB, showTabC, showTabD, type
           ) VALUES (
-              '', null , 'Compte rendu', '',
-              1, 1, 1, 1,
-              'global'
+              '', '' ,'' ,'' ,'' ,
+              'Compte rendu', '', 1, 1, 1, 1, 'global'
           )
       ");
     }
@@ -93,26 +94,27 @@ class PdfParameterRepository
 
     $stmt = $this->pdo->prepare("
         INSERT INTO pdf_parameter (
-            office, prescriber_id, subject, notes,
-            showTabA, showTabB, showTabC, showTabD,
-            type
+            office, prescriberFullname, prescriberAddress, prescriberMail, prescriberPhoneNumber,
+            subject, notes, showTabA, showTabB, showTabC, showTabD, type
         ) VALUES (
-            :office, :prescriber_id, :subject, :notes,
-            :a, :b, :c, :d,
-            :type
+            :office, :prescriberFullname, :prescriberAddress, :prescriberMail, :prescriberPhoneNumber,
+            :subject, :notes, :showTabA, :showTabB, :showTabC, :showTabD, :type
         )
     ");
 
     $stmt->execute([
-      ':office'        => $pdfParameter->getOffice(),
-      ':prescriber_id' => $pdfParameter->getPrescriberId(),
-      ':subject'       => $pdfParameter->getSubject(),
-      ':notes'         => $pdfParameter->getNotes(),
-      ':a'             => $pdfParameter->getShowTabA() ? 1 : 0,
-      ':b'             => $pdfParameter->getShowTabB() ? 1 : 0,
-      ':c'             => $pdfParameter->getShowTabC() ? 1 : 0,
-      ':d'             => $pdfParameter->getShowTabD() ? 1 : 0,
-      ':type'          => $pdfParameter->getType(),
+      ':type'                  => $pdfParameter->getType(),
+      ':office'                => $pdfParameter->getOffice(),
+      ':prescriberFullname'    => $pdfParameter->getPrescriberFullname(),
+      ':prescriberAddress'     => $pdfParameter->getPrescriberAddress(),
+      ':prescriberMail'        => $pdfParameter->getPrescriberMail(),
+      ':prescriberPhoneNumber' => $pdfParameter->getPrescriberPhoneNumber(),
+      ':subject'               => $pdfParameter->getSubject(),
+      ':notes'                 => $pdfParameter->getNotes(),
+      ':showTabA'              => $pdfParameter->getShowTabA() ? 1 : 0,
+      ':showTabB'              => $pdfParameter->getShowTabB() ? 1 : 0,
+      ':showTabC'              => $pdfParameter->getShowTabC() ? 1 : 0,
+      ':showTabD'              => $pdfParameter->getShowTabD() ? 1 : 0,
     ]);
 
     $pdfParameter->setId((int)$this->pdo->lastInsertId());
@@ -128,27 +130,33 @@ class PdfParameterRepository
 
     $stmt = $this->pdo->prepare("
         UPDATE pdf_parameter SET
-            office        = :office,
-            prescriber_id = :prescriber_id,
-            subject       = :subject,
-            notes         = :notes,
-            showTabA    = :a,
-            showTabB    = :b,
-            showTabC    = :c,
-            showTabD    = :d
+            office                = :office,
+            prescriberFullname    = :prescriberFullname,
+            prescriberAddress     = :prescriberAddress,
+            prescriberMail        = :prescriberMail,
+            prescriberPhoneNumber = :prescriberPhoneNumber,
+            subject               = :subject,
+            notes                 = :notes,
+            showTabA              = :showTabA,
+            showTabB              = :showTabB,
+            showTabC              = :showTabC,
+            showTabD              = :showTabD
         WHERE id = :id
     ");
 
     $stmt->execute([
-      ':office'        => $pdfParameter->getOffice(),
-      ':prescriber_id' => $pdfParameter->getPrescriberId(),
-      ':subject'       => $pdfParameter->getSubject(),
-      ':notes'         => $pdfParameter->getNotes(),
-      ':a'             => $pdfParameter->getShowTabA() ? 1 : 0,
-      ':b'             => $pdfParameter->getShowTabB() ? 1 : 0,
-      ':c'             => $pdfParameter->getShowTabC() ? 1 : 0,
-      ':d'             => $pdfParameter->getShowTabD() ? 1 : 0,
-      ':id'            => $pdfParameter->getId(),
+      ':office'                => $pdfParameter->getOffice(),
+      ':prescriberFullname'    => $pdfParameter->getPrescriberFullname(),
+      ':prescriberAddress'     => $pdfParameter->getPrescriberAddress(),
+      ':prescriberMail'        => $pdfParameter->getPrescriberMail(),
+      ':prescriberPhoneNumber' => $pdfParameter->getPrescriberPhoneNumber(),
+      ':subject'               => $pdfParameter->getSubject(),
+      ':notes'                 => $pdfParameter->getNotes(),
+      ':showTabA'              => $pdfParameter->getShowTabA() ? 1 : 0,
+      ':showTabB'              => $pdfParameter->getShowTabB() ? 1 : 0,
+      ':showTabC'              => $pdfParameter->getShowTabC() ? 1 : 0,
+      ':showTabD'              => $pdfParameter->getShowTabD() ? 1 : 0,
+      ':id'                    => $pdfParameter->getId(),
     ]);
 
     return $pdfParameter;

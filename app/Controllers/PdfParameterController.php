@@ -53,7 +53,7 @@ class PdfParameterController
     $entity = PdfParameter::fromArray($this->readJsonInput());
     $saved = $this->repo->create($entity);
 
-    $this->json(['success' => true, 'pdfParameter' => $saved->toArray()], 201);
+    $this->json(['success' => true, 'pdfParameter' => $saved->toArray()], 200);
   }
 
   public function update(int $id): void

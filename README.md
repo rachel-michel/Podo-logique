@@ -4,7 +4,6 @@ Créé par une orthopédiste, pour les orthopédistes. Cette application a pour 
 
 Todo :
 
-- faire fonctionner le pré-remplissage des prescribers
 - modifier/ajouter/supprimer un prescriber doit reload la liste des prescriber de l'onglet CR
 - rendre le CR joli
 

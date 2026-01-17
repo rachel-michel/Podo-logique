@@ -54,10 +54,6 @@ function report() {
       this.prescriberList = await getAllPrescriber();
     },
 
-    isShowAddPrescriberToLibraryButton() {
-      return false;
-    },
-
     getPrescribers() {
       if (!this.prescriberList.length || this.pdfParameter.prescriberFullname.trim() == "") return [];
       if (this.prescriberList.find((p) => p.fullname === this.pdfParameter.prescriberFullname)) return [];

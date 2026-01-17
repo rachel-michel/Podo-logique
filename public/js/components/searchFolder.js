@@ -14,7 +14,6 @@ function searchFolder() {
 
       this.patient = patient;
 
-      console.log("getFoldersByPatient searchFolder.js");
       const results = await getFoldersByPatient(this.patient.id);
       this.folderPatientList = results.filter((folder) => folder.archivedAt == null).sort((a, b) => b.id - a.id);
 

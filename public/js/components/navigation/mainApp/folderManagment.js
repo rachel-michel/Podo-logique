@@ -13,7 +13,6 @@ function folderManagment() {
 
       this.patient = patient;
 
-      console.log("getFoldersByPatient folderManagment.js");
       const results = await getFoldersByPatient(this.patient.id);
       this.folderList = results.sort((a, b) => b.id - a.id);
     },

@@ -10,16 +10,16 @@ function report() {
         return;
       }
 
-      if (pdfParameter && folder.pdf_parameter_id === pdfParameter.id) {
-        this.pdfParameter = pdfParameter;
+      if (pdfParameter) {
+        if (folder.pdf_parameter_id === pdfParameter.id) this.pdfParameter = pdfParameter;
+        else this.pdfParameter = await getPdfParameterByFolder(folder.id);
       } else {
-        console.log("getPdfParameterByFolder report.js", folder.id);
-        this.pdfParameter = await getPdfParameterByFolder(folder.id);
+        if (!this.pdfParameter.length) {
+          this.pdfParameter = await getPdfParameterByFolder(folder.id);
+        }
       }
 
       const examinations = await getExaminationByFolder(folder.id);
-      console.log("getExaminationByFolder report.js", folder.id);
-
       this.equipmentPlan = examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
       this.examinations = [
         {
@@ -59,7 +59,7 @@ function report() {
     async onSavePdfParameter() {
       await updatePdfParameter(this.pdfParameter);
       this.isEdit = false;
-      this.load(this.pdfParameter.folder_id);
+      this.load(this.folder, this.pdfParameter);
     },
 
     async htmlToClipboard() {

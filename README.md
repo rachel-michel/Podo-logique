@@ -4,10 +4,9 @@ Créé par une orthopédiste, pour les orthopédistes. Cette application a pour 
 
 Todo :
 
-- optimisation : passer les informations possible lors des dispatch (patient, folder...) pour éviter le sur-requêtage
-- toujours enregistrer l'objet entier et pas juste l'id
-- les onglets du header (library et prescriber) doivent reload les onglet examination (pour library) et pdf parameter (pour prescriber)
-- modifier la table des pdf parameter, elle ne doit pas contenir un prescriber_id mais les données fullname, address, mail, phoneNumber qui seront pré-rempli
+- modifier la table des pdf parameter, elle ne doit pas contenir un prescriber_id mais les données fullname, address, mail, phoneNumber
+- faire fonctionner le pré-remplissage des prescribers
+- modifier/ajouter/supprimer un prescriber doit reload la liste des prescriber de l'onglet CR
 - rendre le CR joli
 
 ### Erreur au lancement "VCRUNTIME140.dll"

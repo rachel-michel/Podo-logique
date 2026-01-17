@@ -6,7 +6,6 @@
   x-on:select-patient.document="load(null)"
   x-on:close-patient.document="load(null)"
   x-on:select-folder.document="load($event.detail.folder)"
-  x-on:update-examination.document="load($event.detail.folder)"
   x-on:update-suggestion.document="loadSuggestion()">
 
   <!-- Folder managment tab -->

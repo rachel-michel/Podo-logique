@@ -77,9 +77,7 @@ function examination() {
         this.loadSuggestion();
       }
 
-      console.log("getExaminationByFolder examination.js");
       const examinations = await getExaminationByFolder(folder.id);
-
       let examinationList = {
         visualExamination: examinations
           .filter((e) => e.name == "visualExamination")
@@ -147,7 +145,6 @@ function examination() {
     async loadSuggestion() {
       if (!this.folder) return;
 
-      console.log("getAllSuggestion examination.js");
       const suggestions = await getAllSuggestion();
       this.suggestionList = {
         localisation: suggestions.filter((s) => s.name == "localisation").map((s) => s.value),
@@ -167,6 +164,7 @@ function examination() {
 
     getSplitedInput(index, field, templateName) {
       const row = this.getTemplateTab(templateName).rows[index];
+      if (!row) return [];
       return row[`${field}Input`]
         .split(";")
         .map((s) => s.trim())
@@ -175,7 +173,6 @@ function examination() {
 
     getSuggestions(field, row, suggestionListName) {
       const input = row[`${field}Input`].toLowerCase().trim();
-
       if (!input) return [];
 
       // Get the last part of input
@@ -214,14 +211,13 @@ function examination() {
     },
 
     async onSaveRow(index, templateName) {
-      const row = this.getTemplateTab(templateName).rows[index];
+      const templateTab = this.getTemplateTab(templateName);
+      const row = templateTab.rows[index];
       row.editing = false;
 
       if (row.localisationInput.trim() == "" && row.observationInput.trim() == "") {
         if (row?.id != null) {
-          await deleteExamination(row.id);
-          customDispatch("update-examination", { folder: this.folder });
-
+          await this.onDeleteRow(index, templateName);
           return;
         } else {
           return;
@@ -243,13 +239,26 @@ function examination() {
         return;
       }
 
-      await createExamination(data);
+      const newRow = await createExamination(data);
+      row.id = newRow.id;
+      templateTab.rows.push({
+        editing: false,
+        _refs: {},
+        localisationInput: "",
+        observationInput: "",
+      });
+
       customDispatch("update-examination", { folder: this.folder });
     },
 
     async onDeleteRow(index, templateName) {
-      const row = this.getTemplateTab(templateName).rows[index];
+      const tab = this.getTemplateTab(templateName);
+      const row = tab.rows[index];
+
       await deleteExamination(row.id);
+
+      tab.rows = tab.rows.filter((r) => r.id !== row.id);
+
       customDispatch("update-examination", { folder: this.folder });
     },
   };

@@ -1,25 +1,9 @@
 function anamnesis() {
   return {
-    patient: {
-      id: null,
-      gender: "Mme",
-      lastname: "",
-      firstname: "",
-      dateOfBirth: "",
-      phoneNumber: "",
-      address: "",
-      folderPrefix: "Consultation du",
-      folderPrefixFormat: "prefixDate",
-      weight: 0,
-      height: 0,
-      shoeSize: 0,
-      job: "",
-      physicalActivity: "",
-      pathology: "",
-      medicalHistory: "",
-      notices: "",
-      createdAt: null,
-      updatedAt: null,
+    patient: null,
+
+    init() {
+      this.resetPatient();
     },
 
     async load(patient) {

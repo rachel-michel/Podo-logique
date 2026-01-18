@@ -89,7 +89,8 @@ class PrescriberRepository
       ':fullname'    => $prescriber->getFullname(),
       ':address'     => $prescriber->getAddress(),
       ':mail'        => $prescriber->getMail(),
-      ':phoneNumber' => $prescriber->getPhoneNumber()
+      ':phoneNumber' => $prescriber->getPhoneNumber(),
+      ':id'          => $prescriber->getId()
     ]);
 
     return $prescriber;

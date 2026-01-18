@@ -55,7 +55,12 @@ function report() {
     },
 
     getPrescribers() {
-      if (!this.prescriberList.length || this.pdfParameter.prescriberFullname.trim() == "") return [];
+      if (
+        !this.prescriberList.length ||
+        !Object.keys(this.pdfParameter).length ||
+        this.pdfParameter.prescriberFullname.trim() == ""
+      )
+        return [];
       if (this.prescriberList.find((p) => p.fullname === this.pdfParameter.prescriberFullname)) return [];
 
       return this.prescriberList

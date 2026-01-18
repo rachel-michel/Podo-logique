@@ -54,14 +54,15 @@ function prescriber() {
         phoneNumber: this.inputPrescriber.phoneNumber.trim(),
       });
 
-      this.loadPrescriberList();
-
       this.inputPrescriber = {
         fullname: "",
         address: "",
         mail: "",
         phoneNumber: "",
       };
+
+      this.loadPrescriberList();
+      customDispatch("update-prescriber");
     },
 
     async editPrescriber() {
@@ -81,8 +82,6 @@ function prescriber() {
         phoneNumber: this.inputEditPrescriber.phoneNumber.trim(),
       });
 
-      await this.loadPrescriberList();
-
       this.editingField = null;
       this.inputEditPrescriber = {
         id: null,
@@ -91,11 +90,16 @@ function prescriber() {
         mail: "",
         phoneNumber: "",
       };
+
+      await this.loadPrescriberList();
+      customDispatch("update-prescriber");
     },
 
     async removePrescriber(id) {
       await deletePrescriber(id);
+
       this.loadPrescriberList();
+      customDispatch("update-prescriber");
     },
   };
 }

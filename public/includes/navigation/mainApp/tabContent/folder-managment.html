@@ -1,53 +1,45 @@
-<div
-  x-data="folderManagment()"
-  x-on:create-patient.document="load($event.detail.patient)"
-  x-on:select-patient.document="load($event.detail.patient)"
-  x-on:select-folder.document="load($event.detail.patient, $event.detail.ignore)"
-  x-on:close-patient.document="load(null)"
->
-  <div class="table-responsive">
-    <table class="table table-striped table-hover">
-      <colgroup>
-        <col style="width: 55%" />
-        <col style="width: 20%" />
-        <col style="width: 20%" />
-        <col style="width: 5%" />
-      </colgroup>
-      <thead>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <colgroup>
+      <col style="width: 55%" />
+      <col style="width: 20%" />
+      <col style="width: 20%" />
+      <col style="width: 5%" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Dossier</th>
+        <th>Création</th>
+        <th>Dernière modification</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <template x-for="folder in folderList" :key="folder.id">
         <tr>
-          <th>Dossier</th>
-          <th>Création</th>
-          <th>Dernière modification</th>
-          <th></th>
+          <td x-text="folder.name"></td>
+          <td x-text="getFormatedDate(folder.createdAt)"></td>
+          <td x-text="getFormatedDate(folder.updatedAt)"></td>
+          <td class="text-center align-middle">
+            <template x-if="folder.archivedAt == null">
+              <img
+                src="assets/archived.png"
+                alt="archived icon"
+                class="icon-table-archived"
+                @click="onArchived(folder)"
+              />
+            </template>
+            <template x-if="folder.archivedAt !== null">
+              <img
+                src="assets/unarchived.png"
+                alt="unarchived icon"
+                class="icon-table-unarchived"
+                @click="onUnarchived(folder)"
+              />
+            </template>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <template x-for="folder in folderList" :key="folder.id">
-          <tr>
-            <td x-text="folder.name"></td>
-            <td x-text="getFormatedDate(folder.createdAt)"></td>
-            <td x-text="getFormatedDate(folder.updatedAt)"></td>
-            <td class="text-center align-middle">
-              <template x-if="folder.archivedAt == null">
-                <img
-                  src="assets/archived.png"
-                  alt="archived icon"
-                  class="icon-table-archived"
-                  @click="onArchived(folder)"
-                />
-              </template>
-              <template x-if="folder.archivedAt !== null">
-                <img
-                  src="assets/unarchived.png"
-                  alt="unarchived icon"
-                  class="icon-table-unarchived"
-                  @click="onUnarchived(folder)"
-                />
-              </template>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
-  </div>
+      </template>
+    </tbody>
+  </table>
 </div>

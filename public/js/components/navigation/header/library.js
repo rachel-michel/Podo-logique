@@ -9,6 +9,10 @@ function library() {
     },
 
     async init() {
+      await this.loadLibraries();
+    },
+
+    async loadLibraries() {
       const result = await getAllSuggestion();
       this.libraries = [
         {
@@ -46,7 +50,7 @@ function library() {
 
       input.value = "";
       customDispatch("update-suggestion");
-      this.init();
+      this.loadLibraries();
     },
 
     async removeSuggestion(suggestionName, id) {
@@ -62,7 +66,7 @@ function library() {
 
       await deleteSuggestion(id);
       customDispatch("update-suggestion");
-      this.init();
+      this.loadLibraries();
     },
   };
 }

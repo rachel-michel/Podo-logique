@@ -1,19 +1,19 @@
 <div
   id="mainAppTabContent"
-  class="tab-content py-3"
-  x-data="examination()"
-  x-on:create-patient.document="load($event.detail.folder)"
-  x-on:select-patient.document="load(null)"
-  x-on:close-patient.document="load(null)"
-  x-on:select-folder.document="load($event.detail.folder)"
-  x-on:update-suggestion.document="loadSuggestion()">
+  class="tab-content py-3">
 
   <!-- Folder managment tab -->
   <div
     id="folderManagment"
     class="tab-pane fade"
     role="tabpanel"
-    aria-labelledby="folderManagmentTab">
+    aria-labelledby="folderManagmentTab"
+    x-data="folderManagment()"
+    x-on:create-patient.document="load($event.detail.patient)"
+    x-on:select-patient.document="load($event.detail.patient)"
+    x-on:select-folder.document="load($event.detail.patient, $event.detail.ignore)"
+    x-on:close-patient.document="load(null)">
+
     <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/folder-managment.html'; ?>
   </div>
 
@@ -22,12 +22,24 @@
     id="anamnesis"
     class="tab-pane fade show active"
     role="tabpanel"
-    aria-labelledby="anamnesisTab">
+    aria-labelledby="anamnesisTab"
+    x-data="anamnesis()"
+    x-on:create-patient.document="load($event.detail.patient)"
+    x-on:select-patient.document="load($event.detail.patient)"
+    x-on:close-patient.document="load(null)">
+
     <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/anamnesis.html'; ?>
   </div>
 
   <!-- Examination tabs : visual, palpatory, podoscopic, walk study, equipment plan  -->
-  <template x-for="t in templateTabs" :key="t.name">
+  <template x-for="t in templateTabs" :key="t.name"
+    x-data="examination()"
+    x-on:create-patient.document="load($event.detail.folder)"
+    x-on:select-patient.document="load(null)"
+    x-on:close-patient.document="load(null)"
+    x-on:select-folder.document="load($event.detail.folder)"
+    x-on:update-suggestion.document="loadSuggestion()">
+
     <div :id="t.name" class="tab-pane fade" role="tabpanel" :aria-labelledby="t.name + 'Tab'">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -153,7 +165,15 @@
     id="report"
     class="tab-pane fade"
     role="tabpanel"
-    aria-labelledby="reportTab">
+    aria-labelledby="reportTab"
+    x-data="report()"
+    x-on:create-patient.document="load($event.detail.folder, $event.detail.pdfParameter)"
+    x-on:select-patient.document="load(null)"
+    x-on:close-patient.document="load(null)"
+    x-on:select-folder.document="load($event.detail.folder)"
+    x-on:update-examination.document="load($event.detail.folder)"
+    x-on:update-prescriber.document="loadPrescriber()">
+
     <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/report.html'; ?>
   </div>
 </div>

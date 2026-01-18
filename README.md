@@ -4,7 +4,7 @@ Créé par une orthopédiste, pour les orthopédistes. Cette application a pour 
 
 Todo :
 
-- modifier/ajouter/supprimer un prescriber doit reload la liste des prescriber de l'onglet CR
+- chercher comment optimiser le partage de data entre les composants
 - rendre le CR joli
 
 ### Erreur au lancement "VCRUNTIME140.dll"

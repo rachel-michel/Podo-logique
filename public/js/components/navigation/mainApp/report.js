@@ -1,53 +1,10 @@
 function report() {
   return {
-    pdfParameter: {},
-    examinations: [],
-    equipmentPlan: [],
     prescriberList: [],
     isEdit: false,
 
-    async load(folder, pdfParameter) {
-      if (!folder) {
-        return;
-      }
-
-      if (pdfParameter) {
-        if (folder.pdf_parameter_id === pdfParameter.id) this.pdfParameter = pdfParameter;
-        else this.pdfParameter = await getPdfParameterByFolder(folder.id);
-      } else {
-        if (!this.pdfParameter.length) {
-          this.pdfParameter = await getPdfParameterByFolder(folder.id);
-        }
-      }
-
-      const examinations = await getExaminationByFolder(folder.id);
-      this.equipmentPlan = examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
-      this.examinations = [
-        {
-          show: this.pdfParameter.showTabA,
-          name: "Examen visuel",
-          rows: examinations.filter((e) => e.name == "visualExamination").sort((a, b) => a.id - b.id),
-        },
-        {
-          show: this.pdfParameter.showTabB,
-          name: "Examen palpatoire",
-          rows: examinations.filter((e) => e.name == "palpatoryExamination").sort((a, b) => a.id - b.id),
-        },
-        {
-          show: this.pdfParameter.showTabC,
-          name: "Examen podoscopique",
-          rows: examinations.filter((e) => e.name == "podoscopicExamination").sort((a, b) => a.id - b.id),
-        },
-        {
-          show: this.pdfParameter.showTabD,
-          name: "Etude de la marche",
-          rows: examinations.filter((e) => e.name == "walkStudy").sort((a, b) => a.id - b.id),
-        },
-      ];
-
-      if (!this.prescriberList.length) {
-        await this.loadPrescriber();
-      }
+    async init() {
+      await this.loadPrescriber();
     },
 
     async loadPrescriber() {
@@ -83,9 +40,8 @@ function report() {
     },
 
     async onSavePdfParameter() {
-      await updatePdfParameter(this.pdfParameter);
+      this.pdfParameter = await updatePdfParameter(this.pdfParameter);
       this.isEdit = false;
-      this.load(this.folder, this.pdfParameter);
     },
 
     async htmlToClipboard() {

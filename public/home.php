@@ -1,6 +1,3 @@
-<?php
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -59,6 +56,7 @@
 
   <script src="js/app.js"></script>
 
+  <script src="js/components/parent.js"></script>
   <script src="js/components/reset.js"></script>
   <script src="js/components/searchPatient.js"></script>
   <script src="js/components/searchFolder.js"></script>

@@ -1,19 +1,7 @@
-<div
-  x-data="searchFolder()"
-  x-cloak
-  x-show="Object.keys(patient).length > 0"
-  class="row border-bot pb-3"
-  x-on:create-patient.document="loadPatient($event.detail.patient, $event.detail.folder)"
-  x-on:update-patient.document="loadPatient($event.detail.patient)"
-  x-on:select-patient.document="loadPatient($event.detail.patient, $event.detail.folder)"
-  x-on:close-patient.document="loadPatient(null)"
-  x-on:select-folder.document="loadFolder($event.detail.folder, $event.detail.ignore)"
-  x-on:archived-folder.document="onArchivedFolder($event.detail.folder)"
-  x-on:unarchived-folder.document="loadPatient($event.detail.patient)"
->
+<div x-data="searchFolder()" x-cloak x-show="patient?.id != null" class="row border-bot pb-3">
   <div class="py-3 text-center h2">
     <span x-text="getPatientFullname"></span>
-    <span x-show="Object.keys(patient).length > 0 && Object.keys(folder).length > 0">-</span>
+    <span x-show="patient?.id != null && Object.keys(folder).length > 0">-</span>
     <span x-text="getFolderName"></span>
   </div>
 
@@ -23,11 +11,11 @@
       <select
         class="form-select"
         id="folderPatientSelect"
-        x-show="folderPatientList.length > 0"
+        x-show="activeFolders.length > 0"
         @change="onSelectFolder($event.target.value)"
       >
         <option value="" disabled selected>Sélectionnez un dossier</option>
-        <template x-for="folderPatient in folderPatientList" :key="folderPatient.id">
+        <template x-for="folderPatient in activeFolders" :key="folderPatient.id">
           <option
             :value="folderPatient.id"
             :selected="folder.id && folder.id == folderPatient.id"

@@ -1,14 +1,14 @@
 function pdfParameter() {
   return {
-    pdfParameter: {},
+    globalPdfParameter: {},
     isEdit: false,
 
     async init() {
-      this.pdfParameter = await getGlobalPdfParameter();
+      this.globalPdfParameter = await getGlobalPdfParameter();
     },
 
     async onSavePdfParameter() {
-      await updatePdfParameter(this.pdfParameter);
+      this.globalPdfParameter = await updatePdfParameter(this.globalPdfParameter);
       this.isEdit = false;
     },
   };

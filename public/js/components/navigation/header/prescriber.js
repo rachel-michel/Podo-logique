@@ -61,6 +61,7 @@ function prescriber() {
         phoneNumber: "",
       };
 
+      // todo remove
       this.loadPrescriberList();
       customDispatch("update-prescriber");
     },
@@ -91,6 +92,7 @@ function prescriber() {
         phoneNumber: "",
       };
 
+      // todo remove
       await this.loadPrescriberList();
       customDispatch("update-prescriber");
     },
@@ -98,6 +100,7 @@ function prescriber() {
     async removePrescriber(id) {
       await deletePrescriber(id);
 
+      // todo remove
       this.loadPrescriberList();
       customDispatch("update-prescriber");
     },

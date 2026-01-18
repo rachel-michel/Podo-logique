@@ -3,7 +3,7 @@
   <!------------------------- Main App Tab ------------------------>
   <!--------------------------------------------------------------->
 
-  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+  <div x-data="parent()" class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
     <!--- Search patient --->
     <div class="pt-4 pb-2 border-bottom">
       <?php include PUBLIC_PATH . '/includes/search-patient.html'; ?>
@@ -12,11 +12,8 @@
     <div
       class="row justify-content-end p-2"
       x-cloak
-      x-show="isSelectedPatient"
-      x-data="reset()"
-      x-on:create-patient.document="load($event.detail.patient)"
-      x-on:select-patient.document="load($event.detail.patient)"
-      x-on:close-patient.document="load(null)">
+      x-show="patient?.id != null"
+      x-data="reset()">
       <button class="btn btn-close" @click="onClose"></button>
     </div>
 

@@ -1,8 +1,5 @@
 function folderManagment() {
   return {
-    patient: null,
-    folderList: [],
-
     async load(patient, ignore = false) {
       if (ignore) return;
 
@@ -14,7 +11,7 @@ function folderManagment() {
       this.patient = patient;
 
       const results = await getFoldersByPatient(this.patient.id);
-      this.folderList = results.sort((a, b) => b.id - a.id);
+      this.folders = results.sort((a, b) => b.id - a.id);
     },
 
     getFormatedDate(dateString) {
@@ -34,7 +31,7 @@ function folderManagment() {
     },
 
     async onArchived(folder) {
-      result = this.folderList.filter((f) => f.id !== folder.id).filter((f) => f.archivedAt == null);
+      result = this.folders.filter((f) => f.id !== folder.id).filter((f) => f.archivedAt == null);
 
       if (!result.length) {
         customDispatch("notify", {
@@ -45,14 +42,20 @@ function folderManagment() {
       }
 
       const updatedFolder = await archivedFolder(folder);
-      this.folderList = this.folderList.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
-      customDispatch("archived-folder", { folder: updatedFolder });
+
+      this.folders = this.folders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
+      this.activeFolders = this.activeFolders
+        .filter((folder) => folder.id !== updatedFolder.id)
+        .sort((a, b) => b.id - a.id);
     },
 
     async onUnarchived(folder) {
       const updatedFolder = await unarchivedFolder(folder);
-      this.folderList = this.folderList.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
-      customDispatch("unarchived-folder", { patient: this.patient });
+
+      this.folders = this.folders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
+
+      this.activeFolders.push(updatedFolder);
+      this.activeFolders = this.activeFolders.sort((a, b) => b.id - a.id);
     },
   };
 }

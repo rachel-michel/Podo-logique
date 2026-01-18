@@ -1,151 +1,14 @@
 function examination() {
   return {
-    folder: null,
     suggestionList: null,
-    templateTabs: [
-      {
-        name: "visualExamination",
-        rows: [],
-        suggestion: {
-          first: "localisation",
-          second: "observation",
-        },
-        column: {
-          first: "Localisation",
-          second: "Observation",
-        },
-      },
-      {
-        name: "palpatoryExamination",
-        rows: [],
-        suggestion: {
-          first: "localisation",
-          second: "observation",
-        },
-        column: {
-          first: "Localisation",
-          second: "Observation",
-        },
-      },
-      {
-        name: "podoscopicExamination",
-        rows: [],
-        suggestion: {
-          first: "localisation",
-          second: "observation",
-        },
-        column: {
-          first: "Localisation",
-          second: "Observation",
-        },
-      },
-      {
-        name: "walkStudy",
-        rows: [],
-        suggestion: {
-          first: "localisation",
-          second: "observation",
-        },
-        column: {
-          first: "Localisation",
-          second: "Observation",
-        },
-      },
-      {
-        name: "equipmentPlan",
-        rows: [],
-        suggestion: {
-          first: "equipmentList",
-          second: "equipmentDetail",
-        },
-        column: {
-          first: "Appareillage",
-          second: "Details",
-        },
-      },
-    ],
 
-    async load(folder) {
-      if (!folder) {
-        this.folder = null;
-        return;
-      }
-
-      this.folder = folder;
-
-      if (!this.suggestionList) {
-        this.loadSuggestion();
-      }
-
-      const examinations = await getExaminationByFolder(folder.id);
-      let examinationList = {
-        visualExamination: examinations
-          .filter((e) => e.name == "visualExamination")
-          .map((a) => ({
-            id: a.id,
-            editing: false,
-            _refs: {},
-            localisationInput: a.localisation,
-            observationInput: a.observation,
-          }))
-          .sort((a, b) => a.id - b.id),
-        palpatoryExamination: examinations
-          .filter((e) => e.name == "palpatoryExamination")
-          .map((a) => ({
-            id: a.id,
-            editing: false,
-            _refs: {},
-            localisationInput: a.localisation,
-            observationInput: a.observation,
-          }))
-          .sort((a, b) => a.id - b.id),
-        podoscopicExamination: examinations
-          .filter((e) => e.name == "podoscopicExamination")
-          .map((a) => ({
-            id: a.id,
-            editing: false,
-            _refs: {},
-            localisationInput: a.localisation,
-            observationInput: a.observation,
-          }))
-          .sort((a, b) => a.id - b.id),
-        walkStudy: examinations
-          .filter((e) => e.name == "walkStudy")
-          .map((a) => ({
-            id: a.id,
-            editing: false,
-            _refs: {},
-            localisationInput: a.localisation,
-            observationInput: a.observation,
-          }))
-          .sort((a, b) => a.id - b.id),
-        equipmentPlan: examinations
-          .filter((e) => e.name == "equipmentPlan")
-          .map((a) => ({
-            id: a.id,
-            editing: false,
-            _refs: {},
-            localisationInput: a.localisation,
-            observationInput: a.observation,
-          }))
-          .sort((a, b) => a.id - b.id),
-      };
-
-      for (let template of this.templateTabs) {
-        template.rows = examinationList[template.name];
-        template.rows.push({
-          editing: false,
-          _refs: {},
-          localisationInput: "",
-          observationInput: "",
-        });
-      }
+    init() {
+      this.loadSuggestion();
     },
 
     async loadSuggestion() {
-      if (!this.folder) return;
-
       const suggestions = await getAllSuggestion();
+
       this.suggestionList = {
         localisation: suggestions.filter((s) => s.name == "localisation").map((s) => s.value),
         observation: suggestions.filter((s) => s.name == "observation").map((s) => s.value),
@@ -234,8 +97,6 @@ function examination() {
       if (row?.id != null) {
         data.id = row.id;
         await updateExamination(data);
-        customDispatch("update-examination", { folder: this.folder });
-
         return;
       }
 
@@ -247,19 +108,13 @@ function examination() {
         localisationInput: "",
         observationInput: "",
       });
-
-      customDispatch("update-examination", { folder: this.folder });
     },
 
     async onDeleteRow(index, templateName) {
       const tab = this.getTemplateTab(templateName);
       const row = tab.rows[index];
-
       await deleteExamination(row.id);
-
       tab.rows = tab.rows.filter((r) => r.id !== row.id);
-
-      customDispatch("update-examination", { folder: this.folder });
     },
   };
 }

@@ -155,7 +155,7 @@
     </div>
 
     <!-- Tableau d'examens -->
-    <template x-for="examen in examinations" :key="examen.name">
+    <template x-for="examen in reportExamination" :key="examen.name">
       <template x-if="examen.show">
         <div style="margin-bottom: 20px">
           <span x-text="examen.name" style="font-weight: bold; display: inline-block; margin-bottom: 6px"></span>

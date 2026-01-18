@@ -4,7 +4,7 @@ Créé par une orthopédiste, pour les orthopédistes. Cette application a pour 
 
 Todo :
 
-- chercher comment optimiser le partage de data entre les composants
+- factoriser les différents appel dans parent.js
 - rendre le CR joli
 
 ### Erreur au lancement "VCRUNTIME140.dll"

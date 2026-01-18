@@ -1,7 +1,6 @@
 function searchPatient() {
   return {
     query: "",
-    selectedPatient: {},
     patientList: [],
 
     async onSearchPatients() {
@@ -28,28 +27,21 @@ function searchPatient() {
       if (!id) return;
       const patient = this.patientList.find((p) => p.id == id);
       if (!patient) return;
-      this.selectedPatient = patient;
 
-      // Sort by descending order id
-      const results = await getFoldersByPatient(id);
-      const lastPatientFolder = results.filter((folder) => folder.archivedAt == null).sort((a, b) => b.id - a.id)[0];
+      // Init values with selected patient
+      this.selectPatient(patient);
 
       // Force return to the anamnesis tab
       var tabTrigger = document.querySelector("#anamnesisTab");
       bootstrap.Tab.getOrCreateInstance(tabTrigger).show();
 
       // Show navigation tab but disabled
-      customDispatch("display-tab", { display: true });
-      customDispatch("lock-tab", { lock: true });
-
-      // Reload all tab value with patient selected
-      customDispatch("select-patient", { patient, folder: lastPatientFolder });
-      customDispatch("select-folder", { patient, folder: lastPatientFolder, ignore: true });
+      this.displayTab = true;
+      this.lockTab = false;
     },
 
     resetSearchBar() {
       this.query = "";
-      this.selectedPatient = {};
       this.patientList = [];
     },
   };

@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      <template x-for="folder in folderList" :key="folder.id">
+      <template x-for="folder in folders" :key="folder.id">
         <tr>
           <td x-text="folder.name"></td>
           <td x-text="getFormatedDate(folder.createdAt)"></td>

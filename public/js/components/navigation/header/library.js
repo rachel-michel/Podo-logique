@@ -50,6 +50,7 @@ function library() {
 
       input.value = "";
       customDispatch("update-suggestion");
+      // todo remove
       this.loadLibraries();
     },
 
@@ -66,6 +67,7 @@ function library() {
 
       await deleteSuggestion(id);
       customDispatch("update-suggestion");
+      // todo remove
       this.loadLibraries();
     },
   };

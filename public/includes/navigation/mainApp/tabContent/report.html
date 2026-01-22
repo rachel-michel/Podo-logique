@@ -97,32 +97,28 @@
     style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; color: #000"
   >
     <!-- HEADER -->
-    <div style="margin-bottom: 12px">
-      <div style="margin-bottom: 4px">
+    <div>
+      <!-- Expéditeur : nom de l'établissement, adresse, email, téléphone -->
+      <div>
         <span x-text="pdfParameter.office"></span>
       </div>
 
+      <!-- Destinataire : le médecin -->
       <div>
         <span x-text="pdfParameter.prescriberFullname"></span>
-      </div>
-      <div>
         <span x-text="pdfParameter.prescriberAddress"></span>
-      </div>
-      <div>
         <span x-text="pdfParameter.prescriberMail"></span>
-      </div>
-      <div>
         <span x-text="pdfParameter.prescriberPhoneNumber"></span>
       </div>
     </div>
 
     <!-- OBJET -->
-    <div style="margin-bottom: 12px; font-weight: bold">
+    <div>
       <span x-text="pdfParameter.subject"></span>
     </div>
 
     <!-- TABLEAU APPAREILLAGE -->
-    <table style="border-collapse: collapse; width: 100%; margin-bottom: 16px">
+    <table>
       <colgroup>
         <col style="width: 30%" />
         <col style="width: 70%" />
@@ -130,26 +126,26 @@
 
       <thead>
         <tr>
-          <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">Appareillage</th>
-          <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">Details</th>
+          <th>Appareillage</th>
+          <th>Details</th>
         </tr>
       </thead>
 
       <tbody>
         <template x-for="(row, index) in getEquipmentPlan" :key="index">
           <tr>
-            <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+            <td>
               <div>
                 <template x-for="part in getSplitedInput(row, 'localisation')" :key="part">
-                  <div x-text="part" style="margin-bottom: 2px"></div>
+                  <div x-text="part"></div>
                 </template>
               </div>
             </td>
 
-            <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+            <td>
               <div>
                 <template x-for="obs in getSplitedInput(row, 'observation')" :key="obs">
-                  <div x-text="obs" style="margin-bottom: 2px"></div>
+                  <div x-text="obs"></div>
                 </template>
               </div>
             </td>
@@ -159,17 +155,17 @@
     </table>
 
     <!-- Note au médecin -->
-    <div style="margin-bottom: 16px; white-space: pre-line">
+    <div>
       <span x-text="pdfParameter.notes"></span>
     </div>
 
     <!-- Tableau d'examens -->
     <template x-for="examen in getExaminations()" :key="examen.name">
       <template x-if="examen.show">
-        <div style="margin-bottom: 20px">
-          <span x-text="examen.name" style="font-weight: bold; display: inline-block; margin-bottom: 6px"></span>
+        <div>
+          <span x-text="examen.name"></span>
 
-          <table style="border-collapse: collapse; width: 100%">
+          <table>
             <colgroup>
               <col style="width: 30%" />
               <col style="width: 70%" />
@@ -177,28 +173,26 @@
 
             <thead>
               <tr>
-                <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">
-                  Localisation
-                </th>
-                <th style="border: 1px solid #ccc; padding: 6px; background: #f7f7f7; text-align: left">Observation</th>
+                <th>Localisation</th>
+                <th>Observation</th>
               </tr>
             </thead>
 
             <tbody>
               <template x-for="(row, index) in examen.rows" :key="index">
                 <tr>
-                  <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+                  <td>
                     <div>
                       <template x-for="part in getSplitedInput(row, 'localisation')" :key="part">
-                        <div x-text="part" style="margin-bottom: 2px"></div>
+                        <div x-text="part"></div>
                       </template>
                     </div>
                   </td>
 
-                  <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
+                  <td>
                     <div>
                       <template x-for="obs in getSplitedInput(row, 'observation')" :key="obs">
-                        <div x-text="obs" style="margin-bottom: 2px"></div>
+                        <div x-text="obs"></div>
                       </template>
                     </div>
                   </td>

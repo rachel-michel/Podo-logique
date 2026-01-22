@@ -188,7 +188,6 @@ function appData() {
     },
 
     formatExaminations() {
-      // Examinations tabs (visual, palpatory, podoscopic, walk, equipment plan)
       let examinationList = {
         visualExamination: this.examinations
           .filter((e) => e.name == "visualExamination")

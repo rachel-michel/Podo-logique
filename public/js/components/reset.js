@@ -12,7 +12,7 @@ function reset() {
       this.lockTab = true;
 
       // Reset all tab with no value
-      this.resetPatient();
+      this.resetMainAppData();
 
       customDispatch("close-patient");
     },

@@ -9,13 +9,10 @@ function searchPatient() {
         return;
       }
 
-      // todo faire la requête qu'une fois, à l'ouverture de l'app
-      const all = await getAllPatient();
-
       const search = this.query.toLowerCase().trim();
       const terms = search.split(/\s+/);
 
-      this.patientList = all
+      this.patientList = this.patients
         .filter((p) => {
           const fullName = (p.lastname + " " + p.firstname).toLowerCase();
           return terms.every((term) => fullName.includes(term));

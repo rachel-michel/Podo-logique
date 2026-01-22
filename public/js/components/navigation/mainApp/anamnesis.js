@@ -18,25 +18,59 @@ function anamnesis() {
 
     async onSave() {
       const now = new Date();
-      const isNewPatient = !this.patient.id;
-      this.patient.updatedAt = isNewPatient ? null : now.toISOString();
+      const isExistingPatient = this.patient.id;
+      this.patient.updatedAt = isExistingPatient ? now.toISOString() : null;
 
-      try {
-        if (isNewPatient) {
-          await this.createPatient();
+      if (isExistingPatient) {
+        try {
+          const patient = await updatePatient(this.patient.id, { ...this.patient });
+
+          this.patient = patient;
+          this.patients = this.patients.map((p) => (p.id === patient.id ? patient : p));
+
+          customDispatch("notify", { message: "Patient modifié", type: "alert-success" });
+        } catch (err) {
+          console.error("Erreur patient →", err);
+          customDispatch("notify", { message: "Erreur lors de la modification du patient", type: "alert-danger" });
+        }
+      } else {
+        try {
+          const patient = await createPatient({ ...this.patient });
+          this.patients.push(patient);
+
+          // Create new pdf parameters for the folder
+          const pdfParameter = await createPdfParameter({
+            office: this.globalPdfParameter.office,
+            prescriberFullname: "",
+            prescriberAddress: "",
+            prescriberMail: "",
+            prescriberPhoneNumber: "",
+            subject: this.globalPdfParameter.subject,
+            notes: "",
+            showTabA: this.globalPdfParameter.showTabA,
+            showTabB: this.globalPdfParameter.showTabB,
+            showTabC: this.globalPdfParameter.showTabC,
+            showTabD: this.globalPdfParameter.showTabD,
+          });
+
+          // Create new folder
+          const folderName = getFolderName(patient.folderPrefixFormat, patient.folderPrefix);
+          const folder = await createFolder({
+            patient_id: patient.id,
+            pdf_parameter_id: pdfParameter.id,
+            name: folderName,
+          });
+
+          this.selectPatient(patient, pdfParameter, folder);
+
           this.displayTab = true;
           this.lockTab = false;
+
           customDispatch("notify", { message: "Patient ajouté", type: "alert-success" });
-        } else {
-          this.patient = await updatePatient(this.patient.id, { ...this.patient });
-          customDispatch("notify", { message: "Patient modifié", type: "alert-warning" });
+        } catch (err) {
+          console.error("Erreur patient →", err);
+          customDispatch("notify", { message: "Erreur lors de l'ajout du patient", type: "alert-danger" });
         }
-      } catch (err) {
-        console.error("Erreur patient →", err);
-        customDispatch("notify", {
-          message: isNewPatient ? "Erreur lors de l'ajout du patient" : "Erreur lors de la modification du patient",
-          type: "alert-danger",
-        });
       }
     },
   };

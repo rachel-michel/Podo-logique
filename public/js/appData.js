@@ -1,5 +1,11 @@
 function appData() {
   return {
+    // Global data
+    patients: [],
+    globalPdfParameter: {},
+    libraries: [],
+    prescribers: [],
+    // Patient data
     displayTab: false,
     lockTab: true,
     patient: {
@@ -24,9 +30,8 @@ function appData() {
       updatedAt: null,
     },
     folders: [],
-    activeFolders: [],
     folder: {},
-    globalPdfParameter: {},
+    activeFolders: [],
     pdfParameter: {},
     examinations: [],
     reportExamination: [],
@@ -94,88 +99,70 @@ function appData() {
       },
     ],
 
-    async createPatient() {
-      const patient = await createPatient({ ...this.patient });
+    async init() {
+      this.patients = await getAllPatient();
 
-      // Create new pdf parameters for the folder
-      const pdfParameter = await createPdfParameter({
-        office: this.globalPdfParameter.office,
-        prescriberFullname: "",
-        prescriberAddress: "",
-        prescriberMail: "",
-        prescriberPhoneNumber: "",
-        subject: this.globalPdfParameter.subject,
-        notes: "",
-        showTabA: this.globalPdfParameter.showTabA,
-        showTabB: this.globalPdfParameter.showTabB,
-        showTabC: this.globalPdfParameter.showTabC,
-        showTabD: this.globalPdfParameter.showTabD,
-      });
+      this.prescribers = await getAllPrescriber();
+      customDispatch("init-prescribers", { prescribers: this.prescribers });
 
-      // Create new folder
-      const folderName = getFolderName(patient.folderPrefixFormat, patient.folderPrefix);
-      await createFolder({
-        patient_id: patient.id,
-        pdf_parameter_id: pdfParameter.id,
-        name: folderName,
-      });
+      this.libraries = await getAllSuggestion();
+      customDispatch("init-libraries", { libraries: this.libraries });
 
-      this.selectPatient(patient);
+      this.globalPdfParameter = await getGlobalPdfParameter();
+      customDispatch("init-global-pdf-parameter", { globalPdfParameter: this.globalPdfParameter });
     },
 
-    async selectPatient(patient) {
+    updateGlobalPdfParameter(globalPdfParameter) {
+      this.globalPdfParameter = globalPdfParameter;
+    },
+
+    async selectPatient(patient, pdfParameter, folder) {
+      if (!patient || !("id" in patient) || patient.id == null) {
+        customDispatch("notify", {
+          message: "Une erreur est survenue lors de la selection du patient, merci de rafraichir la page",
+          type: "alert-danger",
+        });
+        return;
+      }
+
+      this.resetMainAppData();
+
       this.patient = patient;
+
       this.folders = await getFoldersByPatient(patient.id);
+      this.folder = folder || this.folders.filter((folder) => folder.archivedAt == null).sort((a, b) => b.id - a.id)[0];
       this.activeFolders = this.folders.filter((folder) => folder.archivedAt == null).sort((a, b) => b.id - a.id);
-      this.folder = this.folders.filter((folder) => folder.archivedAt == null).sort((a, b) => b.id - a.id)[0];
-      this.globalPdfParameter = await getGlobalPdfParameter();
-      this.pdfParameter = await getPdfParameterByFolder(this.folder.id);
+
+      this.pdfParameter = pdfParameter || (await getPdfParameterByFolder(this.folder.id));
+
       this.examinations = await getExaminationByFolder(this.folder.id);
       this.equipmentPlan = this.examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
-      this.loadExamination();
+      this.formatExaminations();
     },
 
     async selectFolder(folder) {
       this.folder = folder;
+
       this.pdfParameter = await getPdfParameterByFolder(folder.id);
+
       this.examinations = await getExaminationByFolder(folder.id);
       this.equipmentPlan = this.examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
-      this.loadExamination();
+      this.formatExaminations();
     },
 
-    async createFolder() {
-      // Create new pdf parameters for the folder
-      this.pdfParameter = await createPdfParameter({
-        office: this.globalPdfParameter.office,
-        prescriberFullname: "",
-        prescriberAddress: "",
-        prescriberMail: "",
-        prescriberPhoneNumber: "",
-        subject: this.globalPdfParameter.subject,
-        notes: "",
-        showTabA: this.globalPdfParameter.showTabA,
-        showTabB: this.globalPdfParameter.showTabB,
-        showTabC: this.globalPdfParameter.showTabC,
-        showTabD: this.globalPdfParameter.showTabD,
-      });
-
-      // Create new folder
-      const folderName = getFolderName(this.patient.folderPrefixFormat, this.patient.folderPrefix);
-      const folder = await createFolder({
-        patient_id: this.patient.id,
-        pdf_parameter_id: this.pdfParameter.id,
-        name: folderName,
-      });
-
-      // update data
+    async addFolder(folder, pdfParameter) {
       this.folders = [...this.folders, folder];
       this.activeFolders = [...this.activeFolders, folder].sort((a, b) => b.id - a.id);
+
+      this.pdfParameter = pdfParameter;
+
       this.examinations = await getExaminationByFolder(folder.id);
       this.equipmentPlan = this.examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
-      this.loadExamination();
+      this.formatExaminations();
     },
 
-    loadExamination() {
+    formatExaminations() {
+      // Examinations tabs (visual, palpatory, podoscopic, walk, equipment plan)
       let examinationList = {
         visualExamination: this.examinations
           .filter((e) => e.name == "visualExamination")
@@ -239,6 +226,7 @@ function appData() {
         });
       }
 
+      // Report Tabs
       this.reportExamination = [
         {
           show: this.pdfParameter.showTabA,
@@ -263,16 +251,9 @@ function appData() {
       ];
     },
 
-    resetPatient() {
+    resetMainAppData() {
       this.displayTab = false;
       this.lockTab = true;
-      this.folder = {};
-      this.folders = [];
-      this.globalPdfParameter = {};
-      this.pdfParameter = {};
-      this.examinations = [];
-      this.equipmentPlan = [];
-      this.activeFolders = [];
 
       this.patient = {
         id: null,
@@ -295,6 +276,16 @@ function appData() {
         createdAt: null,
         updatedAt: null,
       };
+
+      this.folders = [];
+      this.folder = {};
+      this.activeFolders = [];
+
+      this.pdfParameter = {};
+
+      this.examinations = [];
+      this.reportExamination = [];
+      this.equipmentPlan = [];
 
       this.templateTabs = [
         {

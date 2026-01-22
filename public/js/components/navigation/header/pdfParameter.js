@@ -3,13 +3,23 @@ function pdfParameter() {
     globalPdfParameter: {},
     isEdit: false,
 
-    async init() {
-      this.globalPdfParameter = await getGlobalPdfParameter();
+    async initData(data) {
+      this.globalPdfParameter = data;
     },
 
-    async onSavePdfParameter() {
-      this.globalPdfParameter = await updatePdfParameter(this.globalPdfParameter);
-      this.isEdit = false;
+    async onEditGlobalPdfParameter() {
+      try {
+        this.globalPdfParameter = await updatePdfParameter(this.globalPdfParameter);
+        this.isEdit = false;
+
+        customDispatch("update-global-pdf-parameter", { globalPdfParameter: this.globalPdfParameter });
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
   };
 }

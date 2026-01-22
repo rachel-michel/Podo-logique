@@ -65,7 +65,7 @@
                         <template x-for="s in getSuggestions('localisation', row, t.suggestion.first)" :key="s">
                           <li
                             class="list-group-item list-group-item-action"
-                            @click="selectSuggestion('localisation', row, s)">
+                            @click="onSelectSuggestion('localisation', row, s)">
                             <span x-text="s"></span>
                           </li>
                         </template>
@@ -99,7 +99,7 @@
                         <template x-for="s in getSuggestions('observation', row, t.suggestion.second)" :key="s">
                           <li
                             class="list-group-item list-group-item-action"
-                            @click="selectSuggestion('observation', row, s)">
+                            @click="onSelectSuggestion('observation', row, s)">
                             <span x-text="s"></span>
                           </li>
                         </template>
@@ -138,7 +138,7 @@
                         src="assets/trash.png"
                         alt="delete icon"
                         class="icon-table-delete"
-                        @click="onDeleteRow(index, t.name)" />
+                        @click="onRemoveRow(index, t.name)" />
                     </div>
                   </template>
                 </td>

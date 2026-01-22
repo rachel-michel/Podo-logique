@@ -16,11 +16,8 @@ function prescriber() {
     },
     editingField: null,
 
-    async init() {
-      const prescriberList = await getAllPrescriber();
-      this.prescriberList = prescriberList.sort((a, b) =>
-        a.fullname.localeCompare(b.fullname, "fr", { sensitivity: "base" }),
-      );
+    async initData(data) {
+      this.prescriberList = data.sort((a, b) => a.fullname.localeCompare(b.fullname, "fr", { sensitivity: "base" }));
     },
 
     onClickPrescriber(prescriber, field) {
@@ -34,7 +31,7 @@ function prescriber() {
       };
     },
 
-    async addPrescriber() {
+    async onAddPrescriber() {
       if (this.inputPrescriber.fullname.trim() == "") {
         customDispatch("notify", {
           message: "Vous devez renseigner au minimum le nom du prescripteur",
@@ -72,7 +69,7 @@ function prescriber() {
       customDispatch("add-prescriber", { prescriber });
     },
 
-    async editPrescriber() {
+    async onEditPrescriber() {
       if (this.inputEditPrescriber.fullname == "") {
         customDispatch("notify", {
           message: "Vous devez renseigner au minimum le nom du prescripteur",
@@ -94,35 +91,51 @@ function prescriber() {
         return;
       }
 
-      const prescriber = await updatePrescriber({
-        id: this.inputEditPrescriber.id,
-        fullname: this.inputEditPrescriber.fullname.trim(),
-        address: this.inputEditPrescriber.address.trim(),
-        mail: this.inputEditPrescriber.mail.trim(),
-        phoneNumber: this.inputEditPrescriber.phoneNumber.trim(),
-      });
+      try {
+        const prescriber = await updatePrescriber({
+          id: this.inputEditPrescriber.id,
+          fullname: this.inputEditPrescriber.fullname.trim(),
+          address: this.inputEditPrescriber.address.trim(),
+          mail: this.inputEditPrescriber.mail.trim(),
+          phoneNumber: this.inputEditPrescriber.phoneNumber.trim(),
+        });
 
-      this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
+        this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
 
-      this.editingField = null;
-      this.inputEditPrescriber = {
-        id: null,
-        fullname: "",
-        address: "",
-        mail: "",
-        phoneNumber: "",
-      };
+        this.editingField = null;
+        this.inputEditPrescriber = {
+          id: null,
+          fullname: "",
+          address: "",
+          mail: "",
+          phoneNumber: "",
+        };
 
-      customDispatch("update-prescriber", { prescriber });
+        customDispatch("update-prescriber", { prescriber });
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
 
-    async removePrescriber(id) {
+    async onRemovePrescriber(id) {
       const prescriber = this.prescriberList.find((p) => p.id === id);
 
-      await deletePrescriber(id);
-      this.prescriberList = this.prescriberList.filter((p) => p.id !== id);
+      try {
+        await deletePrescriber(id);
+        this.prescriberList = this.prescriberList.filter((p) => p.id !== id);
 
-      customDispatch("remove-prescriber", { prescriber });
+        customDispatch("remove-prescriber", { prescriber });
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
   };
 }

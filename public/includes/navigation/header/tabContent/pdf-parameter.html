@@ -1,7 +1,11 @@
-<div x-data="pdfParameter()" class="row">
+<div
+  x-data="pdfParameter()"
+  class="row"
+  x-on:init-global-pdf-parameter.document="initData($event.detail.globalPdfParameter)"
+>
   <span class="h3 pt-3 text-center">Paramétrage par défaut du compte rendu</span>
 
-  <form @submit.prevent="onSavePdfParameter" @input="isEdit = true">
+  <form @submit.prevent="onEditGlobalPdfParameter" @input="isEdit = true">
     <div class="row py-4 gy-4">
       <!-- Informations du cabinet -->
       <div class="col-12">

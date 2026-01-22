@@ -1,5 +1,5 @@
 <div id="configuration" class="my-4">
-  <form @submit.prevent="onSavePdfParameter" @input="isEdit = true">
+  <form @submit.prevent="onEditPdfParameter" @input="isEdit = true">
     <div class="row py-4 gy-4">
       <div class="col-12">
         <label for="office" class="form-label">Informations du cabinet</label>
@@ -15,7 +15,7 @@
         <!-- SUGGESTION -->
         <ul class="list-group w-100 z-10" x-show="getPrescribers().length > 0">
           <template x-for="p in getPrescribers()" :key="p.fullname">
-            <li class="list-group-item list-group-item-action" @click="selectPrescriber(p)">
+            <li class="list-group-item list-group-item-action" @click="onSelectPrescriber(p)">
               <span x-text="p.fullname"></span>
             </li>
           </template>
@@ -103,7 +103,16 @@
       </div>
 
       <div>
-        <span x-text="pdfParameter.prescriber"></span>
+        <span x-text="pdfParameter.prescriberFullname"></span>
+      </div>
+      <div>
+        <span x-text="pdfParameter.prescriberAddress"></span>
+      </div>
+      <div>
+        <span x-text="pdfParameter.prescriberMail"></span>
+      </div>
+      <div>
+        <span x-text="pdfParameter.prescriberPhoneNumber"></span>
       </div>
     </div>
 
@@ -205,5 +214,5 @@
 
 <div class="d-flex justify-content-around">
   <button type="button" @click="window.print()" class="btn btn-primary">Générer le PDF</button>
-  <button type="button" @click="sendToMail()" class="btn btn-primary">Envoyer un email</button>
+  <button type="button" @click="onSendToMail()" class="btn btn-primary">Envoyer un email</button>
 </div>

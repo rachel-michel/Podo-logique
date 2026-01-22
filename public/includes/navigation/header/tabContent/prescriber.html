@@ -1,7 +1,11 @@
-<div x-data="prescriber()" class="row justify-content-around gy-5">
+<div
+  x-data="prescriber()"
+  class="row justify-content-around gy-5"
+  x-on:init-prescribers.document="initData($event.detail.prescribers)"
+>
   <span class="h3 text-center">Ajouter un prescripteur</span>
   <div class="col-10">
-    <form class="row pb-4" @submit.prevent="addPrescriber()">
+    <form class="row pb-4" @submit.prevent="onAddPrescriber()">
       <div class="col-12 col-md-4">
         <label for="prescriberFullname" class="form-label">Nom complet</label>
         <input class="form-control" id="prescriberFullname" rows="3" x-model="inputPrescriber.fullname" />
@@ -40,7 +44,7 @@
                   class="form-control"
                   x-model="inputEditPrescriber.fullname"
                   x-init="editingField === 'fullname' && $nextTick(() => $el.focus())"
-                  @keydown.enter.prevent="editPrescriber()"
+                  @keydown.enter.prevent="onEditPrescriber()"
                   placeholder="John Doe"
                 />
               </template>
@@ -58,7 +62,7 @@
                   class="form-control"
                   x-model="inputEditPrescriber.mail"
                   x-init="editingField === 'mail' && $nextTick(() => $el.focus())"
-                  @keydown.enter.prevent="editPrescriber()"
+                  @keydown.enter.prevent="onEditPrescriber()"
                   placeholder="mail@exemple.fr"
                 />
               </template>
@@ -76,7 +80,7 @@
                   class="form-control"
                   x-model="inputEditPrescriber.phoneNumber"
                   x-init="editingField === 'phoneNumber' && $nextTick(() => $el.focus())"
-                  @keydown.enter.prevent="editPrescriber()"
+                  @keydown.enter.prevent="onEditPrescriber()"
                   placeholder="0628523366"
                 />
               </template>
@@ -93,7 +97,7 @@
                   class="form-control"
                   x-model="inputEditPrescriber.address"
                   x-init="editingField === 'address' && $nextTick(() => $el.focus())"
-                  @keydown.enter.prevent="editPrescriber()"
+                  @keydown.enter.prevent="onEditPrescriber()"
                   placeholder="13 Rue des prescripteurs"
                 ></textarea>
               </template>
@@ -117,7 +121,7 @@
                     src="assets/trash.png"
                     alt="delete icon"
                     class="icon-table-delete"
-                    @click="removePrescriber(prescriber.id)"
+                    @click="onRemovePrescriber(prescriber.id)"
                   />
                 </div>
               </template>
@@ -128,7 +132,7 @@
                     src="assets/save.png"
                     alt="validate icon"
                     class="icon-table-save"
-                    @click="editPrescriber(prescriber)"
+                    @click="onEditPrescriber(prescriber)"
                   />
                 </div>
               </template>

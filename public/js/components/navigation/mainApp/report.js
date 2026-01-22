@@ -4,7 +4,7 @@ function report() {
     isEdit: false,
 
     async init() {
-      this.prescriberList = await getAllPrescriber();
+      this.prescriberList = this.prescribers;
     },
 
     async reloadPrescriber(action, prescriber) {
@@ -35,23 +35,49 @@ function report() {
         .slice(0, 8);
     },
 
-    selectPrescriber(prescriber) {
-      this.pdfParameter.prescriberFullname = prescriber.fullname;
-      this.pdfParameter.prescriberAddress = prescriber.address;
-      this.pdfParameter.prescriberMail = prescriber.mail;
-      this.pdfParameter.prescriberPhoneNumber = prescriber.phoneNumber;
-    },
-
     getSplitedInput(row, field) {
+      console.log(row, this.reportExamination);
       return row[field]
         .split(";")
         .map((s) => s.trim())
         .filter(Boolean);
     },
 
-    async onSavePdfParameter() {
-      this.pdfParameter = await updatePdfParameter(this.pdfParameter);
-      this.isEdit = false;
+    onSelectPrescriber(prescriber) {
+      this.pdfParameter.prescriberFullname = prescriber.fullname;
+      this.pdfParameter.prescriberAddress = prescriber.address;
+      this.pdfParameter.prescriberMail = prescriber.mail;
+      this.pdfParameter.prescriberPhoneNumber = prescriber.phoneNumber;
+    },
+
+    async onEditPdfParameter() {
+      try {
+        this.pdfParameter = await updatePdfParameter(this.pdfParameter);
+        console.log(this.pdfParameter);
+        this.isEdit = false;
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
+    },
+
+    async onSendToMail() {
+      try {
+        await this.htmlToClipboard();
+        alert("Contenu copié. A vous de le coller (ctrl+v) dans le mail.");
+      } catch (e) {
+        console.error(e);
+      }
+
+      const destinataire = "medecin@example.com";
+      const sujet = this.pdfParameter.subject || "Compte-rendu";
+      const sujetEncoded = encodeURIComponent(sujet);
+
+      const mailto = `mailto:${destinataire}?subject=${sujetEncoded}`;
+      window.location.href = mailto;
     },
 
     async htmlToClipboard() {
@@ -77,22 +103,6 @@ function report() {
 
       alert("Fonctionnalité non prise en charge par le navigateur");
       return;
-    },
-
-    async sendToMail() {
-      try {
-        await this.htmlToClipboard();
-        alert("Contenu copié. A vous de le coller (ctrl+v) dans le mail.");
-      } catch (e) {
-        console.error(e);
-      }
-
-      const destinataire = "medecin@example.com";
-      const sujet = this.pdfParameter.subject || "Compte-rendu";
-      const sujetEncoded = encodeURIComponent(sujet);
-
-      const mailto = `mailto:${destinataire}?subject=${sujetEncoded}`;
-      window.location.href = mailto;
     },
   };
 }

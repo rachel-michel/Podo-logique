@@ -3,13 +3,11 @@ function examination() {
     suggestionList: null,
 
     async init() {
-      const suggestions = await getAllSuggestion();
-
       this.suggestionList = {
-        localisation: suggestions.filter((s) => s.name == "localisation").map((s) => s.value),
-        observation: suggestions.filter((s) => s.name == "observation").map((s) => s.value),
-        equipmentList: suggestions.filter((s) => s.name == "equipmentList").map((s) => s.value),
-        equipmentDetail: suggestions.filter((s) => s.name == "equipmentDetail").map((s) => s.value),
+        localisation: this.libraries.filter((s) => s.name == "localisation").map((s) => s.value),
+        observation: this.libraries.filter((s) => s.name == "observation").map((s) => s.value),
+        equipmentList: this.libraries.filter((s) => s.name == "equipmentList").map((s) => s.value),
+        equipmentDetail: this.libraries.filter((s) => s.name == "equipmentDetail").map((s) => s.value),
       };
     },
 
@@ -57,7 +55,7 @@ function examination() {
       return list.filter((s) => s.toLowerCase().includes(lastPart) && !parts.includes(s.toLowerCase())).slice(0, 8);
     },
 
-    selectSuggestion(field, row, suggestion) {
+    onSelectSuggestion(field, row, suggestion) {
       // Replace last part with suggest
       let parts = row[`${field}Input`].split(";");
       parts[parts.length - 1] = " " + suggestion + "; ";
@@ -87,7 +85,7 @@ function examination() {
 
       if (row.localisationInput.trim() == "" && row.observationInput.trim() == "") {
         if (row?.id != null) {
-          await this.onDeleteRow(index, templateName);
+          this.onRemoveRow(index, templateName);
           return;
         } else {
           return;
@@ -101,27 +99,44 @@ function examination() {
         observation: row.observationInput,
       };
 
-      if (row?.id != null) {
-        data.id = row.id;
-        await updateExamination(data);
-        return;
-      }
+      try {
+        if (row?.id != null) {
+          data.id = row.id;
+          await updateExamination(data);
+          return;
+        }
 
-      const newRow = await createExamination(data);
-      row.id = newRow.id;
-      templateTab.rows.push({
-        editing: false,
-        _refs: {},
-        localisationInput: "",
-        observationInput: "",
-      });
+        const newRow = await createExamination(data);
+        row.id = newRow.id;
+        templateTab.rows.push({
+          editing: false,
+          _refs: {},
+          localisationInput: "",
+          observationInput: "",
+        });
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
 
-    async onDeleteRow(index, templateName) {
+    async onRemoveRow(index, templateName) {
       const tab = this.getTemplateTab(templateName);
       const row = tab.rows[index];
-      await deleteExamination(row.id);
-      tab.rows = tab.rows.filter((r) => r.id !== row.id);
+
+      try {
+        await deleteExamination(row.id);
+        tab.rows = tab.rows.filter((r) => r.id !== row.id);
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
   };
 }

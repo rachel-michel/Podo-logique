@@ -27,21 +27,37 @@ function folderManagment() {
         return;
       }
 
-      const updatedFolder = await archivedFolder(folder);
+      try {
+        const updatedFolder = await archivedFolder(folder);
 
-      this.folders = this.folders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
-      this.activeFolders = this.activeFolders
-        .filter((folder) => folder.id !== updatedFolder.id)
-        .sort((a, b) => b.id - a.id);
+        this.folders = this.folders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
+        this.activeFolders = this.activeFolders
+          .filter((folder) => folder.id !== updatedFolder.id)
+          .sort((a, b) => b.id - a.id);
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
 
     async onUnarchived(folder) {
-      const updatedFolder = await unarchivedFolder(folder);
+      try {
+        const updatedFolder = await unarchivedFolder(folder);
 
-      this.folders = this.folders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
+        this.folders = this.folders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
 
-      this.activeFolders.push(updatedFolder);
-      this.activeFolders = this.activeFolders.sort((a, b) => b.id - a.id);
+        this.activeFolders.push(updatedFolder);
+        this.activeFolders.sort((a, b) => b.id - a.id);
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
   };
 }

@@ -17,10 +17,6 @@ function prescriber() {
     editingField: null,
 
     async init() {
-      this.loadPrescriberList();
-    },
-
-    async loadPrescriberList() {
       const prescriberList = await getAllPrescriber();
       this.prescriberList = prescriberList.sort((a, b) =>
         a.fullname.localeCompare(b.fullname, "fr", { sensitivity: "base" }),
@@ -47,7 +43,7 @@ function prescriber() {
         return;
       }
 
-      await createPrescriber({
+      const prescriber = await createPrescriber({
         fullname: this.inputPrescriber.fullname.trim(),
         address: this.inputPrescriber.address.trim(),
         mail: this.inputPrescriber.mail.trim(),
@@ -61,9 +57,10 @@ function prescriber() {
         phoneNumber: "",
       };
 
-      // todo remove
-      this.loadPrescriberList();
-      customDispatch("update-prescriber");
+      this.prescriberList.push(prescriber);
+      this.prescriberList.sort((a, b) => a.fullname.localeCompare(b.fullname, "fr", { sensitivity: "base" }));
+
+      customDispatch("add-prescriber", { prescriber });
     },
 
     async editPrescriber() {
@@ -75,13 +72,15 @@ function prescriber() {
         return;
       }
 
-      await updatePrescriber({
+      const prescriber = await updatePrescriber({
         id: this.inputEditPrescriber.id,
         fullname: this.inputEditPrescriber.fullname.trim(),
         address: this.inputEditPrescriber.address.trim(),
         mail: this.inputEditPrescriber.mail.trim(),
         phoneNumber: this.inputEditPrescriber.phoneNumber.trim(),
       });
+
+      this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
 
       this.editingField = null;
       this.inputEditPrescriber = {
@@ -92,17 +91,16 @@ function prescriber() {
         phoneNumber: "",
       };
 
-      // todo remove
-      await this.loadPrescriberList();
-      customDispatch("update-prescriber");
+      customDispatch("update-prescriber", { prescriber });
     },
 
     async removePrescriber(id) {
-      await deletePrescriber(id);
+      const prescriber = this.prescriberList.find((p) => p.id === id);
 
-      // todo remove
-      this.loadPrescriberList();
-      customDispatch("update-prescriber");
+      await deletePrescriber(id);
+      this.prescriberList = this.prescriberList.filter((p) => p.id !== id);
+
+      customDispatch("remove-prescriber", { prescriber });
     },
   };
 }

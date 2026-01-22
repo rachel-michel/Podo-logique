@@ -9,6 +9,7 @@ function searchPatient() {
         return;
       }
 
+      // todo faire la requête qu'une fois, à l'ouverture de l'app
       const all = await getAllPatient();
 
       const search = this.query.toLowerCase().trim();

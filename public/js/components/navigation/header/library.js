@@ -43,15 +43,15 @@ function library() {
 
       if (suggestion) return;
 
-      await createSuggestion({
+      const newSuggestion = await createSuggestion({
         name: suggestionName,
         value: inputValue,
       });
 
       input.value = "";
-      customDispatch("update-suggestion");
-      // todo remove
-      this.loadLibraries();
+      lib.suggestions.push(newSuggestion);
+
+      customDispatch("add-suggestion", { suggestion: newSuggestion });
     },
 
     async removeSuggestion(suggestionName, id) {
@@ -65,10 +65,12 @@ function library() {
         return;
       }
 
+      const suggestion = lib.suggestions.find((s) => s.id === id);
+
       await deleteSuggestion(id);
-      customDispatch("update-suggestion");
-      // todo remove
-      this.loadLibraries();
+      lib.suggestions = lib.suggestions.filter((s) => s.id !== id);
+
+      customDispatch("remove-suggestion", { suggestion });
     },
   };
 }

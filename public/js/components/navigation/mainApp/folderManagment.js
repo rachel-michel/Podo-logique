@@ -1,19 +1,5 @@
 function folderManagment() {
   return {
-    async load(patient, ignore = false) {
-      if (ignore) return;
-
-      if (!patient) {
-        this.patient = null;
-        return;
-      }
-
-      this.patient = patient;
-
-      const results = await getFoldersByPatient(this.patient.id);
-      this.folders = results.sort((a, b) => b.id - a.id);
-    },
-
     getFormatedDate(dateString) {
       if (!dateString) return "";
       const d = new Date(dateString);

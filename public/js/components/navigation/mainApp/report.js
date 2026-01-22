@@ -4,11 +4,21 @@ function report() {
     isEdit: false,
 
     async init() {
-      await this.loadPrescriber();
+      this.prescriberList = await getAllPrescriber();
     },
 
-    async loadPrescriber() {
-      this.prescriberList = await getAllPrescriber();
+    async reloadPrescriber(action, prescriber) {
+      if (action === "add") {
+        this.prescriberList.push(prescriber);
+      }
+
+      if (action === "update") {
+        this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
+      }
+
+      if (action === "remove") {
+        this.prescriberList = this.prescriberList.filter((p) => p.id !== prescriber.id);
+      }
     },
 
     getPrescribers() {

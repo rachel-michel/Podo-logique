@@ -27,7 +27,8 @@
   <!-- Examination tabs : visual, palpatory, podoscopic, walk study, equipment plan  -->
   <template x-for="t in templateTabs" :key="t.name"
     x-data="examination()"
-    x-on:update-suggestion.document="loadSuggestion()">
+    x-on:add-suggestion.document="reloadSuggestion('add', $event.detail.suggestion)"
+    x-on:remove-suggestion.document="reloadSuggestion('remove', $event.detail.suggestion)">
 
     <div :id="t.name" class="tab-pane fade" role="tabpanel" :aria-labelledby="t.name + 'Tab'">
       <div class="table-responsive">
@@ -156,7 +157,9 @@
     role="tabpanel"
     aria-labelledby="reportTab"
     x-data="report()"
-    x-on:update-prescriber.document="loadPrescriber()">
+    x-on:add-prescriber.document="reloadPrescriber('add', $event.detail.prescriber)"
+    x-on:update-prescriber.document="reloadPrescriber('update', $event.detail.prescriber)"
+    x-on:remove-prescriber.document="reloadPrescriber('remove', $event.detail.prescriber)">
 
     <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/report.html'; ?>
   </div>

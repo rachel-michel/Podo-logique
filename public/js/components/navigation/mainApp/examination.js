@@ -2,11 +2,7 @@ function examination() {
   return {
     suggestionList: null,
 
-    init() {
-      this.loadSuggestion();
-    },
-
-    async loadSuggestion() {
+    async init() {
       const suggestions = await getAllSuggestion();
 
       this.suggestionList = {
@@ -15,6 +11,17 @@ function examination() {
         equipmentList: suggestions.filter((s) => s.name == "equipmentList").map((s) => s.value),
         equipmentDetail: suggestions.filter((s) => s.name == "equipmentDetail").map((s) => s.value),
       };
+    },
+
+    async reloadSuggestion(action, suggestion) {
+      if (action === "add") {
+        this.suggestionList[suggestion.name].push(suggestion.value);
+      }
+      if (action === "remove") {
+        this.suggestionList[suggestion.name] = this.suggestionList[suggestion.name].filter(
+          (s) => s !== suggestion.value,
+        );
+      }
     },
 
     getTemplateTab(name) {

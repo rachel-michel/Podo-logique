@@ -1,4 +1,4 @@
-function parent() {
+function appData() {
   return {
     displayTab: false,
     lockTab: true,

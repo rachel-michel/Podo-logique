@@ -47,6 +47,9 @@
 
   <script src="js/bootstrap.bundle.min.js"></script>
 
+  <script src="js/app.js"></script>
+  <script src="js/appData.js"></script>
+
   <script src="js/services/patient.js"></script>
   <script src="js/services/prescriber.js"></script>
   <script src="js/services/folder.js"></script>
@@ -54,9 +57,6 @@
   <script src="js/services/pdfParameter.js"></script>
   <script src="js/services/library.js"></script>
 
-  <script src="js/app.js"></script>
-
-  <script src="js/components/parent.js"></script>
   <script src="js/components/reset.js"></script>
   <script src="js/components/searchPatient.js"></script>
   <script src="js/components/searchFolder.js"></script>

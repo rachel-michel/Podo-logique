@@ -43,6 +43,15 @@ function prescriber() {
         return;
       }
 
+      const existingPrescriber = this.prescriberList.find((p) => p.fullname === this.inputPrescriber.fullname.trim());
+      if (existingPrescriber) {
+        customDispatch("notify", {
+          message: "Un prescripteur existe déjà avec le nom : " + this.inputPrescriber.fullname.trim(),
+          type: "alert-warning",
+        });
+        return;
+      }
+
       const prescriber = await createPrescriber({
         fullname: this.inputPrescriber.fullname.trim(),
         address: this.inputPrescriber.address.trim(),
@@ -67,6 +76,19 @@ function prescriber() {
       if (this.inputEditPrescriber.fullname == "") {
         customDispatch("notify", {
           message: "Vous devez renseigner au minimum le nom du prescripteur",
+          type: "alert-warning",
+        });
+        return;
+      }
+
+      const existingPrescriber = this.prescriberList.find(
+        (p) => p.id !== this.inputEditPrescriber.id && p.fullname === this.inputEditPrescriber.fullname.trim(),
+      );
+      if (existingPrescriber) {
+        customDispatch("notify", {
+          message:
+            "Impossible de renommer ce prescripteur, un autre existe déjà avec ce nom : " +
+            this.inputEditPrescriber.fullname.trim(),
           type: "alert-warning",
         });
         return;

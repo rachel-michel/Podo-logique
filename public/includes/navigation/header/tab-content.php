@@ -3,7 +3,7 @@
   <!------------------------- Main App Tab ------------------------>
   <!--------------------------------------------------------------->
 
-  <div x-data="parent()" class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+  <div x-data="appData()" class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
     <!--- Search patient --->
     <div class="pt-4 pb-2 border-bottom">
       <?php include PUBLIC_PATH . '/includes/search-patient.html'; ?>

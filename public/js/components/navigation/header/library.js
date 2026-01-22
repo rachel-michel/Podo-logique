@@ -9,10 +9,6 @@ function library() {
     },
 
     async init() {
-      await this.loadLibraries();
-    },
-
-    async loadLibraries() {
       const result = await getAllSuggestion();
       this.libraries = [
         {

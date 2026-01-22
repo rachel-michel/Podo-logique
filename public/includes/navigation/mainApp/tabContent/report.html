@@ -23,11 +23,6 @@
       </div>
 
       <div class="col-12 col-sm-4">
-        <label for="prescriberAddress" class="form-label">Adresse</label>
-        <input class="form-control" id="prescriberAddress" rows="3" x-model="pdfParameter.prescriberAddress" />
-      </div>
-
-      <div class="col-12 col-sm-4">
         <label for="prescriberMail" class="form-label">Mail</label>
         <input class="form-control" id="prescriberMail" rows="3" x-model="pdfParameter.prescriberMail" />
       </div>
@@ -35,6 +30,16 @@
       <div class="col-12 col-sm-4">
         <label for="prescriberPhoneNumber" class="form-label">Téléphone</label>
         <input class="form-control" id="prescriberPhoneNumber" rows="3" x-model="pdfParameter.prescriberPhoneNumber" />
+      </div>
+
+      <div class="col-12">
+        <label for="prescriberAddress" class="form-label">Adresse</label>
+        <textarea
+          class="form-control"
+          id="prescriberAddress"
+          rows="3"
+          x-model="pdfParameter.prescriberAddress"
+        ></textarea>
       </div>
 
       <div class="col-12">
@@ -91,22 +96,18 @@
 </div>
 
 <div id="pdfTemplateWrapper">
-  <div
-    id="pdfTemplate"
-    x-ref="pdfTemplate"
-    style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; color: #000"
-  >
+  <div id="pdfTemplate" x-ref="pdfTemplate">
     <!-- HEADER -->
     <div>
       <!-- Expéditeur : nom de l'établissement, adresse, email, téléphone -->
       <div>
-        <span x-text="pdfParameter.office"></span>
+        <span x-text="pdfParameter.office" style="white-space: pre-line"></span>
       </div>
 
       <!-- Destinataire : le médecin -->
       <div>
         <span x-text="pdfParameter.prescriberFullname"></span>
-        <span x-text="pdfParameter.prescriberAddress"></span>
+        <span x-text="pdfParameter.prescriberAddress" style="white-space: pre-line"></span>
         <span x-text="pdfParameter.prescriberMail"></span>
         <span x-text="pdfParameter.prescriberPhoneNumber"></span>
       </div>
@@ -155,8 +156,13 @@
     </table>
 
     <!-- Note au médecin -->
-    <div>
+    <div x-cloak x-show="(pdfParameter.notes ?? '').trim() !== ''">
+      <span style="font-weight: bold">Notes :</span>
       <span x-text="pdfParameter.notes"></span>
+    </div>
+
+    <div x-cloak x-show="isShowAtLeastOneExamination()">
+      <span x-text="'Détail des examens'" class="details-title"></span>
     </div>
 
     <!-- Tableau d'examens -->

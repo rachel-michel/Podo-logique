@@ -23,6 +23,15 @@ function report() {
         .rows.filter((row) => row.localisationInput.trim() !== "" || row.observationInput.trim() !== "");
     },
 
+    isShowAtLeastOneExamination() {
+      return (
+        this.pdfParameter.showTabA ||
+        this.pdfParameter.showTabB ||
+        this.pdfParameter.showTabC ||
+        this.pdfParameter.showTabD
+      );
+    },
+
     getExaminations() {
       return [
         {

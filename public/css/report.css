@@ -1,0 +1,210 @@
+:root {
+  --ink: #111827;
+  --muted: #6b7280;
+  --subtle: #9ca3af;
+  --line: #d1d5db;
+  --line-2: #e5e7eb;
+  --accent: #3b74ad;
+  --accent-2: #0f7520;
+}
+
+#pdfTemplateWrapper {
+  background-color: white;
+  font-family: Parkinsans, Sen, Arial;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.58;
+  letter-spacing: 0.12px;
+}
+
+#pdfTemplate {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 26px;
+}
+
+/* global */
+#pdfTemplate span {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
+#pdfTemplate [x-text] {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* =========================
+            HEADER
+   ========================= */
+
+/* conteneur header */
+#pdfTemplate > div:first-of-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  padding: 14px 0 16px;
+  margin-bottom: 14px;
+}
+
+/* expéditeur (gauche) */
+#pdfTemplate > div:first-of-type > div:first-child {
+  padding: 0 12px 0 14px;
+  position: relative;
+}
+#pdfTemplate > div:first-of-type > div:first-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  border-right: 2px solid var(--line);
+  border-radius: 2px;
+}
+
+#pdfTemplate > div:first-of-type > div:first-child span {
+  white-space: pre-line;
+  color: var(--muted);
+}
+
+#pdfTemplate > div:first-of-type > div:first-child span::first-line {
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 13.4px;
+}
+
+/* destinataire (droite) */
+#pdfTemplate > div:first-of-type > div:last-child {
+  justify-self: end;
+  text-align: right;
+  max-width: 420px;
+  padding: 0 14px 0 12px;
+  position: relative;
+  width: -webkit-fill-available;
+}
+#pdfTemplate > div:first-of-type > div:last-child::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 2px;
+  bottom: 2px;
+  border-right: 2px solid var(--line);
+  border-radius: 2px;
+}
+
+#pdfTemplate > div:first-of-type > div:last-child span {
+  display: block;
+  color: var(--muted);
+}
+#pdfTemplate > div:first-of-type > div:last-child span:first-child {
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 13.4px;
+  margin-bottom: 2px;
+}
+
+/* =========================
+            OBJET
+   ========================= */
+
+#pdfTemplate > div:nth-of-type(2) {
+  margin: 10px 0 16px;
+  padding: 0 0 10px;
+}
+
+#pdfTemplate > div:nth-of-type(2) span,
+.details-title {
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: 0.15px;
+  color: var(--ink);
+  display: block;
+  text-align: center;
+}
+
+/* =========================
+           TABLES
+   ========================= */
+
+#pdfTemplate table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0 18px;
+  table-layout: fixed;
+}
+
+#pdfTemplate thead th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--subtle);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Séparations verticales très discrètes */
+#pdfTemplate th + th,
+#pdfTemplate td + td {
+  border-left: 1px solid var(--line-2);
+}
+
+#pdfTemplate tbody td {
+  font-size: 13px;
+  padding: 5px 12px 5px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-2);
+}
+
+#pdfTemplate tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+#pdfTemplate td > div {
+  display: grid;
+  gap: 5px;
+}
+
+/* =========================
+       NOTE AU MÉDECIN
+   ========================= */
+
+#pdfTemplate > div:nth-of-type(3) {
+  margin: 6px 0 18px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent-2);
+  border-right: 3px solid var(--accent-2);
+  border-radius: 10px;
+}
+
+/* =========================
+      SECTIONS D’EXAMENS
+   ========================= */
+
+#pdfTemplate div:has(> span + table) {
+  margin-top: 16px;
+}
+
+#pdfTemplate div:has(> span + table) > span {
+  display: block;
+  margin: 8px 0 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  border-bottom-left-radius: 10px;
+  font-weight: 850;
+  font-size: 13.6px;
+  letter-spacing: 0.15px;
+}
+
+/* =========================
+          IMPRESSION
+   ========================= */
+@media print {
+  #pdfTemplateWrapper {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

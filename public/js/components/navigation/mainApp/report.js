@@ -73,7 +73,6 @@ function report() {
     async onEditPdfParameter() {
       try {
         this.pdfParameter = await updatePdfParameter(this.pdfParameter);
-        console.log(this.pdfParameter);
         this.isEdit = false;
       } catch (err) {
         console.error("Erreur patient →", err);

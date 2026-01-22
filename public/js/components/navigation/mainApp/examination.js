@@ -1,27 +1,5 @@
 function examination() {
   return {
-    suggestionList: null,
-
-    async init() {
-      this.suggestionList = {
-        localisation: this.libraries.filter((s) => s.name == "localisation").map((s) => s.value),
-        observation: this.libraries.filter((s) => s.name == "observation").map((s) => s.value),
-        equipmentList: this.libraries.filter((s) => s.name == "equipmentList").map((s) => s.value),
-        equipmentDetail: this.libraries.filter((s) => s.name == "equipmentDetail").map((s) => s.value),
-      };
-    },
-
-    async reloadSuggestion(action, suggestion) {
-      if (action === "add") {
-        this.suggestionList[suggestion.name].push(suggestion.value);
-      }
-      if (action === "remove") {
-        this.suggestionList[suggestion.name] = this.suggestionList[suggestion.name].filter(
-          (s) => s !== suggestion.value,
-        );
-      }
-    },
-
     getTemplateTab(name) {
       return this.templateTabs.find((tab) => tab.name === name);
     },
@@ -51,7 +29,7 @@ function examination() {
       const lastPart = parts[parts.length - 1] || "";
 
       // Filter suggets with every part and current entry
-      const list = this.suggestionList[suggestionListName] || [];
+      const list = this.suggestions[suggestionListName] || [];
       return list.filter((s) => s.toLowerCase().includes(lastPart) && !parts.includes(s.toLowerCase())).slice(0, 8);
     },
 

@@ -1,43 +1,63 @@
 function report() {
   return {
-    prescriberList: [],
     isEdit: false,
-
-    async init() {
-      this.prescriberList = this.prescribers;
-    },
-
-    async reloadPrescriber(action, prescriber) {
-      if (action === "add") {
-        this.prescriberList.push(prescriber);
-      }
-
-      if (action === "update") {
-        this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
-      }
-
-      if (action === "remove") {
-        this.prescriberList = this.prescriberList.filter((p) => p.id !== prescriber.id);
-      }
-    },
 
     getPrescribers() {
       if (
-        !this.prescriberList.length ||
+        !this.prescribers.length ||
         !Object.keys(this.pdfParameter).length ||
         this.pdfParameter.prescriberFullname.trim() == ""
       )
         return [];
-      if (this.prescriberList.find((p) => p.fullname === this.pdfParameter.prescriberFullname)) return [];
 
-      return this.prescriberList
+      if (this.prescribers.find((p) => p.fullname === this.pdfParameter.prescriberFullname)) return [];
+
+      return this.prescribers
         .filter((p) => p.fullname.toLowerCase().includes(this.pdfParameter.prescriberFullname.toLowerCase()))
         .slice(0, 8);
     },
 
+    getEquipmentPlan() {
+      return this.templateTabs
+        .find((e) => e.name === "equipmentPlan")
+        .rows.filter((row) => row.localisationInput.trim() !== "" || row.observationInput.trim() !== "");
+    },
+
+    getExaminations() {
+      return [
+        {
+          show: this.pdfParameter.showTabA,
+          name: "Examen visuel",
+          rows: this.templateTabs
+            .find((e) => e.name === "visualExamination")
+            .rows.filter((row) => row.localisationInput.trim() !== "" || row.observationInput.trim() !== ""),
+        },
+        {
+          show: this.pdfParameter.showTabB,
+          name: "Examen palpatoire",
+          rows: this.templateTabs
+            .find((e) => e.name === "palpatoryExamination")
+            .rows.filter((row) => row.localisationInput.trim() !== "" || row.observationInput.trim() !== ""),
+        },
+        {
+          show: this.pdfParameter.showTabC,
+          name: "Examen podoscopique",
+          rows: this.templateTabs
+            .find((e) => e.name === "podoscopicExamination")
+            .rows.filter((row) => row.localisationInput.trim() !== "" || row.observationInput.trim() !== ""),
+        },
+        {
+          show: this.pdfParameter.showTabD,
+          name: "Etude de la marche",
+          rows: this.templateTabs
+            .find((e) => e.name === "walkStudy")
+            .rows.filter((row) => row.localisationInput.trim() !== "" || row.observationInput.trim() !== ""),
+        },
+      ];
+    },
+
     getSplitedInput(row, field) {
-      console.log(row, this.reportExamination);
-      return row[field]
+      return row[field + "Input"]
         .split(";")
         .map((s) => s.trim())
         .filter(Boolean);

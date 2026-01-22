@@ -49,24 +49,32 @@ function prescriber() {
         return;
       }
 
-      const prescriber = await createPrescriber({
-        fullname: this.inputPrescriber.fullname.trim(),
-        address: this.inputPrescriber.address.trim(),
-        mail: this.inputPrescriber.mail.trim(),
-        phoneNumber: this.inputPrescriber.phoneNumber.trim(),
-      });
+      try {
+        const prescriber = await createPrescriber({
+          fullname: this.inputPrescriber.fullname.trim(),
+          address: this.inputPrescriber.address.trim(),
+          mail: this.inputPrescriber.mail.trim(),
+          phoneNumber: this.inputPrescriber.phoneNumber.trim(),
+        });
 
-      this.inputPrescriber = {
-        fullname: "",
-        address: "",
-        mail: "",
-        phoneNumber: "",
-      };
+        this.inputPrescriber = {
+          fullname: "",
+          address: "",
+          mail: "",
+          phoneNumber: "",
+        };
 
-      this.prescriberList.push(prescriber);
-      this.prescriberList.sort((a, b) => a.fullname.localeCompare(b.fullname, "fr", { sensitivity: "base" }));
+        this.prescriberList.push(prescriber);
+        this.prescriberList.sort((a, b) => a.fullname.localeCompare(b.fullname, "fr", { sensitivity: "base" }));
 
-      customDispatch("add-prescriber", { prescriber });
+        customDispatch("add-prescriber", { prescriber });
+      } catch (err) {
+        console.error("Erreur patient →", err);
+        customDispatch("notify", {
+          message: "Une erreur est survenue. Veuillez rafraichir la page",
+          type: "alert-danger",
+        });
+      }
     },
 
     async onEditPrescriber() {
@@ -100,8 +108,6 @@ function prescriber() {
           phoneNumber: this.inputEditPrescriber.phoneNumber.trim(),
         });
 
-        this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
-
         this.editingField = null;
         this.inputEditPrescriber = {
           id: null,
@@ -126,8 +132,7 @@ function prescriber() {
 
       try {
         await deletePrescriber(id);
-        this.prescriberList = this.prescriberList.filter((p) => p.id !== id);
-
+        this.prescriberList = !this.prescriberList.length ? [] : this.prescriberList.filter((p) => p.id !== id);
         customDispatch("remove-prescriber", { prescriber });
       } catch (err) {
         console.error("Erreur patient →", err);

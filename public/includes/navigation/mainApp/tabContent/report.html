@@ -136,7 +136,7 @@
       </thead>
 
       <tbody>
-        <template x-for="(row, index) in equipmentPlan" :key="index">
+        <template x-for="(row, index) in getEquipmentPlan" :key="index">
           <tr>
             <td style="border: 1px solid #ccc; padding: 6px; vertical-align: top">
               <div>
@@ -164,7 +164,7 @@
     </div>
 
     <!-- Tableau d'examens -->
-    <template x-for="examen in reportExamination" :key="examen.name">
+    <template x-for="examen in getExaminations()" :key="examen.name">
       <template x-if="examen.show">
         <div style="margin-bottom: 20px">
           <span x-text="examen.name" style="font-weight: bold; display: inline-block; margin-bottom: 6px"></span>

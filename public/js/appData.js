@@ -4,6 +4,7 @@ function appData() {
     patients: [],
     globalPdfParameter: {},
     libraries: [],
+    suggestions: [],
     prescribers: [],
     // Patient data
     displayTab: false,
@@ -34,8 +35,6 @@ function appData() {
     activeFolders: [],
     pdfParameter: {},
     examinations: [],
-    reportExamination: [],
-    equipmentPlan: [],
     templateTabs: [
       {
         name: "visualExamination",
@@ -103,13 +102,43 @@ function appData() {
       this.patients = await getAllPatient();
 
       this.prescribers = await getAllPrescriber();
-      customDispatch("init-prescribers", { prescribers: this.prescribers });
+      customDispatch("init-prescribers", { prescribers: [...this.prescribers] });
 
       this.libraries = await getAllSuggestion();
-      customDispatch("init-libraries", { libraries: this.libraries });
+      this.suggestions = {
+        localisation: this.libraries.filter((s) => s.name == "localisation").map((s) => s.value),
+        observation: this.libraries.filter((s) => s.name == "observation").map((s) => s.value),
+        equipmentList: this.libraries.filter((s) => s.name == "equipmentList").map((s) => s.value),
+        equipmentDetail: this.libraries.filter((s) => s.name == "equipmentDetail").map((s) => s.value),
+      };
+      customDispatch("init-libraries", { libraries: [...this.libraries] });
 
       this.globalPdfParameter = await getGlobalPdfParameter();
-      customDispatch("init-global-pdf-parameter", { globalPdfParameter: this.globalPdfParameter });
+      customDispatch("init-global-pdf-parameter", { globalPdfParameter: { ...this.globalPdfParameter } });
+    },
+
+    async updatePrescriber(action, prescriber) {
+      if (action === "add") {
+        this.prescribers.push(prescriber);
+      }
+
+      if (action === "update") {
+        this.prescribers = this.prescribers.map((p) => (p.id === prescriber.id ? prescriber : p));
+      }
+
+      if (action === "remove") {
+        this.prescribers = this.prescribers.filter((p) => p.id !== prescriber.id);
+      }
+    },
+
+    async updateSuggestion(action, suggestion) {
+      if (action === "add") {
+        this.suggestions[suggestion.name].push(suggestion.value);
+      }
+
+      if (action === "remove") {
+        this.suggestions[suggestion.name] = this.suggestions[suggestion.name].filter((s) => s !== suggestion.value);
+      }
     },
 
     updateGlobalPdfParameter(globalPdfParameter) {
@@ -136,7 +165,6 @@ function appData() {
       this.pdfParameter = pdfParameter || (await getPdfParameterByFolder(this.folder.id));
 
       this.examinations = await getExaminationByFolder(this.folder.id);
-      this.equipmentPlan = this.examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
       this.formatExaminations();
     },
 
@@ -146,7 +174,6 @@ function appData() {
       this.pdfParameter = await getPdfParameterByFolder(folder.id);
 
       this.examinations = await getExaminationByFolder(folder.id);
-      this.equipmentPlan = this.examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
       this.formatExaminations();
     },
 
@@ -157,7 +184,6 @@ function appData() {
       this.pdfParameter = pdfParameter;
 
       this.examinations = await getExaminationByFolder(folder.id);
-      this.equipmentPlan = this.examinations.filter((e) => e.name == "equipmentPlan").sort((a, b) => a.id - b.id);
       this.formatExaminations();
     },
 
@@ -225,30 +251,6 @@ function appData() {
           observationInput: "",
         });
       }
-
-      // Report Tabs
-      this.reportExamination = [
-        {
-          show: this.pdfParameter.showTabA,
-          name: "Examen visuel",
-          rows: this.examinations.filter((e) => e.name == "visualExamination").sort((a, b) => a.id - b.id),
-        },
-        {
-          show: this.pdfParameter.showTabB,
-          name: "Examen palpatoire",
-          rows: this.examinations.filter((e) => e.name == "palpatoryExamination").sort((a, b) => a.id - b.id),
-        },
-        {
-          show: this.pdfParameter.showTabC,
-          name: "Examen podoscopique",
-          rows: this.examinations.filter((e) => e.name == "podoscopicExamination").sort((a, b) => a.id - b.id),
-        },
-        {
-          show: this.pdfParameter.showTabD,
-          name: "Etude de la marche",
-          rows: this.examinations.filter((e) => e.name == "walkStudy").sort((a, b) => a.id - b.id),
-        },
-      ];
     },
 
     resetMainAppData() {
@@ -284,9 +286,6 @@ function appData() {
       this.pdfParameter = {};
 
       this.examinations = [];
-      this.reportExamination = [];
-      this.equipmentPlan = [];
-
       this.templateTabs = [
         {
           name: "visualExamination",

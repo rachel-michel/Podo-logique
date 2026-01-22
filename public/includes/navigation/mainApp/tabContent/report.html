@@ -1,16 +1,21 @@
 <div id="configuration" class="my-4">
   <form @submit.prevent="onEditPdfParameter" @input="isEdit = true">
     <div class="row py-4 gy-4">
-      <div class="col-12">
-        <label for="office" class="form-label">Informations du cabinet</label>
+      <div class="col-12 pb-3 border-bottom">
+        <label for="office" class="form-label title">Informations du cabinet</label>
         <textarea class="form-control" id="office" rows="3" x-model="pdfParameter.office"></textarea>
       </div>
 
-      <span>Informations du prescripteur</span>
+      <span class="title">Informations du prescripteur</span>
 
       <div class="col-12 col-sm-4">
         <label for="prescriberFullname" class="form-label">Nom complet</label>
-        <input class="form-control" id="prescriberFullname" rows="3" x-model="pdfParameter.prescriberFullname" />
+        <input
+          class="form-control border-bottom"
+          id="prescriberFullname"
+          rows="3"
+          x-model="pdfParameter.prescriberFullname"
+        />
 
         <!-- SUGGESTION -->
         <ul class="list-group w-100 z-10" x-show="getPrescribers().length > 0">
@@ -32,7 +37,7 @@
         <input class="form-control" id="prescriberPhoneNumber" rows="3" x-model="pdfParameter.prescriberPhoneNumber" />
       </div>
 
-      <div class="col-12">
+      <div class="col-12 pb-3 border-bottom">
         <label for="prescriberAddress" class="form-label">Adresse</label>
         <textarea
           class="form-control"
@@ -43,17 +48,18 @@
       </div>
 
       <div class="col-12">
-        <label for="subject" class="form-label">Objet du compte rendu</label>
+        <!-- Todo : ajouter un système de variable qui s'autocomplète lors de l'aperçu du document -->
+        <label for="subject" class="form-label title">Objet du compte rendu</label>
         <input type="text" class="form-control" id="subject" rows="3" x-model="pdfParameter.subject" />
       </div>
 
-      <div class="col-12">
-        <label for="notesPrescriber" class="form-label">Notes pour le médecin</label>
+      <div class="col-12 pb-3 border-bottom">
+        <label for="notesPrescriber" class="form-label title">Notes pour le médecin</label>
         <textarea class="form-control" id="notesPrescriber" rows="3" x-model="pdfParameter.notes"></textarea>
       </div>
 
       <div class="col-12">
-        <span class="form-label d-block">Tableaux à afficher</span>
+        <span class="form-label d-block title">Tableaux à afficher</span>
 
         <div class="d-flex flex-wrap">
           <div class="form-check form-switch col-12 col-sm-6">
@@ -81,7 +87,7 @@
             <label class="form-check-label" for="switchExamenPodoscopique">Examen podoscopique</label>
           </div>
 
-          <div class="form-check form-switch col-12 col-sm-6">
+          <div class="form-check form-switch col-12 col-sm-6 pb-3 border-bottom">
             <input class="form-check-input" type="checkbox" id="switchEtudeMarche" x-model="pdfParameter.showTabD" />
             <label class="form-check-label" for="switchEtudeMarche">Étude de la marche</label>
           </div>
@@ -95,17 +101,29 @@
   </form>
 </div>
 
+<span class="title">Aperçu du document</span>
+
 <div id="pdfTemplateWrapper">
   <div id="pdfTemplate" x-ref="pdfTemplate">
     <!-- HEADER -->
-    <div>
+    <div class="header">
+      <div
+        class="logo"
+        x-data="{ visible: false }"
+        x-show="visible"
+        style="display: none"
+        x-init="$nextTick(() => { if ($refs.img.complete && $refs.img.naturalWidth > 0) visible = true })"
+      >
+        <img x-ref="img" src="assets/logo.png" alt="logo" @load="visible = true" @error="visible = false" />
+      </div>
+
       <!-- Expéditeur : nom de l'établissement, adresse, email, téléphone -->
-      <div>
+      <div class="sender">
         <span x-text="pdfParameter.office" style="white-space: pre-line"></span>
       </div>
 
       <!-- Destinataire : le médecin -->
-      <div>
+      <div class="recipient">
         <span x-text="pdfParameter.prescriberFullname"></span>
         <span x-text="pdfParameter.prescriberAddress" style="white-space: pre-line"></span>
         <span x-text="pdfParameter.prescriberMail"></span>
@@ -114,7 +132,7 @@
     </div>
 
     <!-- OBJET -->
-    <div>
+    <div class="subject">
       <span x-text="pdfParameter.subject"></span>
     </div>
 
@@ -155,8 +173,12 @@
       </tbody>
     </table>
 
+    <div class="plan-appareillage">
+      <img style="width: 20px" src="assets/bkg.jpg" alt="une image" />
+    </div>
+
     <!-- Note au médecin -->
-    <div x-cloak x-show="(pdfParameter.notes ?? '').trim() !== ''">
+    <div class="notes" x-cloak x-show="(pdfParameter.notes ?? '').trim() !== ''">
       <span style="font-weight: bold">Notes :</span>
       <span x-text="pdfParameter.notes"></span>
     </div>
@@ -168,8 +190,8 @@
     <!-- Tableau d'examens -->
     <template x-for="examen in getExaminations()" :key="examen.name">
       <template x-if="examen.show">
-        <div>
-          <span x-text="examen.name"></span>
+        <div class="examen">
+          <span class="examen-title" x-text="examen.name"></span>
 
           <table>
             <colgroup>

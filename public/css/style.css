@@ -2,6 +2,21 @@
 ******************* Main CSS ********************
 *************************************************/
 
+:root {
+  --main: #0f3d6e;
+  --shadow: #0c2033;
+  --bkg: #f3f3f3;
+  --bkg-hover: #d6e5f3;
+  --btn-primary-hover: #3b74ad;
+  --ink: #111827;
+  --muted: #6b7280;
+  --subtle: #9ca3af;
+  --line: #d1d5db;
+  --line-2: #e5e7eb;
+  --accent: var(--btn-primary-hover);
+  --accent-2: #0f7520;
+}
+
 @font-face {
   font-family: "Lexend";
   src: url("./../fonts/Lexend.ttf") format("TrueType");
@@ -29,13 +44,13 @@ body,
 
 header {
   font-family: Lexend, Arial;
-  color: #f3f3f3;
+  color: var(--bkg);
 
   background-image: url("./../assets/bkg-header.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 
-  box-shadow: 0px 3px 10px #0c2033;
+  box-shadow: 0px 3px 10px var(--shadow);
 }
 
 .icon-header {
@@ -57,10 +72,10 @@ header .logo {
 }
 
 main {
-  background: #f3f3f3;
-  color: #0f3d6e;
+  background: var(--bkg);
+  color: var(--main);
   border-radius: 5px;
-  box-shadow: 0px 3px 10px #0c2033;
+  box-shadow: 0px 3px 10px var(--shadow);
 }
 
 [class^="icon"] {
@@ -157,16 +172,16 @@ main {
 }
 
 #headerTab .nav-link {
-  color: #f3f3f3;
+  color: var(--bkg);
 }
 
 #headerTab .nav-link.active,
 #headerTab .nav-link:hover {
-  background-color: #0f3d6e;
+  background-color: var(--main);
 }
 
 #mainAppTab [class^="nav"] {
-  color: #0f3d6e;
+  color: var(--main);
 }
 
 #mainAppTab .nav-link {
@@ -176,7 +191,7 @@ main {
 
 #mainAppTab .nav-link.active,
 #mainAppTab .nav-link:hover {
-  background-color: #d6e5f3;
+  background-color: var(--bkg-hover);
 }
 
 #headerTab .nav-link,
@@ -186,12 +201,12 @@ main {
 
 .table {
   min-width: 350px;
-  --bs-table-bg: #f3f3f3;
-  --bs-table-hover-bg: #d6e5f3;
+  --bs-table-bg: var(--bkg);
+  --bs-table-hover-bg: var(--bkg-hover);
 }
 
 .table th {
-  color: #0f3d6e;
+  color: var(--main);
 }
 
 th {
@@ -199,17 +214,17 @@ th {
 }
 
 .btn-primary {
-  --bs-btn-bg: #0f3d6e;
-  --bs-btn-hover-bg: #3b74ad;
-  --bs-btn-border-color: #0f3d6e;
-  --bs-btn-hover-border-color: #3b74ad;
+  --bs-btn-bg: var(--main);
+  --bs-btn-hover-bg: var(--btn-primary-hover);
+  --bs-btn-border-color: var(--main);
+  --bs-btn-hover-border-color: var(--btn-primary-hover);
 }
 
 .btn-outline-primary {
-  --bs-btn-color: #0f3d6e;
-  --bs-btn-border-color: #0f3d6e;
-  --bs-btn-hover-bg: #0f3d6e;
-  --bs-btn-hover-border-color: #0f3d6e;
+  --bs-btn-color: var(--main);
+  --bs-btn-border-color: var(--main);
+  --bs-btn-hover-bg: var(--main);
+  --bs-btn-hover-border-color: var(--main);
 }
 
 /**********************************************/

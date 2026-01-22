@@ -1,20 +1,16 @@
-:root {
-  --ink: #111827;
-  --muted: #6b7280;
-  --subtle: #9ca3af;
-  --line: #d1d5db;
-  --line-2: #e5e7eb;
-  --accent: #3b74ad;
-  --accent-2: #0f7520;
+.title {
+  font-size: 18px;
 }
 
 #pdfTemplateWrapper {
   background-color: white;
+  border: var(--line) 1px solid;
   font-family: Parkinsans, Sen, Arial;
   color: var(--ink);
   font-size: 15px;
   line-height: 1.58;
   letter-spacing: 0.12px;
+  margin-bottom: 1.5rem;
 }
 
 #pdfTemplate {
@@ -37,21 +33,33 @@
             HEADER
    ========================= */
 
-/* conteneur header */
-#pdfTemplate > div:first-of-type {
+#pdfTemplate .header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr auto;
   gap: 22px;
   padding: 14px 0 16px;
   margin-bottom: 14px;
+  align-items: start;
 }
 
-/* expéditeur (gauche) */
-#pdfTemplate > div:first-of-type > div:first-child {
-  padding: 0 12px 0 14px;
+#pdfTemplate .header .logo {
+  align-self: center;
+}
+
+#pdfTemplate .header .logo img {
+  display: block;
+  max-width: 70px; /* ajuste */
+  height: auto;
+}
+
+/* expéditeur */
+#pdfTemplate .header .sender {
+  padding: 0 12px 0 12px;
   position: relative;
 }
-#pdfTemplate > div:first-of-type > div:first-child::before {
+
+/* barre verticale à gauche du sender */
+#pdfTemplate .header .sender::before {
   content: "";
   position: absolute;
   left: 0;
@@ -61,19 +69,19 @@
   border-radius: 2px;
 }
 
-#pdfTemplate > div:first-of-type > div:first-child span {
+/* sender texte */
+#pdfTemplate .header .sender span {
   white-space: pre-line;
   color: var(--muted);
 }
 
-#pdfTemplate > div:first-of-type > div:first-child span::first-line {
+#pdfTemplate .header .sender span::first-line {
   color: var(--ink);
   font-weight: 800;
-  font-size: 13.4px;
 }
 
-/* destinataire (droite) */
-#pdfTemplate > div:first-of-type > div:last-child {
+/* destinataire */
+#pdfTemplate .header .recipient {
   justify-self: end;
   text-align: right;
   max-width: 420px;
@@ -81,7 +89,9 @@
   position: relative;
   width: -webkit-fill-available;
 }
-#pdfTemplate > div:first-of-type > div:last-child::after {
+
+/* barre à droite du recipient */
+#pdfTemplate .header .recipient::after {
   content: "";
   position: absolute;
   right: 0;
@@ -91,14 +101,14 @@
   border-radius: 2px;
 }
 
-#pdfTemplate > div:first-of-type > div:last-child span {
+#pdfTemplate .header .recipient span {
   display: block;
   color: var(--muted);
 }
-#pdfTemplate > div:first-of-type > div:last-child span:first-child {
+
+#pdfTemplate .header .recipient span:first-child {
   color: var(--ink);
   font-weight: 800;
-  font-size: 13.4px;
   margin-bottom: 2px;
 }
 
@@ -106,12 +116,12 @@
             OBJET
    ========================= */
 
-#pdfTemplate > div:nth-of-type(2) {
+#pdfTemplate .subject {
   margin: 10px 0 16px;
   padding: 0 0 10px;
 }
 
-#pdfTemplate > div:nth-of-type(2) span,
+#pdfTemplate .subject span,
 .details-title {
   font-size: 20px;
   font-weight: 850;
@@ -171,7 +181,7 @@
        NOTE AU MÉDECIN
    ========================= */
 
-#pdfTemplate > div:nth-of-type(3) {
+#pdfTemplate .notes {
   margin: 6px 0 18px;
   padding: 12px 14px;
   border-left: 3px solid var(--accent-2);
@@ -183,11 +193,11 @@
       SECTIONS D’EXAMENS
    ========================= */
 
-#pdfTemplate div:has(> span + table) {
+#pdfTemplate .examen {
   margin-top: 16px;
 }
 
-#pdfTemplate div:has(> span + table) > span {
+#pdfTemplate .examen-title {
   display: block;
   margin: 8px 0 10px;
   padding: 10px 12px;
@@ -195,7 +205,6 @@
   border-bottom: 1px solid var(--accent);
   border-bottom-left-radius: 10px;
   font-weight: 850;
-  font-size: 13.6px;
   letter-spacing: 0.15px;
 }
 

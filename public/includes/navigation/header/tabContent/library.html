@@ -29,7 +29,7 @@
           </thead>
           <tbody>
             <template x-for="(suggestion, index) in list.suggestions" :key="index">
-              <tr>
+              <tr x-show="isCanDelete(suggestion.value)">
                 <td x-text="suggestion.value"></td>
                 <td class="text-end">
                   <img

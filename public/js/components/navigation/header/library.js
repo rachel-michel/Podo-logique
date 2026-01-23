@@ -7,6 +7,41 @@ function library() {
       equipmentList: "Equipement",
       equipmentDetail: "Détail de l'équipement",
     },
+    keepSuggestion: [
+      "Orthèses plantaires",
+      "Anneau neutre",
+      "Anneau pronateur",
+      "Anneau supinateur",
+      "Arciforme",
+      "ARCM - appui retro capital médian",
+      "BAC - barre antéro capitale totale",
+      "Décharge de l'hallux",
+      "Décharge des orteils 1-2",
+      "Décharge du 2eme orteil",
+      "Décharge des orteils 2-3",
+      "Décharge des orteils 2-3-4",
+      "Décharge du 3eme orteil",
+      "Décharge des orteils 3-4",
+      "Décharge des orteils 3-4-5",
+      "Décharge du 4eme orteil",
+      "Décharge des orteils 4-5",
+      "Décharge du 5eme orteil",
+      "Barre sous diaphysaire",
+      "BRC - Barre rétro capital",
+      "CPP - coin pronateur postérieur",
+      "CSP - coin supinateur postérieur",
+      "EPA - élément pronateur antérieur",
+      "EPP - élément pronateur postérieur",
+      "EPT - élément pronateur total",
+      "ESP - élément supinateur postérieur",
+      "Hémicoupole de décharge de l'hallux",
+      "SAC - sous antéro capital court",
+      "SAC - sous antéro capital long",
+      "Sous cuboïdien",
+      "Sous naviculaire",
+      "Talonnette",
+      "Voûte",
+    ],
 
     async initData(data) {
       this.libraries = [
@@ -27,6 +62,11 @@ function library() {
           suggestions: data.filter((l) => l.name == "equipmentDetail"),
         },
       ];
+    },
+
+    isCanDelete(suggestion) {
+      if (this.keepSuggestion.includes(suggestion)) return false;
+      return true;
     },
 
     async onAddSuggestion(suggestionName, input) {

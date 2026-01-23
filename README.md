@@ -17,12 +17,6 @@ https://learn.microsoft.com/fr-fr/cpp/windows/latest-supported-vc-redist?view=ms
 
 # TODO
 
-Aperçu CR :
-
-- Mettre le tableau + les notes à gauche et le plan d'appareillage à droite
-- Conditionner l'affichage du plan : si pas d'orthèse plantaire en appareillage = pas de plan
-- Conditionner l'affichage de chaque éléments avec la colonne appareillage
-
 Rappel SMS
 
 - Ajouter un onglet "Rappel patient" dans lequel s'affiche les patients (nom, prénom, téléphone) dont le dernier bilan podo a été fait il y a minimum 11 mois

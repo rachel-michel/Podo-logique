@@ -155,62 +155,118 @@
       <span x-text="replaceVariable(pdfParameter.content)" style="white-space: pre-line"></span>
     </div>
 
-    <!-- TABLEAU APPAREILLAGE -->
-    <table>
-      <colgroup>
-        <col style="width: 30%" />
-        <col style="width: 70%" />
-      </colgroup>
+    <!-- LAYOUT TABLE + NOTES (GAUCHE) / PLAN (DROITE) -->
+    <div class="equipment-layout" :class="{ 'equipment-layout--full': !isEquipmentInclude('Orthèses plantaires') }">
+      <div class="equipment-left">
+        <!-- TABLEAU APPAREILLAGE -->
+        <table>
+          <colgroup>
+            <col style="width: 60%" />
+            <col style="width: 40%" />
+          </colgroup>
 
-      <thead>
-        <tr>
-          <th>Appareillage</th>
-          <th>Details</th>
-        </tr>
-      </thead>
+          <thead>
+            <tr>
+              <th>Appareillage</th>
+              <th>Details</th>
+            </tr>
+          </thead>
 
-      <tbody>
-        <template x-for="(row, index) in getEquipmentPlan" :key="index">
-          <tr>
-            <td>
-              <div>
-                <template x-for="part in getSplitedInput(row, 'localisation')" :key="part">
-                  <div x-text="part"></div>
-                </template>
-              </div>
-            </td>
+          <tbody>
+            <template x-for="(row, index) in getEquipmentPlan" :key="index">
+              <tr>
+                <td>
+                  <div>
+                    <template x-for="part in getSplitedInput(row, 'localisation')" :key="part">
+                      <div x-text="part"></div>
+                    </template>
+                  </div>
+                </td>
 
-            <td>
-              <div>
-                <template x-for="obs in getSplitedInput(row, 'observation')" :key="obs">
-                  <div x-text="obs"></div>
-                </template>
-              </div>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
+                <td>
+                  <div>
+                    <template x-for="obs in getSplitedInput(row, 'observation')" :key="obs">
+                      <div x-text="obs"></div>
+                    </template>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
 
-    <div class="equipment-plan">
-      <img src="assets/equipment-plan/semelle-base.png" />
-      <img src="assets/equipment-plan/anneau-neutre.png" />
-      <img src="assets/equipment-plan/voute.png" />
-      <img src="assets/equipment-plan/arcm.png" />
-      <img src="assets/equipment-plan/semelle-contour.png" />
-    </div>
+        <!-- NOTES AU MEDECIN -->
+        <div class="notes" x-cloak x-show="(pdfParameter.notes ?? '').trim() !== ''">
+          <span style="font-weight: bold">Notes :</span>
+          <span x-text="pdfParameter.notes"></span>
+        </div>
+      </div>
 
-    <!-- Note au médecin -->
-    <div class="notes" x-cloak x-show="(pdfParameter.notes ?? '').trim() !== ''">
-      <span style="font-weight: bold">Notes :</span>
-      <span x-text="pdfParameter.notes"></span>
+      <!-- PLAN D'APPAREILLAGE -->
+      <div class="equipment-right" x-show="isEquipmentInclude('Orthèses plantaires')">
+        <div class="equipment-plan">
+          <img src="assets/equipment-plan/semelle-base.png" />
+          <img x-show="isEquipmentInclude('Talonnette')" src="assets/equipment-plan/talonnette.png" />
+          <img x-show="isEquipmentInclude('SAC - sous antéro capital long')" src="assets/equipment-plan/sac-long.png" />
+          <img
+            x-show="isEquipmentInclude('SAC - sous antéro capital court')"
+            src="assets/equipment-plan/sac-court.png"
+          />
+          <img
+            x-show="isEquipmentInclude('BAC - barre antéro capitale totale')"
+            src="assets/equipment-plan/bac-totale.png"
+          />
+          <img x-show="isEquipmentInclude('Décharge de l\'hallux')" src="assets/equipment-plan/decharge-1.png" />
+          <img x-show="isEquipmentInclude('Décharge des orteils 1-2')" src="assets/equipment-plan/decharge-1-2.png" />
+          <img x-show="isEquipmentInclude('Décharge du 2eme orteil')" src="assets/equipment-plan/decharge-2.png" />
+          <img x-show="isEquipmentInclude('Décharge des orteils 2-3')" src="assets/equipment-plan/decharge-2-3.png" />
+          <img
+            x-show="isEquipmentInclude('Décharge des orteils 2-3-4')"
+            src="assets/equipment-plan/decharge-2-3-4.png"
+          />
+          <img x-show="isEquipmentInclude('Décharge du 3eme orteil')" src="assets/equipment-plan/decharge-3.png" />
+          <img x-show="isEquipmentInclude('Décharge des orteils 3-4')" src="assets/equipment-plan/decharge-3-4.png" />
+          <img
+            x-show="isEquipmentInclude('Décharge des orteils 3-4-5')"
+            src="assets/equipment-plan/decharge-3-4-5.png"
+          />
+          <img x-show="isEquipmentInclude('Décharge du 4eme orteil')" src="assets/equipment-plan/decharge-4.png" />
+          <img x-show="isEquipmentInclude('Décharge des orteils 4-5')" src="assets/equipment-plan/decharge-4-5.png" />
+          <img x-show="isEquipmentInclude('Décharge du 5eme orteil')" src="assets/equipment-plan/decharge-5.png" />
+
+          <img x-show="isEquipmentInclude('CPP - coin pronateur postérieur')" src="assets/equipment-plan/cpp.png" />
+          <img x-show="isEquipmentInclude('CSP - coin supinateur postérieur')" src="assets/equipment-plan/csp.png" />
+          <img x-show="isEquipmentInclude('EPT - élément pronateur total')" src="assets/equipment-plan/ept.png" />
+          <img x-show="isEquipmentInclude('Anneau neutre')" src="assets/equipment-plan/anneau-neutre.png" />
+          <img x-show="isEquipmentInclude('Anneau pronateur')" src="assets/equipment-plan/anneau-pronateur.png" />
+          <img x-show="isEquipmentInclude('Anneau supinateur')" src="assets/equipment-plan/anneau-supinateur.png" />
+          <img x-show="isEquipmentInclude('ESP - élément supinateur postérieur')" src="assets/equipment-plan/esp.png" />
+          <img x-show="isEquipmentInclude('EPP - élément pronateur postérieur')" src="assets/equipment-plan/epp.png" />
+          <img x-show="isEquipmentInclude('Sous naviculaire')" src="assets/equipment-plan/sous-naviculaire.png" />
+          <img x-show="isEquipmentInclude('Sous cuboïdien')" src="assets/equipment-plan/sous-cuboidien.png" />
+          <img x-show="isEquipmentInclude('EPA - élément pronateur antérieur')" src="assets/equipment-plan/epa.png" />
+          <img x-show="isEquipmentInclude('BRC - Barre rétro capital')" src="assets/equipment-plan/brc.png" />
+          <img x-show="isEquipmentInclude('Voûte')" src="assets/equipment-plan/voute.png" />
+          <img x-show="isEquipmentInclude('Arciforme')" src="assets/equipment-plan/arciforme.png" />
+          <img
+            x-show="isEquipmentInclude('Hémicoupole de décharge de l\'hallux')"
+            src="assets/equipment-plan/hemicoupole-decharge.png"
+          />
+          <img x-show="isEquipmentInclude('ARCM - appui retro capital médian')" src="assets/equipment-plan/arcm.png" />
+          <img
+            x-show="isEquipmentInclude('Barre sous diaphysaire')"
+            src="assets/equipment-plan/barre-sous-diaphysaire.png"
+          />
+          <img src="assets/equipment-plan/semelle-contour.png" />
+        </div>
+      </div>
     </div>
 
     <div x-cloak x-show="isShowAtLeastOneExamination()">
       <span x-text="'Détail des examens'" class="details-title"></span>
     </div>
 
-    <!-- Tableau d'examens -->
+    <!-- TABLEAU D'EXAMEN -->
     <template x-for="examen in getExaminations()" :key="examen.name">
       <template x-if="examen.show">
         <div class="examen">

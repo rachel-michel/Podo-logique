@@ -131,6 +131,52 @@
   text-align: center;
 }
 
+/* ======================================
+   TABLEAU APPAREILLAGE + NOTES (GAUCHE)
+   ==================================== */
+
+#pdfTemplate .equipment-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px; /* gauche flexible, droite fixe */
+  gap: 18px;
+  align-items: start;
+  margin: 10px 0 18px;
+}
+
+/* Quand le plan n'est pas affiché => 1 seule colonne */
+#pdfTemplate .equipment-layout.equipment-layout--full {
+  grid-template-columns: 1fr;
+}
+
+#pdfTemplate .equipment-left {
+  min-width: 0; /* évite les débordements en grid */
+  padding-top: 20px;
+}
+
+#pdfTemplate .equipment-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* =================================
+       PLAN D'APPAREILLAGE (DROITE)
+   ================================ */
+
+#pdfTemplate .equipment-plan {
+  margin: 0;
+  position: relative;
+  width: 259px;
+  height: 450px;
+}
+
+#pdfTemplate .equipment-plan img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 259px;
+  height: 450px;
+}
+
 /* =========================
            TABLES
    ========================= */
@@ -178,30 +224,11 @@
 }
 
 /* =========================
-       PLAN D'APPAREILLAGE
-   ========================= */
-
-#pdfTemplate .equipment-plan {
-  margin: 0 auto;
-  position: relative;
-  width: 259px;
-  height: 450px;
-}
-
-#pdfTemplate .equipment-plan img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 259px;
-  height: 450px;
-}
-
-/* =========================
        NOTE AU MÉDECIN
    ========================= */
 
 #pdfTemplate .notes {
-  margin: 6px 0 18px;
+  margin: 40px 0 18px;
   padding: 12px 14px;
   border-left: 3px solid var(--accent-2);
   border-right: 3px solid var(--accent-2);

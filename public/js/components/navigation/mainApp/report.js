@@ -30,6 +30,11 @@ function report() {
       );
     },
 
+    isEquipmentInclude(equipmentName) {
+      const rows = this.templateTabs.find((e) => e.name === "equipmentPlan").rows;
+      return rows.filter((equipment) => equipment.localisationInput.includes(equipmentName)).length;
+    },
+
     getExaminations() {
       return [
         {

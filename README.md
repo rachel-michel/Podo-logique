@@ -17,6 +17,10 @@ https://learn.microsoft.com/fr-fr/cpp/windows/latest-supported-vc-redist?view=ms
 
 # TODO
 
+- Il manque une décharge dans les suggestions !
+- Bug sur la modif d'un prescripteur
+- Trouver pourquoi l'impression pdf génère des pages vides à la suite du document
+
 Rappel SMS
 
 - Ajouter un onglet "Rappel patient" dans lequel s'affiche les patients (nom, prénom, téléphone) dont le dernier bilan podo a été fait il y a minimum 11 mois

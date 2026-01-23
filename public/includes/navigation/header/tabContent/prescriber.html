@@ -8,22 +8,22 @@
     <form class="row pb-4" @submit.prevent="onAddPrescriber()">
       <div class="col-12 col-md-4">
         <label for="prescriberFullname" class="form-label">Nom complet</label>
-        <input class="form-control" id="prescriberFullname" rows="3" x-model="inputPrescriber.fullname" />
+        <input class="form-control" id="prescriberFullname" x-model="inputPrescriber.fullname" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
         <label for="prescriberMail" class="form-label">Mail</label>
-        <input class="form-control" id="prescriberMail" rows="3" x-model="inputPrescriber.mail" />
+        <input class="form-control" id="prescriberMail" x-model="inputPrescriber.mail" />
       </div>
 
       <div class="col-12 col-sm-6 col-md-4">
         <label for="prescriberPhoneNumber" class="form-label">Téléphone</label>
-        <input class="form-control" id="prescriberPhoneNumber" rows="3" x-model="inputPrescriber.phoneNumber" />
+        <input class="form-control" id="prescriberPhoneNumber" x-model="inputPrescriber.phoneNumber" />
       </div>
 
       <div class="col-12">
         <label for="prescriberAddress" class="form-label">Adresse</label>
-        <textarea class="form-control" id="prescriberAddress" rows="3" x-model="inputPrescriber.address"></textarea>
+        <textarea class="form-control" id="prescriberAddress" x-model="inputPrescriber.address"></textarea>
       </div>
 
       <div class="col-12">

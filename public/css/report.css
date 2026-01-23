@@ -178,6 +178,25 @@
 }
 
 /* =========================
+       PLAN D'APPAREILLAGE
+   ========================= */
+
+#pdfTemplate .equipment-plan {
+  margin: 0 auto;
+  position: relative;
+  width: 259px;
+  height: 450px;
+}
+
+#pdfTemplate .equipment-plan img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 259px;
+  height: 450px;
+}
+
+/* =========================
        NOTE AU MÉDECIN
    ========================= */
 

@@ -1,7 +1,5 @@
 function report() {
   return {
-    isEdit: false,
-
     getPrescribers() {
       if (
         !this.prescribers.length ||
@@ -72,6 +70,33 @@ function report() {
         .filter(Boolean);
     },
 
+    replaceVariable(text) {
+      if (!text || !text.trim().length) return "";
+
+      const now = new Date();
+      const birthday = new Date(this.patient.dateOfBirth);
+      const createFolder = new Date(this.folder.createdAt);
+
+      const map = {
+        genre: this.patient.gender,
+        nom_complet: [this.patient.lastname, this.patient.firstname].filter(Boolean).join(" "),
+        nom: this.patient.lastname,
+        date_de_naissance: birthday.toLocaleDateString("fr-FR"),
+        date_creation_dossier: createFolder.toLocaleDateString("fr-FR"),
+        date_aujourdhui: now.toLocaleDateString("fr-FR"),
+      };
+
+      return text.replace(/\{([a-zA-Z0-9_]+)\}/g, (match, varName) => {
+        if (!(varName in map)) return match;
+        return String(map[varName] ?? "");
+      });
+    },
+
+    formatDateFR(d) {
+      const date = new Date(d);
+      return date.toLocaleDateString("fr-FR");
+    },
+
     onSelectPrescriber(prescriber) {
       this.pdfParameter.prescriberFullname = prescriber.fullname;
       this.pdfParameter.prescriberAddress = prescriber.address;
@@ -82,7 +107,7 @@ function report() {
     async onEditPdfParameter() {
       try {
         this.pdfParameter = await updatePdfParameter(this.pdfParameter);
-        this.isEdit = false;
+        customDispatch("notify", { message: "Les modifications ont bien été prises en compte", type: "alert-success" });
       } catch (err) {
         console.error("Erreur patient →", err);
         customDispatch("notify", {

@@ -7,11 +7,12 @@ class PdfParameter
   private ?int $id = null;
   private string $type = 'custom';
   private ?string $office = null;
-  private ?string $prescriberFullname = '';
-  private ?string $prescriberAddress = '';
-  private ?string $prescriberMail = '';
-  private ?string $prescriberPhoneNumber = '';
-  private string $subject = 'Compte rendu';
+  private ?string $prescriberFullname = null;
+  private ?string $prescriberAddress = null;
+  private ?string $prescriberMail = null;
+  private ?string $prescriberPhoneNumber = null;
+  private string $subject = 'Compte rendu du bilan podologique de {genre} {nom_complet}.';
+  private ?string $content = '{genre} {nom_complet}, née le {date_de_naissance}, est venu le {date_creation_dossier} afin de réaliser un bilan podologique au sein de mon cabinet.\n\nRépondant à votre prescription médicale, je me permet de vous retourner le compte rendu complet de cet examen.\n\nFait le : {date_aujourdhui}.';
   private ?string $notes = null;
   private bool $showTabA = true;
   private bool $showTabB = true;
@@ -30,6 +31,7 @@ class PdfParameter
     if (isset($data['prescriberMail'])) $e->setPrescriberMail($data['prescriberMail']);
     if (isset($data['prescriberPhoneNumber'])) $e->setPrescriberPhoneNumber($data['prescriberPhoneNumber']);
     if (isset($data['subject'])) $e->setSubject($data['subject']);
+    if (isset($data['content'])) $e->setContent($data['content']);
     if (isset($data['notes'])) $e->setNotes($data['notes']);
     if (isset($data['showTabA'])) $e->setShowTabA((bool)$data['showTabA']);
     if (isset($data['showTabB'])) $e->setShowTabB((bool)$data['showTabB']);
@@ -50,6 +52,7 @@ class PdfParameter
       'prescriberMail'        => $this->prescriberMail,
       'prescriberPhoneNumber' => $this->prescriberPhoneNumber,
       'subject'               => $this->subject,
+      'content'               => $this->content,
       'notes'                 => $this->notes,
       'showTabA'              => $this->showTabA,
       'showTabB'              => $this->showTabB,
@@ -128,6 +131,15 @@ class PdfParameter
   public function setSubject(string $v): void
   {
     $this->subject = $v;
+  }
+
+  public function getContent(): ?string
+  {
+    return $this->content;
+  }
+  public function setContent(string $v): void
+  {
+    $this->content = $v;
   }
 
   public function getNotes(): ?string

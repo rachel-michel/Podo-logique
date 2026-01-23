@@ -23,7 +23,8 @@ class PdfParameterRepository
             prescriberAddress TEXT NULL,
             prescriberMail TEXT NULL,
             prescriberPhoneNumber TEXT NULL,
-            subject TEXT NULL DEFAULT 'Compte rendu',
+            subject TEXT NULL DEFAULT 'Compte rendu du bilan podologique de {genre} {nom_complet}.',
+            content TEXT '{genre} {nom_complet}, née le {date_de_naissance}, est venu le {date_creation_dossier} afin de réaliser un bilan podologique au sein de mon cabinet.\n\nRépondant à votre prescription médicale, je me permet de vous retourner le compte rendu complet de cet examen.\n\nFait le : {date_aujourdhui}.',
             notes TEXT NULL,
             showTabA INTEGER NOT NULL DEFAULT 1,
             showTabB INTEGER NOT NULL DEFAULT 1,
@@ -39,10 +40,12 @@ class PdfParameterRepository
       $this->pdo->exec("
           INSERT INTO pdf_parameter (
               office, prescriberFullname, prescriberAddress, prescriberMail, prescriberPhoneNumber,
-              subject, notes, showTabA, showTabB, showTabC, showTabD, type
+              subject, content, notes, showTabA, showTabB, showTabC, showTabD, type
           ) VALUES (
               '', '' ,'' ,'' ,'' ,
-              'Compte rendu', '', 1, 1, 1, 1, 'global'
+              'Compte rendu du bilan podologique de {genre} {nom_complet}.',
+              '{genre} {nom_complet}, née le {date_de_naissance}, est venu le {date_creation_dossier} afin de réaliser un bilan podologique au sein de mon cabinet.\n\nRépondant à votre prescription médicale, je me permet de vous retourner le compte rendu complet de cet examen.\n\nFait le : {date_aujourdhui}.'
+              , '', 1, 1, 1, 1, 'global'
           )
       ");
     }
@@ -95,10 +98,10 @@ class PdfParameterRepository
     $stmt = $this->pdo->prepare("
         INSERT INTO pdf_parameter (
             office, prescriberFullname, prescriberAddress, prescriberMail, prescriberPhoneNumber,
-            subject, notes, showTabA, showTabB, showTabC, showTabD, type
+            subject, content, notes, showTabA, showTabB, showTabC, showTabD, type
         ) VALUES (
             :office, :prescriberFullname, :prescriberAddress, :prescriberMail, :prescriberPhoneNumber,
-            :subject, :notes, :showTabA, :showTabB, :showTabC, :showTabD, :type
+            :subject, :content, :notes, :showTabA, :showTabB, :showTabC, :showTabD, :type
         )
     ");
 
@@ -110,6 +113,7 @@ class PdfParameterRepository
       ':prescriberMail'        => $pdfParameter->getPrescriberMail(),
       ':prescriberPhoneNumber' => $pdfParameter->getPrescriberPhoneNumber(),
       ':subject'               => $pdfParameter->getSubject(),
+      ':content'               => $pdfParameter->getContent(),
       ':notes'                 => $pdfParameter->getNotes(),
       ':showTabA'              => $pdfParameter->getShowTabA() ? 1 : 0,
       ':showTabB'              => $pdfParameter->getShowTabB() ? 1 : 0,
@@ -136,6 +140,7 @@ class PdfParameterRepository
             prescriberMail        = :prescriberMail,
             prescriberPhoneNumber = :prescriberPhoneNumber,
             subject               = :subject,
+            content               = :content,
             notes                 = :notes,
             showTabA              = :showTabA,
             showTabB              = :showTabB,
@@ -151,6 +156,7 @@ class PdfParameterRepository
       ':prescriberMail'        => $pdfParameter->getPrescriberMail(),
       ':prescriberPhoneNumber' => $pdfParameter->getPrescriberPhoneNumber(),
       ':subject'               => $pdfParameter->getSubject(),
+      ':content'               => $pdfParameter->getContent(),
       ':notes'                 => $pdfParameter->getNotes(),
       ':showTabA'              => $pdfParameter->getShowTabA() ? 1 : 0,
       ':showTabB'              => $pdfParameter->getShowTabB() ? 1 : 0,

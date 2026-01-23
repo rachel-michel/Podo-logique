@@ -46,6 +46,7 @@ function anamnesis() {
             prescriberMail: "",
             prescriberPhoneNumber: "",
             subject: this.globalPdfParameter.subject,
+            content: this.globalPdfParameter.content,
             notes: "",
             showTabA: this.globalPdfParameter.showTabA,
             showTabB: this.globalPdfParameter.showTabB,

@@ -20,8 +20,6 @@ https://learn.microsoft.com/fr-fr/cpp/windows/latest-supported-vc-redist?view=ms
 Aperçu CR :
 
 - Mettre le tableau + les notes à gauche et le plan d'appareillage à droite
-- Dans la colonne appareillage, mettre "orthèse plantaire" + tous les élèments possibles
-- Dans la colonne détail, mettre le détail des textures (liège, mousse, couleurs, densité...)
 - Conditionner l'affichage du plan : si pas d'orthèse plantaire en appareillage = pas de plan
 - Conditionner l'affichage de chaque éléments avec la colonne appareillage
 

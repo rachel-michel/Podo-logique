@@ -117,6 +117,7 @@ function prescriber() {
           phoneNumber: "",
         };
 
+        this.prescriberList = this.prescriberList.map((p) => (p.id === prescriber.id ? prescriber : p));
         customDispatch("update-prescriber", { prescriber });
       } catch (err) {
         console.error("Erreur patient →", err);

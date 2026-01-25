@@ -1,9 +1,0 @@
-{
-  "name": "Podo'logique",
-  "short_name": "Podologique",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#007BFF",
-  "theme_color": "#007BFF",
-  "icons": []
-}

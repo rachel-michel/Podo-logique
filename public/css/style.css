@@ -121,49 +121,6 @@ main {
 }
 
 /*******************************************************/
-/********************** PRINT PDF ***********************/
-/*******************************************************/
-
-#pdfTemplateWrapper {
-  width: 100%;
-  overflow: auto;
-}
-
-#pdfTemplate {
-  width: 794px;
-  padding: 20px;
-}
-
-@media print {
-  @page {
-    size: A4;
-    margin: 12mm;
-  }
-
-  * {
-    background: transparent !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  body * {
-    visibility: hidden !important;
-  }
-
-  #pdfTemplate,
-  #pdfTemplate * {
-    visibility: visible !important;
-  }
-
-  #pdfTemplate {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%; /* ou largeur A4 */
-  }
-}
-
-/*******************************************************/
 /***************** Overwrite bootstrap *****************/
 /*******************************************************/
 

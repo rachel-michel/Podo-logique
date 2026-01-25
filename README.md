@@ -17,8 +17,6 @@ https://learn.microsoft.com/fr-fr/cpp/windows/latest-supported-vc-redist?view=ms
 
 # TODO
 
-- Trouver pourquoi l'impression pdf génère des pages vides à la suite du document
-- Trouver comment cacher la console au démarrage de l'app / comment forcer l'arrêt à la fermeture de l'onglet
 - Bug sur la modif d'un prescripteur
 
 Rappel SMS

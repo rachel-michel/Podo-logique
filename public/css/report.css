@@ -5,28 +5,19 @@
 #pdfTemplateWrapper {
   background-color: white;
   border: var(--line) 1px solid;
-  font-family: Parkinsans, Sen, Arial;
+  font-family: Sen, Arial;
   color: var(--ink);
-  font-size: 15px;
   line-height: 1.58;
   letter-spacing: 0.12px;
   margin-bottom: 1.5rem;
+  width: 210mm;
+  min-height: 297mm;
+  margin: auto;
+  margin-bottom: 5%;
 }
 
 #pdfTemplate {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 20px 26px;
-}
-
-/* global */
-#pdfTemplate span {
-  display: inline-block;
-  width: -webkit-fill-available;
-}
-#pdfTemplate [x-text] {
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  padding: 3% 4%;
 }
 
 /* =========================
@@ -34,28 +25,26 @@
    ========================= */
 
 #pdfTemplate .header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   gap: 22px;
   padding: 14px 0 16px;
   margin-bottom: 14px;
-  align-items: start;
 }
 
 #pdfTemplate .header .logo {
+  width: 10%;
   align-self: center;
 }
 
 #pdfTemplate .header .logo img {
-  display: block;
-  max-width: 70px; /* ajuste */
-  height: auto;
+  width: 100%;
 }
 
 /* expéditeur */
 #pdfTemplate .header .sender {
-  padding: 0 12px 0 12px;
+  padding: 0 14px 0 14px;
   position: relative;
+  width: 45%;
 }
 
 /* barre verticale à gauche du sender */
@@ -71,8 +60,8 @@
 
 /* sender texte */
 #pdfTemplate .header .sender span {
-  white-space: pre-line;
   color: var(--muted);
+  display: block;
 }
 
 #pdfTemplate .header .sender span::first-line {
@@ -82,12 +71,10 @@
 
 /* destinataire */
 #pdfTemplate .header .recipient {
-  justify-self: end;
   text-align: right;
-  max-width: 420px;
-  padding: 0 14px 0 12px;
+  padding: 0 14px 0 14px;
   position: relative;
-  width: -webkit-fill-available;
+  width: 45%;
 }
 
 /* barre à droite du recipient */
@@ -109,7 +96,6 @@
 #pdfTemplate .header .recipient span:first-child {
   color: var(--ink);
   font-weight: 800;
-  margin-bottom: 2px;
 }
 
 /* =========================
@@ -117,56 +103,31 @@
    ========================= */
 
 #pdfTemplate .subject {
-  margin: 10px 0 16px;
-  padding: 0 0 10px;
+  margin: 8% 0 5%;
 }
 
 #pdfTemplate .subject span,
 .details-title {
   font-size: 20px;
   font-weight: 850;
-  letter-spacing: 0.15px;
-  color: var(--ink);
   display: block;
   text-align: center;
 }
 
-/* ======================================
-   TABLEAU APPAREILLAGE + NOTES (GAUCHE)
-   ==================================== */
+/* ====================
+   TABLEAU APPAREILLAGE
+   ================== */
 
 #pdfTemplate .equipment-layout {
-  display: grid;
-  grid-template-columns: 1fr 280px; /* gauche flexible, droite fixe */
-  gap: 18px;
-  align-items: start;
-  margin: 10px 0 18px;
-}
-
-/* Quand le plan n'est pas affiché => 1 seule colonne */
-#pdfTemplate .equipment-layout.equipment-layout--full {
-  grid-template-columns: 1fr;
-}
-
-#pdfTemplate .equipment-left {
-  min-width: 0; /* évite les débordements en grid */
-  padding-top: 20px;
-}
-
-#pdfTemplate .equipment-right {
   display: flex;
-  justify-content: flex-end;
+  min-height: 450px;
+  margin: 5% 0 5%;
 }
-
-/* =================================
-       PLAN D'APPAREILLAGE (DROITE)
-   ================================ */
 
 #pdfTemplate .equipment-plan {
-  margin: 0;
   position: relative;
+  margin: auto;
   width: 259px;
-  height: 450px;
 }
 
 #pdfTemplate .equipment-plan img {
@@ -183,12 +144,6 @@
 
 #pdfTemplate table {
   width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 10px 0 18px;
-  table-layout: fixed;
 }
 
 #pdfTemplate thead th {
@@ -201,7 +156,6 @@
   text-transform: uppercase;
 }
 
-/* Séparations verticales très discrètes */
 #pdfTemplate th + th,
 #pdfTemplate td + td {
   border-left: 1px solid var(--line-2);
@@ -228,8 +182,8 @@
    ========================= */
 
 #pdfTemplate .notes {
-  margin: 40px 0 18px;
-  padding: 12px 14px;
+  margin-top: 10%;
+  padding: 2% 3%;
   border-left: 3px solid var(--accent-2);
   border-right: 3px solid var(--accent-2);
   border-radius: 10px;
@@ -239,27 +193,33 @@
       SECTIONS D’EXAMENS
    ========================= */
 
-#pdfTemplate .examen {
-  margin-top: 16px;
-}
-
 #pdfTemplate .examen-title {
   display: block;
-  margin: 8px 0 10px;
-  padding: 10px 12px;
+  margin: 2% 0 2%;
+  padding: 1% 1%;
   border-left: 3px solid var(--accent);
   border-bottom: 1px solid var(--accent);
   border-bottom-left-radius: 10px;
   font-weight: 850;
-  letter-spacing: 0.15px;
 }
 
-/* =========================
-          IMPRESSION
-   ========================= */
+/*******************************************************/
+/********************** PRINT PDF ***********************/
+/*******************************************************/
+
 @media print {
-  #pdfTemplateWrapper {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  body * {
+    visibility: hidden !important;
+  }
+
+  #pdfTemplate,
+  #pdfTemplate * {
+    visibility: visible !important;
+  }
+
+  #pdfTemplate {
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }

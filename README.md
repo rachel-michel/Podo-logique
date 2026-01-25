@@ -17,9 +17,9 @@ https://learn.microsoft.com/fr-fr/cpp/windows/latest-supported-vc-redist?view=ms
 
 # TODO
 
-- Il manque une décharge dans les suggestions !
-- Bug sur la modif d'un prescripteur
 - Trouver pourquoi l'impression pdf génère des pages vides à la suite du document
+- Trouver comment cacher la console au démarrage de l'app / comment forcer l'arrêt à la fermeture de l'onglet
+- Bug sur la modif d'un prescripteur
 
 Rappel SMS
 

@@ -132,3 +132,12 @@ async function unarchivedFolder(folder) {
 
   return updateFolder(payload);
 }
+
+async function refreshUpdatedAt(folder) {
+  const payload = {
+    ...folder,
+    updatedAt: new Date().toISOString(),
+  };
+
+  return updateFolder(payload);
+}

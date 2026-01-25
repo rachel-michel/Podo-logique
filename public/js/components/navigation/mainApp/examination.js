@@ -30,7 +30,12 @@ function examination() {
 
       // Filter suggets with every part and current entry
       const list = this.suggestions[suggestionListName] || [];
-      return list.filter((s) => s.toLowerCase().includes(lastPart) && !parts.includes(s.toLowerCase())).slice(0, 8);
+      return list.filter((s) => s.toLowerCase().includes(lastPart) && !parts.includes(s.toLowerCase())).slice(0, 11);
+    },
+
+    async refreshFolder() {
+      this.folder = await refreshUpdatedAt(this.folder);
+      this.folders = this.folders.map((f) => (f.id === this.folder.id ? this.folder : f));
     },
 
     onSelectSuggestion(field, row, suggestion) {
@@ -81,10 +86,14 @@ function examination() {
         if (row?.id != null) {
           data.id = row.id;
           await updateExamination(data);
+          await this.refreshFolder();
+
           return;
         }
 
         const newRow = await createExamination(data);
+        await this.refreshFolder();
+
         row.id = newRow.id;
         templateTab.rows.push({
           editing: false,
@@ -107,6 +116,7 @@ function examination() {
 
       try {
         await deleteExamination(row.id);
+        await this.refreshFolder();
         tab.rows = tab.rows.filter((r) => r.id !== row.id);
       } catch (err) {
         console.error("Erreur patient →", err);

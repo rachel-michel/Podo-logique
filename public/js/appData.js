@@ -27,6 +27,7 @@ function appData() {
       pathology: "",
       medicalHistory: "",
       notices: "",
+      lastDeliveryAt: null,
       createdAt: null,
       updatedAt: null,
     },
@@ -100,6 +101,7 @@ function appData() {
 
     async init() {
       this.patients = await getAllPatient();
+      customDispatch("init-patients", { patients: [...this.patients] });
 
       this.prescribers = await getAllPrescriber();
       customDispatch("init-prescribers", { prescribers: [...this.prescribers] });
@@ -145,7 +147,7 @@ function appData() {
       this.globalPdfParameter = globalPdfParameter;
     },
 
-    async selectPatient(patient, pdfParameter, folder) {
+    async selectPatient(patient, pdfParameter = null, folder = null) {
       if (!patient || !("id" in patient) || patient.id == null) {
         customDispatch("notify", {
           message: "Une erreur est survenue lors de la selection du patient, merci de rafraichir la page",
@@ -274,6 +276,7 @@ function appData() {
         pathology: "",
         medicalHistory: "",
         notices: "",
+        lastDeliveryAt: null,
         createdAt: null,
         updatedAt: null,
       };

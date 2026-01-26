@@ -21,6 +21,7 @@ class Patient
   private ?string $pathology = null;
   private ?string $medicalHistory = null;
   private ?string $notices = null;
+  private ?string $lastDeliveryAt;
   private string $createdAt;
   private ?string $updatedAt = null;
 
@@ -59,6 +60,7 @@ class Patient
     if (isset($data['medicalHistory'])) $patient->setMedicalHistory($data['medicalHistory']);
     if (isset($data['notices'])) $patient->setNotices($data['notices']);
 
+    if (!empty($data['lastDeliveryAt'])) $patient->setLastDeliveryAt($data['lastDeliveryAt']);
     if (!empty($data['createdAt'])) $patient->setCreatedAt($data['createdAt']);
     if (!empty($data['updatedAt'])) $patient->setUpdatedAt($data['updatedAt']);
 
@@ -85,6 +87,7 @@ class Patient
       'pathology' => $this->pathology,
       'medicalHistory' => $this->medicalHistory,
       'notices' => $this->notices,
+      'lastDeliveryAt' => $this->lastDeliveryAt,
       'createdAt' => $this->createdAt,
       'updatedAt' => $this->updatedAt,
     ];
@@ -241,6 +244,15 @@ class Patient
   public function setNotices(string $notices): void
   {
     $this->notices = $notices;
+  }
+
+  public function getLastDeliveryAt(): ?string
+  {
+    return $this->lastDeliveryAt;
+  }
+  public function setLastDeliveryAt(string $lastDeliveryAt): void
+  {
+    $this->lastDeliveryAt = $lastDeliveryAt;
   }
 
   public function getCreatedAt(): string

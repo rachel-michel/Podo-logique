@@ -33,6 +33,7 @@ class PatientRepository
             pathology TEXT NULL,
             medicalHistory TEXT NULL,
             notices TEXT NULL,
+            lastDeliveryAt TEXT NULL,
             createdAt TEXT NOT NULL,
             updatedAt TEXT NULL
         )
@@ -73,13 +74,13 @@ class PatientRepository
             phoneNumber, address, folderPrefix, folderPrefixFormat,
             weight, height, shoeSize, job,
             physicalActivity, pathology, medicalHistory, notices,
-            createdAt, updatedAt
+            lastDeliveryAt, createdAt, updatedAt
         ) VALUES (
             :gender, :lastname, :firstname, :dateOfBirth,
             :phoneNumber, :address, :folderPrefix, :folderPrefixFormat,
             :weight, :height, :shoeSize, :job,
             :physicalActivity, :pathology, :medicalHistory, :notices,
-            :createdAt, :updatedAt
+            :lastDeliveryAt, :createdAt, :updatedAt
         )
     ");
 
@@ -100,6 +101,7 @@ class PatientRepository
       ':pathology'          => $patient->getPathology(),
       ':medicalHistory'     => $patient->getMedicalHistory(),
       ':notices'            => $patient->getNotices(),
+      ':lastDeliveryAt'     => $patient->getLastDeliveryAt(),
       ':createdAt'          => $patient->getCreatedAt(),
       ':updatedAt'          => $patient->getUpdatedAt(),
     ]);
@@ -135,6 +137,7 @@ class PatientRepository
             pathology         = :pathology,
             medicalHistory    = :medicalHistory,
             notices           = :notices,
+            lastDeliveryAt    = :lastDeliveryAt,
             updatedAt         = :updatedAt
         WHERE id = :id
     ");
@@ -156,6 +159,7 @@ class PatientRepository
       ':pathology'         => $patient->getPathology(),
       ':medicalHistory'    => $patient->getMedicalHistory(),
       ':notices'           => $patient->getNotices(),
+      ':lastDeliveryAt'    => $patient->getLastDeliveryAt(),
       ':updatedAt'         => $patient->getUpdatedAt(),
       ':id'                => $patient->getId(),
     ]);

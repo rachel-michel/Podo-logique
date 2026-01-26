@@ -4,7 +4,8 @@
   <!--------------------------------------------------------------->
 
   <div x-data="appData()"
-    class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0"
+    class="tab-pane fade show active" id="homeTab-pane" role="tabpanel" aria-labelledby="homeTab" tabindex="0"
+    x-on:select-patient.document="selectPatient($event.detail.patient)"
     x-on:add-prescriber.document="updatePrescriber('add', $event.detail.prescriber)"
     x-on:update-prescriber.document="updatePrescriber('update', $event.detail.prescriber)"
     x-on:remove-prescriber.document="updatePrescriber('remove', $event.detail.prescriber)"
@@ -13,7 +14,7 @@
     x-on:update-global-pdf-parameter.document="updateGlobalPdfParameter($event.detail.globalPdfParameter)">
 
     <!--- Search patient --->
-    <div class="pt-4 pb-2 border-bottom">
+    <div class="pb-2 border-bottom">
       <?php include PUBLIC_PATH . '/includes/search-patient.html'; ?>
     </div>
     <!--- Reset patient ---->
@@ -46,9 +47,9 @@
   <!--------------------------------------------------------------->
   <div
     class="tab-pane fade"
-    id="prescriber-tab-pane"
+    id="prescriberTab-pane"
     role="tabpanel"
-    aria-labelledby="prescriber-tab"
+    aria-labelledby="prescriberTab"
     tabindex="0">
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/prescriber.html'; ?>
   </div>
@@ -57,9 +58,9 @@
   <!--------------------------------------------------------------->
   <div
     class="tab-pane fade"
-    id="library-tab-pane"
+    id="libraryTab-pane"
     role="tabpanel"
-    aria-labelledby="library-tab"
+    aria-labelledby="libraryTab"
     tabindex="0">
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/library.html'; ?>
   </div>
@@ -68,20 +69,31 @@
   <!--------------------------------------------------------------->
   <div
     class="tab-pane fade"
-    id="pdfparameter-tab-pane"
+    id="pdfparameterTab-pane"
     role="tabpanel"
-    aria-labelledby="pdfparameter-tab"
+    aria-labelledby="pdfparameterTab"
     tabindex="0">
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/pdf-parameter.html'; ?>
+  </div>
+  <!--------------------------------------------------------------->
+  <!------------------------- Follow up Tab ------------------->
+  <!--------------------------------------------------------------->
+  <div
+    class="tab-pane fade"
+    id="followupTab-pane"
+    role="tabpanel"
+    aria-labelledby="followupTab"
+    tabindex="0">
+    <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/follow-up.html'; ?>
   </div>
   <!----------------------------------------------------------------->
   <!------------------------- Documentation Tab --------------------->
   <!----------------------------------------------------------------->
   <div
     class="tab-pane fade"
-    id="documentation-tab-pane"
+    id="documentationTab-pane"
     role="tabpanel"
-    aria-labelledby="documentation-tab"
+    aria-labelledby="documentationTab"
     tabindex="0">
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/documentation.html'; ?>
   </div>

@@ -3,7 +3,6 @@
   class="row justify-content-around gy-5"
   x-on:init-prescribers.document="initData($event.detail.prescribers)"
 >
-  <span class="h3 text-center">Ajouter un prescripteur</span>
   <div class="col-10">
     <form class="row pb-4" @submit.prevent="onAddPrescriber()">
       <div class="col-12 col-md-4">

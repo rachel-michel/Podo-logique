@@ -3,10 +3,8 @@
   class="row"
   x-on:init-global-pdf-parameter.document="initData($event.detail.globalPdfParameter)"
 >
-  <span class="h3 pt-3 text-center">Paramétrage par défaut du compte rendu</span>
-
   <form @submit.prevent="onEditGlobalPdfParameter">
-    <div class="row py-4 gy-4">
+    <div class="row gy-4">
       <div class="text-center">
         <span class="h4">En-tête</span>
       </div>
@@ -41,7 +39,7 @@
 
       <!-- Switch -->
       <div class="col-12">
-        <div class="mb-4 text-center">
+        <div class="mb-5 text-center">
           <span class="h4">Afficher les tableaux d'examens</span>
         </div>
 

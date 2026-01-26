@@ -64,6 +64,7 @@
   <script src="js/components/navigation/header/library.js"></script>
   <script src="js/components/navigation/header/prescriber.js"></script>
   <script src="js/components/navigation/header/pdfParameter.js"></script>
+  <script src="js/components/navigation/header/followUp.js"></script>
 
   <script src="js/components/navigation/mainApp/anamnesis.js"></script>
   <script src="js/components/navigation/mainApp/folderManagment.js"></script>

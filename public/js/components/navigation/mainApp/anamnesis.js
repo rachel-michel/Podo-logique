@@ -19,12 +19,12 @@ function anamnesis() {
     async onSave() {
       const now = new Date();
       const isExistingPatient = this.patient.id;
-      this.patient.updatedAt = isExistingPatient ? now.toISOString() : null;
 
       if (isExistingPatient) {
         try {
-          const patient = await updatePatient(this.patient.id, { ...this.patient });
+          this.patient.updatedAt = now.toISOString();
 
+          const patient = await updatePatient(this.patient.id, { ...this.patient });
           this.patient = patient;
           this.patients = this.patients.map((p) => (p.id === patient.id ? patient : p));
 
@@ -35,6 +35,8 @@ function anamnesis() {
         }
       } else {
         try {
+          this.patient.lastDeliveryAt = now.toLocaleDateString("fr-CA");
+
           const patient = await createPatient({ ...this.patient });
           this.patients.push(patient);
 

@@ -3,7 +3,6 @@
   class="row justify-content-around gy-5"
   x-on:init-libraries.document="initData($event.detail.libraries)"
 >
-  <span class="h3 pt-3 text-center">Répertoire des listes de suggestion</span>
   <template x-for="list in libraries" :key="list.name">
     <div class="col-10">
       <form class="row" @submit.prevent="onAddSuggestion(list.name, $event.target.querySelector('input'))">

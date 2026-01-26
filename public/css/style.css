@@ -108,6 +108,9 @@ main {
 .icon-table-unarchived:hover {
   content: url("./../assets/unarchived-hover.png");
 }
+.icon-table-select-patient:hover {
+  content: url("./../assets/folder-open-hover.png");
+}
 
 .table-scrollbar {
   max-height: 500px;

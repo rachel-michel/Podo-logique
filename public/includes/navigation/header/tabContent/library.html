@@ -28,10 +28,11 @@
           </thead>
           <tbody>
             <template x-for="(suggestion, index) in list.suggestions" :key="index">
-              <tr x-show="isCanDelete(suggestion.value)">
+              <tr>
                 <td x-text="suggestion.value"></td>
                 <td class="text-end">
                   <img
+                    x-show="isCanDelete(suggestion.value)"
                     src="assets/trash.png"
                     alt="delete icon"
                     class="icon-table-delete"

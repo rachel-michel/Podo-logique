@@ -47,13 +47,12 @@ async function updateExamination(data) {
 
   const id = data.id;
   const payload = {
-    folder_id: data.folder_id,
     name: data.name,
     localisation: data.localisation,
     observation: data.observation,
   };
 
-  const res = await fetch(`/api/examinations/${id}`, {
+  const res = await fetch(`/api/examination/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -63,14 +62,14 @@ async function updateExamination(data) {
 
   if (!res.ok || !json.success) {
     console.error("Erreur updateExamination", json);
-    throw new Error(json.error || "Erreur lors de la mise à jour du dossier");
+    throw new Error(json.error || "Erreur lors de la mise à jour du de l'examination");
   }
 
   return json.examination;
 }
 
 async function deleteExamination(id) {
-  const res = await fetch(`/api/examinations/${id}`, {
+  const res = await fetch(`/api/examination/${id}`, {
     method: "DELETE",
   });
   const json = await res.json();

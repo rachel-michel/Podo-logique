@@ -12,6 +12,9 @@ use App\Repositories\FolderRepository;
 use App\Controllers\ExaminationController;
 use App\Repositories\ExaminationRepository;
 
+use App\Controllers\FollowUpNoteController;
+use App\Repositories\FollowUpNoteRepository;
+
 use App\Controllers\PdfParameterController;
 use App\Repositories\PdfParameterRepository;
 
@@ -44,6 +47,7 @@ class Kernel
     $patientController = new PatientController(new PatientRepository($this->pdo));
     $folderController = new FolderController(new FolderRepository($this->pdo));
     $examinationController = new ExaminationController(new ExaminationRepository($this->pdo));
+    $followUpNoteController = new FollowUpNoteController(new FollowUpNoteRepository($this->pdo));
     $pdfParamsController = new PdfParameterController(new PdfParameterRepository($this->pdo));
     $libraryController = new LibraryController(new LibraryRepository($this->pdo));
     $prescriberController = new PrescriberController(new PrescriberRepository($this->pdo));
@@ -66,8 +70,15 @@ class Kernel
 
     $router->get('/api/examinations/folder/{id}', fn($p) => $examinationController->listByFolder((int)$p['id']));
     $router->post('/api/examinations', fn() => $examinationController->create());
-    $router->put('/api/examinations/{id}', fn($p) => $examinationController->update((int)$p['id']));
-    $router->delete('/api/examinations/{id}', fn($p) => $examinationController->delete((int)$p['id']));
+    $router->put('/api/examination/{id}', fn($p) => $examinationController->update((int)$p['id']));
+    $router->delete('/api/examination/{id}', fn($p) => $examinationController->delete((int)$p['id']));
+
+    // ====== FOLLOW UP NOTE ======
+
+    $router->get('/api/follow-up-note/folder/{id}', fn($p) => $followUpNoteController->listByFolder((int)$p['id']));
+    $router->post('/api/follow-up-note', fn() => $followUpNoteController->create());
+    $router->put('/api/follow-up-note/{id}', fn($p) => $followUpNoteController->update((int)$p['id']));
+    $router->delete('/api/follow-up-note/{id}', fn($p) => $followUpNoteController->delete((int)$p['id']));
 
     // ====== PDF PARAMETER ======
 

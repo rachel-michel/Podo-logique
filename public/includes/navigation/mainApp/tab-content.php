@@ -148,6 +148,17 @@
     </div>
   </template>
 
+  <!-- Follow up tab -->
+  <div
+    id="FollowUpNote"
+    class="tab-pane fade"
+    role="tabpanel"
+    aria-labelledby="FollowUpNoteTab"
+    x-data="FollowUpNote()">
+
+    <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/FollowUpNote.html'; ?>
+  </div>
+
   <!-- Report tab -->
   <div
     id="report"

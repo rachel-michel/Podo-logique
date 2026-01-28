@@ -54,6 +54,7 @@
   <script src="js/services/prescriber.js"></script>
   <script src="js/services/folder.js"></script>
   <script src="js/services/examination.js"></script>
+  <script src="js/services/followupNote.js"></script>
   <script src="js/services/pdfParameter.js"></script>
   <script src="js/services/library.js"></script>
 
@@ -69,6 +70,7 @@
   <script src="js/components/navigation/mainApp/anamnesis.js"></script>
   <script src="js/components/navigation/mainApp/folderManagment.js"></script>
   <script src="js/components/navigation/mainApp/examination.js"></script>
+  <script src="js/components/navigation/mainApp/followUpNote.js"></script>
   <script src="js/components/navigation/mainApp/report.js"></script>
 
   <script src="js/alpinejs3-15-0cdn.min.js"></script>

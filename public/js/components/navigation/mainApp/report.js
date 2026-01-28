@@ -121,46 +121,5 @@ function report() {
         });
       }
     },
-
-    async onSendToMail() {
-      try {
-        await this.htmlToClipboard();
-        alert("Contenu copié. A vous de le coller (ctrl+v) dans le mail.");
-      } catch (e) {
-        console.error(e);
-      }
-
-      const destinataire = "medecin@example.com";
-      const sujet = this.pdfParameter.subject || "Compte-rendu";
-      const sujetEncoded = encodeURIComponent(sujet);
-
-      const mailto = `mailto:${destinataire}?subject=${sujetEncoded}`;
-      window.location.href = mailto;
-    },
-
-    async htmlToClipboard() {
-      const node = this.$refs.pdfTemplate;
-      const html = node.outerHTML;
-      const text = node.innerText.trim(); // fallback
-
-      if (navigator.clipboard && window.ClipboardItem) {
-        const item = new ClipboardItem({
-          "text/html": new Blob([html], { type: "text/html" }),
-          "text/plain": new Blob([text], { type: "text/plain" }),
-        });
-
-        await navigator.clipboard.write([item]);
-        return;
-      }
-
-      // Fallback
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(text);
-        return;
-      }
-
-      alert("Fonctionnalité non prise en charge par le navigateur");
-      return;
-    },
   };
 }

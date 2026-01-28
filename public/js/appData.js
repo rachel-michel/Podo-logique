@@ -35,6 +35,7 @@ function appData() {
     folder: {},
     activeFolders: [],
     pdfParameter: {},
+    followUpNote: [],
     examinations: [],
     templateTabs: [
       {
@@ -166,6 +167,8 @@ function appData() {
 
       this.pdfParameter = pdfParameter || (await getPdfParameterByFolder(this.folder.id));
 
+      this.followUpNote = await getNoteByFolder(this.folder.id);
+
       this.examinations = await getExaminationByFolder(this.folder.id);
       this.formatExaminations();
     },
@@ -174,6 +177,8 @@ function appData() {
       this.folder = folder;
 
       this.pdfParameter = await getPdfParameterByFolder(folder.id);
+
+      this.followUpNote = await getNoteByFolder(folder.id);
 
       this.examinations = await getExaminationByFolder(folder.id);
       this.formatExaminations();
@@ -184,6 +189,8 @@ function appData() {
       this.activeFolders = [...this.activeFolders, folder].sort((a, b) => b.id - a.id);
 
       this.pdfParameter = pdfParameter;
+
+      this.followUpNote = await getNoteByFolder(folder.id);
 
       this.examinations = await getExaminationByFolder(folder.id);
       this.formatExaminations();
@@ -287,6 +294,7 @@ function appData() {
 
       this.pdfParameter = {};
 
+      this.followUpNote = [];
       this.examinations = [];
       this.templateTabs = [
         {

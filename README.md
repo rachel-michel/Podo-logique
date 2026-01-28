@@ -18,3 +18,8 @@ Veillez à bien renommer votre fichier : logo.png
 Pour corriger cette erreur, il suffit d'installer les dernières version de Visual C++ Redistributable v14 en x86 ET x64
 
 https://learn.microsoft.com/fr-fr/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version
+
+## Todo
+
+- Changer l'icone du suivi
+- Changer l'affichage des notes (faire des cards comme les prescripteurs)

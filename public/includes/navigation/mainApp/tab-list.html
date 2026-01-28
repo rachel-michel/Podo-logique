@@ -135,6 +135,25 @@
       </button>
     </li>
 
+    <!-- Follow up -->
+    <li class="nav-item col" role="presentation">
+      <button
+        id="FollowUpNoteTab"
+        class="nav-link"
+        type="button"
+        role="tab"
+        aria-controls="FollowUpNoteTab"
+        aria-selected="false"
+        :class="{ 'disabled': lockTab }"
+        :data-bs-toggle="lockTab ? null : 'tab'"
+        :data-bs-target="lockTab ? null : '#FollowUpNote'"
+        :tabindex="lockTab ? -1 : 0"
+      >
+        <img class="icon-nav" :src="lockTab ? ' assets/sole-disabled.png' : ' assets/sole.png'" alt="sole icon" />
+        <span class="d-block mb-0 mt-2">Suivi</span>
+      </button>
+    </li>
+
     <!-- Podiatric assessment -->
     <li class="nav-item col" role="presentation">
       <button

@@ -1,0 +1,70 @@
+<div>
+  <form class="row" @submit.prevent="onAddNote()">
+    <div class="col-12">
+      <textarea rows="10" class="form-control mb-2" x-model="newNote"></textarea>
+    </div>
+    <div class="col-12 text-center my-3">
+      <button type="submit" class="btn btn-primary col-12">Ajouter</button>
+    </div>
+  </form>
+
+  <template x-for="note in followUpNote" :key="note.id">
+    <div class="card mb-3">
+      <div class="card-header">
+        <div class="d-flex">
+          <!-- Created At -->
+          <div class="col-12 col-sm-4">
+            <span>Créé le :</span>
+            <span x-text="new Date(note.createdAt).toLocaleDateString('fr-FR')"></span>
+          </div>
+          <!-- Updated At -->
+          <div class="col-12 col-sm-4">
+            <span>Mis à jour le :</span>
+            <span x-text="new Date(note.updatedAt).toLocaleDateString('fr-FR')"></span>
+          </div>
+          <!-- Time since first note -->
+          <div class="col-12 col-sm-4">
+            <div>
+              <span x-text="getTimeSinceFirstNote(note)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- Note -->
+        <div class="mb-2">
+          <span class="fw-bold">Note :</span>
+
+          <template x-if="inputEditNote.id === note.id">
+            <textarea
+              class="form-control"
+              x-model="note.text"
+              rows="10"
+              x-init="$nextTick(() => $el.focus())"
+            ></textarea>
+          </template>
+
+          <template x-if="inputEditNote.id !== note.id">
+            <div x-text="note.text" @click="onClickNote(note)"></div>
+          </template>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="d-flex justify-content-end mt-2">
+          <template x-if="inputEditNote.id !== note.id">
+            <div class="d-flex gap-2">
+              <img src="assets/edit.png" alt="edit icon" class="icon-table-edit" @click="onClickNote(note)" />
+              <img src="assets/trash.png" alt="delete icon" class="icon-table-delete" @click="onRemoveNote(note)" />
+            </div>
+          </template>
+
+          <template x-if="inputEditNote.id === note.id">
+            <div class="d-flex gap-2">
+              <img src="assets/save.png" alt="validate icon" class="icon-table-save" @click="onEditNote(note)" />
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </template>
+</div>

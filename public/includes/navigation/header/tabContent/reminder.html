@@ -1,11 +1,13 @@
-<div x-data="followUp()" class="row gy-5" x-on:init-patients.document="initData($event.detail.patients)">
+<div x-data="reminder()" class="row gy-5" x-on:init-patients.document="initData($event.detail.patients)">
   <div class="col-12 d-flex align-items-center gap-2">
-    <label for="range" class="form-label mb-0">Afficher tous les patients dont la date du dernier suivi se situe</label>
+    <label for="range" class="form-label mb-0">
+      Afficher tous les patients dont la date de remise des orthèses plantaire a eu lieu il y a
+    </label>
     <select class="form-select w-auto" id="range" x-model="range">
-      <option value="0-3">entre 0 et 3 mois</option>
-      <option value="3-6">entre 3 et 6 mois</option>
-      <option value="6-12">entre 6 et 12 mois</option>
-      <option value="12+">après 12 mois</option>
+      <option value="0-3">0 à 3 mois</option>
+      <option value="3-6">3 à 6 mois</option>
+      <option value="6-12">6 à 12 mois</option>
+      <option value="12+">plus de 12 mois</option>
     </select>
   </div>
 

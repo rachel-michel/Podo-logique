@@ -31,6 +31,10 @@ class FollowUpNoteController
     $followUpNotes = $this->repo->findByFolder($id);
 
     $data = array_map(fn(FollowUpNote $f) => $f->toArray(), $followUpNotes);
+    usort($data, function ($a, $b) {
+      return strtotime($b['createdAt']) <=> strtotime($a['createdAt']);
+    });
+
     $this->json(['success' => true, 'notes' => $data]);
   }
 

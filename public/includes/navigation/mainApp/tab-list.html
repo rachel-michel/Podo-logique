@@ -138,15 +138,15 @@
     <!-- Follow up -->
     <li class="nav-item col" role="presentation">
       <button
-        id="FollowUpNoteTab"
+        id="followUpNoteTab"
         class="nav-link"
         type="button"
         role="tab"
-        aria-controls="FollowUpNoteTab"
+        aria-controls="followUpNoteTab"
         aria-selected="false"
         :class="{ 'disabled': lockTab }"
         :data-bs-toggle="lockTab ? null : 'tab'"
-        :data-bs-target="lockTab ? null : '#FollowUpNote'"
+        :data-bs-target="lockTab ? null : '#followUpNote'"
         :tabindex="lockTab ? -1 : 0"
       >
         <img class="icon-nav" :src="lockTab ? ' assets/sole-disabled.png' : ' assets/sole.png'" alt="sole icon" />

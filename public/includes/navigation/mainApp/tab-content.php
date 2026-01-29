@@ -150,13 +150,13 @@
 
   <!-- Follow up tab -->
   <div
-    id="FollowUpNote"
+    id="followUpNote"
     class="tab-pane fade"
     role="tabpanel"
-    aria-labelledby="FollowUpNoteTab"
-    x-data="FollowUpNote()">
+    aria-labelledby="followUpNoteTab"
+    x-data="followUp()">
 
-    <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/FollowUpNote.html'; ?>
+    <?php include PUBLIC_PATH . '/includes/navigation/mainApp/tabContent/follow-up.html'; ?>
   </div>
 
   <!-- Report tab -->

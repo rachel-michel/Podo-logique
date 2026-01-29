@@ -1,4 +1,4 @@
-function followUp() {
+function reminder() {
   return {
     patientList: [],
     range: "12+",

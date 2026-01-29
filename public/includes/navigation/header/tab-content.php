@@ -76,15 +76,15 @@
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/pdf-parameter.html'; ?>
   </div>
   <!--------------------------------------------------------------->
-  <!------------------------- Follow up Tab ------------------->
+  <!------------------------- Reminder Tab ------------------->
   <!--------------------------------------------------------------->
   <div
     class="tab-pane fade"
-    id="followupTab-pane"
+    id="reminderTab-pane"
     role="tabpanel"
-    aria-labelledby="followupTab"
+    aria-labelledby="reminderTab"
     tabindex="0">
-    <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/follow-up.html'; ?>
+    <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/reminder.html'; ?>
   </div>
   <!----------------------------------------------------------------->
   <!------------------------- Documentation Tab --------------------->

@@ -20,7 +20,7 @@
           <!-- Updated At -->
           <div class="col-12 col-sm-4">
             <span>Mis à jour le :</span>
-            <span x-text="new Date(note.updatedAt).toLocaleDateString('fr-FR')"></span>
+            <span x-show="note.updatedAt" x-text="new Date(note.updatedAt).toLocaleDateString('fr-FR')"></span>
           </div>
           <!-- Time since first note -->
           <div class="col-12 col-sm-4">
@@ -33,8 +33,6 @@
       <div class="card-body">
         <!-- Note -->
         <div class="mb-2">
-          <span class="fw-bold">Note :</span>
-
           <template x-if="inputEditNote.id === note.id">
             <textarea
               class="form-control"

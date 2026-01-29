@@ -85,7 +85,9 @@ function followUp() {
 
     async onEditNote(note) {
       try {
-        await updateNote(note);
+        const updatedNote = await updateNote(note);
+        this.followUpNote = this.followUpNote.map((f) => (f.id === updatedNote.id ? updatedNote : f));
+
         this.inputEditNote = {
           id: null,
           text: "",

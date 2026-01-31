@@ -16,17 +16,16 @@ Si j'ai créé cette app, ce n'est ni pour la gloire, ni pour l'argent. C'est po
 
 La documentation complète de l'application est disponible sur la page notion : https://glimmer-recorder-996.notion.site/ebd//2f459f2e574080e5988be4c84501503d
 
-## Une app hors ligne
+## Une app 100% hors ligne
 
 Dans cette application, vous êtes amené à renseigner des données de santé (antécédents, bilan podologique...) et permettant d'identifier un patient (nom, prénom, date de naissance...).
 
 Dans le cas d'un site en ligne (qui utilise internet), ces données doivent être stockées sur un serveur dit HDS : Hébergeur de Données de Santées.
 Dans le cas d'un site hors ligne (qui n'utilise pas internet), c'est votre propre ordinateur qui peut assumer le role de serveur.
 
-Pour des raisons budgétaires (un serveur certifié HDS... ça a un coût) **Podo'logique est une application 99.9% hors ligne**
-_(le 0.1% restant est représenté par la documentation que j'ai rédigée et importée depuis une page Notion 😂)_.
+Pour des raisons budgétaires (un serveur certifié HDS... ça a un coût) **Podo'logique est une application 100% hors ligne**
 
-> Le serveur de l'application n'est pas en ligne : c'est votre ordinateur lui-même.
+> Le serveur de l'application n'est pas en ligne : c'est votre ordinateur lui-même qui est le serveur.
 > De ce fait, les données enregistrées dans l'application ne sont accessible que par vous et votre ordinateur.
 
 **Si Podo'logique est une app hors ligne, pourquoi s'ouvre t-elle dans mon navigateur internet ?**

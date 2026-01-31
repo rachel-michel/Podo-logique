@@ -86,15 +86,4 @@
     tabindex="0">
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/reminder.html'; ?>
   </div>
-  <!----------------------------------------------------------------->
-  <!------------------------- Documentation Tab --------------------->
-  <!----------------------------------------------------------------->
-  <div
-    class="tab-pane fade"
-    id="documentationTab-pane"
-    role="tabpanel"
-    aria-labelledby="documentationTab"
-    tabindex="0">
-    <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/documentation.html'; ?>
-  </div>
 </div>

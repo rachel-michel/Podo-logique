@@ -95,7 +95,7 @@ function appData() {
         },
         column: {
           first: "Appareillage",
-          second: "Details",
+          second: "Détails",
         },
       },
     ],
@@ -354,7 +354,7 @@ function appData() {
           },
           column: {
             first: "Appareillage",
-            second: "Details",
+            second: "Détails",
           },
         },
       ];

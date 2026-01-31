@@ -43,7 +43,7 @@
           </template>
 
           <template x-if="inputEditNote.id !== note.id">
-            <div x-text="note.text" @click="onClickNote(note)"></div>
+            <div x-text="note.text" style="white-space: pre-line" @click="onClickNote(note)"></div>
           </template>
         </div>
 

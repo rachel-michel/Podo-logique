@@ -4,8 +4,8 @@ function library() {
     librariesNames: {
       localisation: "Localisation",
       observation: "Observation",
-      equipmentList: "Equipement",
-      equipmentDetail: "Détail de l'équipement",
+      equipmentList: "Appareillage",
+      equipmentDetail: "Details (de l'appareillage)",
     },
     keepSuggestion: [
       "Orthèses plantaires",

@@ -74,22 +74,6 @@
   <script src="js/components/navigation/mainApp/report.js"></script>
 
   <script src="js/alpinejs3-15-0cdn.min.js"></script>
-
-  <!-- Test si le serveur est toujours lancé -->
-  <script>
-    setInterval(() => {
-      fetch("/ping.php", {
-          cache: "no-store"
-        })
-        .then(response => {
-          if (!response.ok) throw new Error();
-        })
-        .catch(() => {
-          window.location.href = "/home.html";
-        });
-    }, 2000);
-  </script>
-
 </body>
 
 </html>

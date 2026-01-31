@@ -2,6 +2,16 @@
 
 Créé par une orthopédiste, pour les orthopédistes. Cette application a pour objectif de simplifier le suivi patient et la génération d'un compte rendu prescripteur lors des bilans podologiques !
 
+## Présentation
+
+Je m'appelle Rachel MICHEL, je suis orthopédiste orthésiste (et anciennement développeur web).
+En entrant dans le métier, je me suis rapidement aperçu que la réalisation d'un bilan podologique et d'un suivi pouvait devenir quelque chose de fastidieux sans un minimum d'organisation. Ne trouvant pas mon compte dans les logiciels existant, j'ai donc pris l'initiative de créer une application pour m'aider à réaliser les bilans podologique, le suivi de mes patients, et ainsi pouvoir génerer en quelques clics des bilans complet à envoyer aux prescripteurs !
+
+## Une app "Open source"
+
+Open source ça veux dire quoi ? Que n'importe qui peut la télécharger, l'utiliser, en voir le code, la modifier, la republier etc... le tout gratuitement.
+Si j'ai créé cette app, ce n'est ni pour la gloire, ni pour l'argent. C'est pour m'aider au quotidien. Vous pensez que ça peut vous aider ? Alors testez là et faites-vous un avis, ça ne coûte rien !
+
 ## Documentation
 
 La documentation complète de l'application est disponible sur la page notion : https://glimmer-recorder-996.notion.site/ebd//2f459f2e574080e5988be4c84501503d

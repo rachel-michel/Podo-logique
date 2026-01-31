@@ -57,7 +57,7 @@ Podo'logique est une application hors ligne autonome. Dès lors que vous la tél
 
 **Je ne peux en aucun cas être responsable d'une fuite de donnée lié à un manque de sécurité sur votre propre ordinateur.**
 
-> Vous et vous seul avez la responsabilité de vous assurer de la sécurité de votre ordinateur.
+> Vous et vous seul avez la responsabilité de vous assurer de la sécurité de votre ordinateur.  
 > Pour plus d'informatons, consultez le site du gouvernement concernant [les règles de bonnes pratiques pour assurer votre sécurité numérique](https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/10-mesures-essentielles-assurer-securite-numerique).
 
 # 🐞 Gestion des erreurs fréquentes

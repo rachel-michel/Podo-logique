@@ -96,7 +96,6 @@
                   class="form-control"
                   x-model="inputEditPrescriber.address"
                   x-init="editingField === 'address' && $nextTick(() => $el.focus())"
-                  @keydown.enter.prevent="onEditPrescriber()"
                   placeholder="13 Rue des prescripteurs"
                 ></textarea>
               </template>

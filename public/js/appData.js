@@ -171,6 +171,14 @@ function appData() {
 
       this.examinations = await getExaminationByFolder(this.folder.id);
       this.formatExaminations();
+
+      // Force return to the anamnesis tab
+      var tabTrigger = document.querySelector("#anamnesisTab");
+      bootstrap.Tab.getOrCreateInstance(tabTrigger).show();
+
+      // Show navigation tab
+      this.displayTab = true;
+      this.lockTab = false;
     },
 
     async selectFolder(folder) {

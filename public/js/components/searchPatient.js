@@ -28,14 +28,6 @@ function searchPatient() {
 
       // Init values with selected patient
       this.selectPatient(patient);
-
-      // Force return to the anamnesis tab
-      var tabTrigger = document.querySelector("#anamnesisTab");
-      bootstrap.Tab.getOrCreateInstance(tabTrigger).show();
-
-      // Show navigation tab but disabled
-      this.displayTab = true;
-      this.lockTab = false;
     },
 
     resetSearchBar() {

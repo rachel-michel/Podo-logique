@@ -18,19 +18,32 @@ function examination() {
     },
 
     getSuggestions(field, row, suggestionListName) {
-      const input = row[`${field}Input`].toLowerCase().trim();
+      const normalize = (str) =>
+        str
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "") // supprime les accents
+          .toLowerCase()
+          .trim();
+
+      const rawInput = row[`${field}Input`] || "";
+      const input = normalize(rawInput);
       if (!input) return [];
 
-      // Get the last part of input
       const parts = input
         .split(";")
-        .map((p) => p.trim())
+        .map((p) => normalize(p))
         .filter(Boolean);
+
       const lastPart = parts[parts.length - 1] || "";
 
-      // Filter suggets with every part and current entry
       const list = this.suggestions[suggestionListName] || [];
-      return list.filter((s) => s.toLowerCase().includes(lastPart) && !parts.includes(s.toLowerCase())).slice(0, 11);
+
+      return list
+        .filter((s) => {
+          const normalizedSuggestion = normalize(s);
+          return normalizedSuggestion.includes(lastPart) && !parts.includes(normalizedSuggestion);
+        })
+        .slice(0, 11);
     },
 
     async refreshFolder() {

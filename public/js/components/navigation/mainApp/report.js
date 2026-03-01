@@ -1,18 +1,27 @@
 function report() {
   return {
     getPrescribers() {
+      const normalize = (str) =>
+        (str || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .trim();
+
       if (
         !this.prescribers.length ||
         !Object.keys(this.pdfParameter).length ||
-        this.pdfParameter.prescriberFullname.trim() == ""
-      )
+        normalize(this.pdfParameter.prescriberFullname) === ""
+      ) {
         return [];
+      }
 
-      if (this.prescribers.find((p) => p.fullname === this.pdfParameter.prescriberFullname)) return [];
+      const query = normalize(this.pdfParameter.prescriberFullname);
 
-      return this.prescribers
-        .filter((p) => p.fullname.toLowerCase().includes(this.pdfParameter.prescriberFullname.toLowerCase()))
-        .slice(0, 8);
+      // ne pas proposer si le nom saisi correspond déjà exactement à un prescripteur (sans accents / casse)
+      if (this.prescribers.some((p) => normalize(p.fullname) === query)) return [];
+
+      return this.prescribers.filter((p) => normalize(p.fullname).includes(query)).slice(0, 8);
     },
 
     getEquipmentPlan() {

@@ -39,6 +39,7 @@ function anamnesis() {
 
           const patient = await createPatient({ ...this.patient });
           this.patients.push(patient);
+          customDispatch("add-patient", { patient });
 
           // Create new pdf parameters for the folder
           const pdfParameter = await createPdfParameter({

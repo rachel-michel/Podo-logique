@@ -7,6 +7,10 @@ function reminder() {
       this.patientList = data;
     },
 
+    async onAddPatient(patient) {
+      this.patientList.push(patient);
+    },
+
     getPatientsByDeliveryRange() {
       const now = new Date();
 

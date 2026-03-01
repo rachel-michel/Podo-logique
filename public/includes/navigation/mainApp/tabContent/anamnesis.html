@@ -15,12 +15,26 @@
 
     <div class="col-12 col-sm-5">
       <label for="lastname" class="form-label">Nom *</label>
-      <input type="text" id="lastname" class="form-control" x-model="patient.lastname" required />
+      <input
+        type="text"
+        id="lastname"
+        class="form-control"
+        x-model="patient.lastname"
+        autocomplete="patient-lastname"
+        required
+      />
     </div>
 
     <div class="col-12 col-sm-5">
       <label for="firstname" class="form-label">Prénom *</label>
-      <input type="text" id="firstname" class="form-control" x-model="patient.firstname" required />
+      <input
+        type="text"
+        id="firstname"
+        class="form-control"
+        x-model="patient.firstname"
+        autocomplete="patient-firstname"
+        required
+      />
     </div>
 
     <div class="col-12 col-sm-6">
@@ -30,12 +44,24 @@
 
     <div class="col-12 col-sm-6">
       <label for="phoneNumber" class="form-label">Téléphone</label>
-      <input type="tel" id="phoneNumber" class="form-control" x-model="patient.phoneNumber" />
+      <input
+        type="tel"
+        id="phoneNumber"
+        class="form-control"
+        x-model="patient.phoneNumber"
+        autocomplete="patient-phone-number"
+      />
     </div>
 
     <div class="col-12 col-sm-12">
       <label for="address" class="form-label">Adresse</label>
-      <textarea id="address" class="form-control" rows="2" x-model="patient.address"></textarea>
+      <textarea
+        id="address"
+        class="form-control"
+        rows="2"
+        x-model="patient.address"
+        autocomplete="patient-address"
+      ></textarea>
     </div>
 
     <div class="col-12 col-sm-6">

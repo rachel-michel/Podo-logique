@@ -1,5 +1,5 @@
 <div id="configuration" class="mb-4">
-  <form @submit.prevent="onEditPdfParameter">
+  <form @submit.prevent="onEditPdfParameter" autocomplete="off">
     <div class="row pb-4 gy-4">
       <div class="text-center">
         <span class="h4">En-tête</span>
@@ -14,7 +14,12 @@
 
       <div class="col-12 col-sm-4">
         <label for="prescriberFullname" class="form-label">Nom complet</label>
-        <input class="form-control border-bottom" id="prescriberFullname" x-model="pdfParameter.prescriberFullname" />
+        <input
+          class="form-control border-bottom"
+          id="prescriberFullname"
+          x-model="pdfParameter.prescriberFullname"
+          autocomplete="prescriber-name"
+        />
 
         <!-- SUGGESTION -->
         <ul class="list-group w-100 z-10" x-show="getPrescribers().length > 0">
@@ -28,12 +33,22 @@
 
       <div class="col-12 col-sm-4">
         <label for="prescriberMail" class="form-label">Mail</label>
-        <input class="form-control" id="prescriberMail" x-model="pdfParameter.prescriberMail" />
+        <input
+          class="form-control"
+          id="prescriberMail"
+          x-model="pdfParameter.prescriberMail"
+          autocomplete="prescriber-mail"
+        />
       </div>
 
       <div class="col-12 col-sm-4">
         <label for="prescriberPhoneNumber" class="form-label">Téléphone</label>
-        <input class="form-control" id="prescriberPhoneNumber" x-model="pdfParameter.prescriberPhoneNumber" />
+        <input
+          class="form-control"
+          id="prescriberPhoneNumber"
+          x-model="pdfParameter.prescriberPhoneNumber"
+          autocomplete="prescriber-phone"
+        />
       </div>
 
       <div class="col-12 pb-3 border-bottom">
@@ -43,6 +58,7 @@
           id="prescriberAddress"
           rows="3"
           x-model="pdfParameter.prescriberAddress"
+          autocomplete="prescriber-address"
         ></textarea>
       </div>
 

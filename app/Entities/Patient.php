@@ -51,9 +51,9 @@ class Patient
     if (isset($data['address'])) $patient->setAddress($data['address']);
     if (isset($data['folderPrefix'])) $patient->setFolderPrefix($data['folderPrefix']);
     if (isset($data['folderPrefixFormat'])) $patient->setFolderPrefixFormat($data['folderPrefixFormat']);
-    if (isset($data['weight'])) $patient->setWeight($data['weight']);
-    if (isset($data['height'])) $patient->setHeight($data['height']);
-    if (isset($data['shoeSize'])) $patient->setShoeSize($data['shoeSize']);
+    if (isset($data['weight'])) $patient->setWeight(intval($data['weight']));
+    if (isset($data['height'])) $patient->setHeight(intval($data['height']));
+    if (isset($data['shoeSize'])) $patient->setShoeSize(intval($data['shoeSize']));
     if (isset($data['job'])) $patient->setJob($data['job']);
     if (isset($data['physicalActivity'])) $patient->setPhysicalActivity($data['physicalActivity']);
     if (isset($data['pathology'])) $patient->setPathology($data['pathology']);

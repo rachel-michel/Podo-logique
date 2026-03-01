@@ -20,6 +20,10 @@
   padding: 3% 4%;
 }
 
+#pdfTemplate .first-sheet {
+  min-height: 1123px; /* A4 */
+}
+
 /* =========================
             HEADER
    ========================= */
@@ -103,7 +107,7 @@
    ========================= */
 
 #pdfTemplate .subject {
-  margin: 8% 0 5%;
+  margin: 10% 0 5%;
 }
 
 #pdfTemplate .subject span,
@@ -121,7 +125,7 @@
 #pdfTemplate .equipment-layout {
   display: flex;
   min-height: 450px;
-  margin: 5% 0 5%;
+  margin: 15% 0 5%;
 }
 
 #pdfTemplate .equipment-plan {

@@ -23,10 +23,6 @@ function searchFolder() {
         // Create new pdf parameters for the folder
         const pdfParameter = (this.pdfParameter = await createPdfParameter({
           office: this.globalPdfParameter.office,
-          prescriberFullname: "",
-          prescriberAddress: "",
-          prescriberMail: "",
-          prescriberPhoneNumber: "",
           subject: this.globalPdfParameter.subject,
           content: this.globalPdfParameter.content,
           notes: "",

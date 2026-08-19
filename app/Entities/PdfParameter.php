@@ -7,10 +7,6 @@ class PdfParameter
   private ?int $id = null;
   private string $type = 'custom';
   private ?string $office = null;
-  private ?string $prescriberFullname = null;
-  private ?string $prescriberAddress = null;
-  private ?string $prescriberMail = null;
-  private ?string $prescriberPhoneNumber = null;
   private string $subject = 'Compte rendu du bilan podologique de {genre} {nom_complet}.';
   private ?string $content = '{genre} {nom_complet}, née le {date_de_naissance}, est venu le {date_creation_dossier} afin de réaliser un bilan podologique au sein de mon cabinet.\n\nRépondant à votre prescription médicale, je me permet de vous retourner le compte rendu complet de cet examen.\n\nFait le : {date_aujourdhui}.';
   private ?string $notes = null;
@@ -26,10 +22,6 @@ class PdfParameter
     if (isset($data['id'])) $e->setId((int)$data['id']);
     if (isset($data['type'])) $e->setType($data['type']);
     if (isset($data['office'])) $e->setOffice($data['office']);
-    if (isset($data['prescriberFullname'])) $e->setPrescriberFullname($data['prescriberFullname']);
-    if (isset($data['prescriberAddress'])) $e->setPrescriberAddress($data['prescriberAddress']);
-    if (isset($data['prescriberMail'])) $e->setPrescriberMail($data['prescriberMail']);
-    if (isset($data['prescriberPhoneNumber'])) $e->setPrescriberPhoneNumber($data['prescriberPhoneNumber']);
     if (isset($data['subject'])) $e->setSubject($data['subject']);
     if (isset($data['content'])) $e->setContent($data['content']);
     if (isset($data['notes'])) $e->setNotes($data['notes']);
@@ -47,10 +39,6 @@ class PdfParameter
       'id'                    => $this->id,
       'type'                  => $this->type,
       'office'                => $this->office,
-      'prescriberFullname'    => $this->prescriberFullname,
-      'prescriberAddress'     => $this->prescriberAddress,
-      'prescriberMail'        => $this->prescriberMail,
-      'prescriberPhoneNumber' => $this->prescriberPhoneNumber,
       'subject'               => $this->subject,
       'content'               => $this->content,
       'notes'                 => $this->notes,
@@ -68,42 +56,6 @@ class PdfParameter
   public function setId(int $id): void
   {
     $this->id = $id;
-  }
-
-  public function getPrescriberFullname(): ?string
-  {
-    return $this->prescriberFullname;
-  }
-  public function setPrescriberFullname(string $v): void
-  {
-    $this->prescriberFullname = $v;
-  }
-
-  public function getPrescriberAddress(): ?string
-  {
-    return $this->prescriberAddress;
-  }
-  public function setPrescriberAddress(string $v): void
-  {
-    $this->prescriberAddress = $v;
-  }
-
-  public function getPrescriberMail(): ?string
-  {
-    return $this->prescriberMail;
-  }
-  public function setPrescriberMail(string $v): void
-  {
-    $this->prescriberMail = $v;
-  }
-
-  public function getPrescriberPhoneNumber(): ?string
-  {
-    return $this->prescriberPhoneNumber;
-  }
-  public function setPrescriberPhoneNumber(string $v): void
-  {
-    $this->prescriberPhoneNumber = $v;
   }
 
   public function getType(): string

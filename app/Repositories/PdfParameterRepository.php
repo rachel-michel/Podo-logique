@@ -19,10 +19,6 @@ class PdfParameterRepository
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             type TEXT NOT NULL DEFAULT 'custom',
             office TEXT NULL,
-            prescriberFullname TEXT NULL,
-            prescriberAddress TEXT NULL,
-            prescriberMail TEXT NULL,
-            prescriberPhoneNumber TEXT NULL,
             subject TEXT NULL DEFAULT 'Compte rendu du bilan podologique de {genre} {nom_complet}.',
             content TEXT '{genre} {nom_complet}, née le {date_de_naissance}, est venu le {date_creation_dossier} afin de réaliser un bilan podologique au sein de mon cabinet.\n\nRépondant à votre prescription médicale, je me permet de vous retourner le compte rendu complet de cet examen.\n\nFait le : {date_aujourdhui}.',
             notes TEXT NULL,
@@ -39,15 +35,71 @@ class PdfParameterRepository
     if ($count === 0) {
       $this->pdo->exec("
           INSERT INTO pdf_parameter (
-              office, prescriberFullname, prescriberAddress, prescriberMail, prescriberPhoneNumber,
-              subject, content, notes, showTabA, showTabB, showTabC, showTabD, type
+              office, subject, content, notes, showTabA, showTabB, showTabC, showTabD, type
           ) VALUES (
-              '', '' ,'' ,'' ,'' ,
-              'Compte rendu du bilan podologique de {genre} {nom_complet}.',
+              '','Compte rendu du bilan podologique de {genre} {nom_complet}.',
               '{genre} {nom_complet}, née le {date_de_naissance}, est venu le {date_creation_dossier} afin de réaliser un bilan podologique au sein de mon cabinet.\n\nRépondant à votre prescription médicale, je me permet de vous retourner le compte rendu complet de cet examen.\n\nFait le : {date_aujourdhui}.'
               , '', 1, 1, 1, 1, 'global'
           )
       ");
+    }
+
+    // ---------  Todo remove ------------
+    $tableExists = $this->pdo->query("
+    SELECT EXISTS (
+        SELECT 1
+        FROM sqlite_master
+        WHERE type = 'table'
+          AND name = 'pdf_parameter'
+      )
+    ")->fetchColumn();
+
+    if ($tableExists) {
+      $columns = $this->pdo->query("PRAGMA table_info(pdf_parameter)")->fetchAll(PDO::FETCH_ASSOC);
+
+      $prescriberFullname = false;
+      foreach ($columns as $column) {
+        if ($column['name'] === 'prescriberFullname') {
+          $prescriberFullname = true;
+          break;
+        }
+      }
+      if ($prescriberFullname) {
+        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberFullname');
+      }
+
+      $prescriberAddress = false;
+      foreach ($columns as $column) {
+        if ($column['name'] === 'prescriberAddress') {
+          $prescriberAddress = true;
+          break;
+        }
+      }
+      if ($prescriberAddress) {
+        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberAddress');
+      }
+
+      $prescriberMail = false;
+      foreach ($columns as $column) {
+        if ($column['name'] === 'prescriberMail') {
+          $prescriberMail = true;
+          break;
+        }
+      }
+      if ($prescriberMail) {
+        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberMail');
+      }
+
+      $prescriberPhoneNumber = false;
+      foreach ($columns as $column) {
+        if ($column['name'] === 'prescriberPhoneNumber') {
+          $prescriberPhoneNumber = true;
+          break;
+        }
+      }
+      if ($prescriberPhoneNumber) {
+        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberPhoneNumber');
+      }
     }
   }
 
@@ -97,21 +149,15 @@ class PdfParameterRepository
 
     $stmt = $this->pdo->prepare("
         INSERT INTO pdf_parameter (
-            office, prescriberFullname, prescriberAddress, prescriberMail, prescriberPhoneNumber,
-            subject, content, notes, showTabA, showTabB, showTabC, showTabD, type
+            office, subject, content, notes, showTabA, showTabB, showTabC, showTabD, type
         ) VALUES (
-            :office, :prescriberFullname, :prescriberAddress, :prescriberMail, :prescriberPhoneNumber,
-            :subject, :content, :notes, :showTabA, :showTabB, :showTabC, :showTabD, :type
+            :office, :subject, :content, :notes, :showTabA, :showTabB, :showTabC, :showTabD, :type
         )
     ");
 
     $stmt->execute([
       ':type'                  => $pdfParameter->getType(),
       ':office'                => $pdfParameter->getOffice(),
-      ':prescriberFullname'    => $pdfParameter->getPrescriberFullname(),
-      ':prescriberAddress'     => $pdfParameter->getPrescriberAddress(),
-      ':prescriberMail'        => $pdfParameter->getPrescriberMail(),
-      ':prescriberPhoneNumber' => $pdfParameter->getPrescriberPhoneNumber(),
       ':subject'               => $pdfParameter->getSubject(),
       ':content'               => $pdfParameter->getContent(),
       ':notes'                 => $pdfParameter->getNotes(),
@@ -135,10 +181,6 @@ class PdfParameterRepository
     $stmt = $this->pdo->prepare("
         UPDATE pdf_parameter SET
             office                = :office,
-            prescriberFullname    = :prescriberFullname,
-            prescriberAddress     = :prescriberAddress,
-            prescriberMail        = :prescriberMail,
-            prescriberPhoneNumber = :prescriberPhoneNumber,
             subject               = :subject,
             content               = :content,
             notes                 = :notes,
@@ -151,10 +193,6 @@ class PdfParameterRepository
 
     $stmt->execute([
       ':office'                => $pdfParameter->getOffice(),
-      ':prescriberFullname'    => $pdfParameter->getPrescriberFullname(),
-      ':prescriberAddress'     => $pdfParameter->getPrescriberAddress(),
-      ':prescriberMail'        => $pdfParameter->getPrescriberMail(),
-      ':prescriberPhoneNumber' => $pdfParameter->getPrescriberPhoneNumber(),
       ':subject'               => $pdfParameter->getSubject(),
       ':content'               => $pdfParameter->getContent(),
       ':notes'                 => $pdfParameter->getNotes(),

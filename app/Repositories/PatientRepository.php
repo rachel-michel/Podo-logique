@@ -22,7 +22,6 @@ class PatientRepository
             firstname TEXT NOT NULL,
             dateOfBirth TEXT NOT NULL,
             phoneNumber TEXT NULL,
-            address TEXT NULL,
             folderPrefix TEXT NULL,
             folderPrefixFormat TEXT NULL,
             weight REAL NULL,
@@ -41,6 +40,32 @@ class PatientRepository
 
     $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_patient_lastname ON patient(lastname)");
     $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_patient_firstname ON patient(firstname)");
+
+    // ---------  Todo remove ------------
+    $tableExists = $this->pdo->query("
+    SELECT EXISTS (
+        SELECT 1
+        FROM sqlite_master
+        WHERE type = 'table'
+          AND name = 'patient'
+      )
+    ")->fetchColumn();
+
+    if ($tableExists) {
+      $columns = $this->pdo->query("PRAGMA table_info(patient)")->fetchAll(PDO::FETCH_ASSOC);
+      $addressExists = false;
+
+      foreach ($columns as $column) {
+        if ($column['name'] === 'address') {
+          $addressExists = true;
+          break;
+        }
+      }
+
+      if ($addressExists) {
+        $this->pdo->exec('ALTER TABLE patient DROP COLUMN address');
+      }
+    }
   }
 
   public function list(): array
@@ -71,13 +96,13 @@ class PatientRepository
     $stmt = $this->pdo->prepare("
         INSERT INTO patient (
             gender, lastname, firstname, dateOfBirth,
-            phoneNumber, address, folderPrefix, folderPrefixFormat,
+            phoneNumber, folderPrefix, folderPrefixFormat,
             weight, height, shoeSize, job,
             physicalActivity, pathology, medicalHistory, notices,
             lastDeliveryAt, createdAt, updatedAt
         ) VALUES (
             :gender, :lastname, :firstname, :dateOfBirth,
-            :phoneNumber, :address, :folderPrefix, :folderPrefixFormat,
+            :phoneNumber, :folderPrefix, :folderPrefixFormat,
             :weight, :height, :shoeSize, :job,
             :physicalActivity, :pathology, :medicalHistory, :notices,
             :lastDeliveryAt, :createdAt, :updatedAt
@@ -90,7 +115,6 @@ class PatientRepository
       ':firstname'          => $patient->getFirstname(),
       ':dateOfBirth'        => $patient->getDateOfBirth(),
       ':phoneNumber'        => $patient->getPhoneNumber(),
-      ':address'            => $patient->getAddress(),
       ':folderPrefix'       => $patient->getFolderPrefix(),
       ':folderPrefixFormat' => $patient->getFolderPrefixFormat(),
       ':weight'             => $patient->getWeight(),
@@ -126,7 +150,6 @@ class PatientRepository
             firstname         = :firstname,
             dateOfBirth       = :dateOfBirth,
             phoneNumber       = :phoneNumber,
-            address           = :address,
             folderPrefix      = :folderPrefix,
             folderPrefixFormat= :folderPrefixFormat,
             weight            = :weight,
@@ -148,7 +171,6 @@ class PatientRepository
       ':firstname'         => $patient->getFirstname(),
       ':dateOfBirth'       => $patient->getDateOfBirth(),
       ':phoneNumber'       => $patient->getPhoneNumber(),
-      ':address'           => $patient->getAddress(),
       ':folderPrefix'      => $patient->getFolderPrefix(),
       ':folderPrefixFormat' => $patient->getFolderPrefixFormat(),
       ':weight'            => $patient->getWeight(),

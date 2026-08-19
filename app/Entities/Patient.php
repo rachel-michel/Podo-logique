@@ -10,7 +10,6 @@ class Patient
   private string $firstname;
   private string $dateOfBirth;
   private ?string $phoneNumber = null;
-  private ?string $address = null;
   private string $folderPrefix = 'Consultation du';
   private string $folderPrefixFormat = 'prefixDate';
   private ?float $weight = null;
@@ -48,7 +47,6 @@ class Patient
     if (isset($data['gender'])) $patient->setGender($data['gender']);
     if (isset($data['dateOfBirth'])) $patient->setDateOfBirth($data['dateOfBirth']);
     if (isset($data['phoneNumber'])) $patient->setPhoneNumber($data['phoneNumber']);
-    if (isset($data['address'])) $patient->setAddress($data['address']);
     if (isset($data['folderPrefix'])) $patient->setFolderPrefix($data['folderPrefix']);
     if (isset($data['folderPrefixFormat'])) $patient->setFolderPrefixFormat($data['folderPrefixFormat']);
     if (isset($data['weight'])) $patient->setWeight(intval($data['weight']));
@@ -76,7 +74,6 @@ class Patient
       'firstname' => $this->firstname,
       'dateOfBirth' => $this->dateOfBirth,
       'phoneNumber' => $this->phoneNumber,
-      'address' => $this->address,
       'folderPrefix' => $this->folderPrefix,
       'folderPrefixFormat' => $this->folderPrefixFormat,
       'weight' => $this->weight,
@@ -145,15 +142,6 @@ class Patient
   public function setPhoneNumber(string $phone): void
   {
     $this->phoneNumber = $phone;
-  }
-
-  public function getAddress(): ?string
-  {
-    return $this->address;
-  }
-  public function setAddress(string $address): void
-  {
-    $this->address = $address;
   }
 
   public function getFolderPrefix(): ?string

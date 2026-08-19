@@ -5,7 +5,6 @@ function appData() {
     globalPdfParameter: {},
     libraries: [],
     suggestions: [],
-    prescribers: [],
     // Patient data
     displayTab: false,
     lockTab: true,
@@ -103,9 +102,6 @@ function appData() {
       this.patients = await getAllPatient();
       customDispatch("init-patients", { patients: [...this.patients] });
 
-      this.prescribers = await getAllPrescriber();
-      customDispatch("init-prescribers", { prescribers: [...this.prescribers] });
-
       this.libraries = await getAllSuggestion();
       this.suggestions = {
         localisation: this.libraries.filter((s) => s.name == "localisation").map((s) => s.value),
@@ -117,20 +113,6 @@ function appData() {
 
       this.globalPdfParameter = await getGlobalPdfParameter();
       customDispatch("init-global-pdf-parameter", { globalPdfParameter: { ...this.globalPdfParameter } });
-    },
-
-    async updatePrescriber(action, prescriber) {
-      if (action === "add") {
-        this.prescribers.push(prescriber);
-      }
-
-      if (action === "update") {
-        this.prescribers = this.prescribers.map((p) => (p.id === prescriber.id ? prescriber : p));
-      }
-
-      if (action === "remove") {
-        this.prescribers = this.prescribers.filter((p) => p.id !== prescriber.id);
-      }
     },
 
     async updateSuggestion(action, suggestion) {

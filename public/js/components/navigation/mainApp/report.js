@@ -1,29 +1,5 @@
 function report() {
   return {
-    getPrescribers() {
-      const normalize = (str) =>
-        (str || "")
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toLowerCase()
-          .trim();
-
-      if (
-        !this.prescribers.length ||
-        !Object.keys(this.pdfParameter).length ||
-        normalize(this.pdfParameter.prescriberFullname) === ""
-      ) {
-        return [];
-      }
-
-      const query = normalize(this.pdfParameter.prescriberFullname);
-
-      // ne pas proposer si le nom saisi correspond déjà exactement à un prescripteur (sans accents / casse)
-      if (this.prescribers.some((p) => normalize(p.fullname) === query)) return [];
-
-      return this.prescribers.filter((p) => normalize(p.fullname).includes(query)).slice(0, 8);
-    },
-
     getEquipmentPlan() {
       return this.templateTabs
         .find((e) => e.name === "equipmentPlan")
@@ -109,13 +85,6 @@ function report() {
     formatDateFR(d) {
       const date = new Date(d);
       return date.toLocaleDateString("fr-FR");
-    },
-
-    onSelectPrescriber(prescriber) {
-      this.pdfParameter.prescriberFullname = prescriber.fullname;
-      this.pdfParameter.prescriberAddress = prescriber.address;
-      this.pdfParameter.prescriberMail = prescriber.mail;
-      this.pdfParameter.prescriberPhoneNumber = prescriber.phoneNumber;
     },
 
     async onEditPdfParameter() {

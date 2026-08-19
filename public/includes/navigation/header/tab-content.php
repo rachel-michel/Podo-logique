@@ -6,9 +6,6 @@
   <div x-data="appData()"
     class="tab-pane fade show active" id="homeTab-pane" role="tabpanel" aria-labelledby="homeTab" tabindex="0"
     x-on:select-patient.document="selectPatient($event.detail.patient)"
-    x-on:add-prescriber.document="updatePrescriber('add', $event.detail.prescriber)"
-    x-on:update-prescriber.document="updatePrescriber('update', $event.detail.prescriber)"
-    x-on:remove-prescriber.document="updatePrescriber('remove', $event.detail.prescriber)"
     x-on:add-suggestion.document="updateSuggestion('add', $event.detail.suggestion)"
     x-on:remove-suggestion.document="updateSuggestion('remove', $event.detail.suggestion)"
     x-on:update-global-pdf-parameter.document="updateGlobalPdfParameter($event.detail.globalPdfParameter)">
@@ -42,17 +39,6 @@
     </div>
   </div>
 
-  <!--------------------------------------------------------------->
-  <!------------------------- Prescriber Tab ---------------------->
-  <!--------------------------------------------------------------->
-  <div
-    class="tab-pane fade"
-    id="prescriberTab-pane"
-    role="tabpanel"
-    aria-labelledby="prescriberTab"
-    tabindex="0">
-    <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/prescriber.html'; ?>
-  </div>
   <!--------------------------------------------------------------->
   <!------------------------- Library Tab ------------------------->
   <!--------------------------------------------------------------->

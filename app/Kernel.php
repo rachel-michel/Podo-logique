@@ -50,6 +50,8 @@ class Kernel
     $followUpNoteController = new FollowUpNoteController(new FollowUpNoteRepository($this->pdo));
     $pdfParamsController = new PdfParameterController(new PdfParameterRepository($this->pdo));
     $libraryController = new LibraryController(new LibraryRepository($this->pdo));
+
+    // Todo remove
     $prescriberController = new PrescriberController(new PrescriberRepository($this->pdo));
 
     // ====== PATIENT ======
@@ -92,13 +94,6 @@ class Kernel
     $router->get('/api/libraries', fn() => $libraryController->list());
     $router->post('/api/library', fn() => $libraryController->create());
     $router->delete('/api/library/{id}', fn($p) => $libraryController->delete((int)$p['id']));
-
-    // ====== PRESCRIBER ======
-
-    $router->get('/api/prescribers', fn() => $prescriberController->list());
-    $router->post('/api/prescriber', fn() => $prescriberController->create());
-    $router->put('/api/prescriber/{id}', fn($p) => $prescriberController->update((int)$p['id']));
-    $router->delete('/api/prescriber/{id}', fn($p) => $prescriberController->delete((int)$p['id']));
 
     // ====== FRONT ======
 

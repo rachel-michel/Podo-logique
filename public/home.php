@@ -51,7 +51,6 @@
   <script src="js/appData.js"></script>
 
   <script src="js/services/patient.js"></script>
-  <script src="js/services/prescriber.js"></script>
   <script src="js/services/folder.js"></script>
   <script src="js/services/examination.js"></script>
   <script src="js/services/followUpNote.js"></script>
@@ -63,7 +62,6 @@
   <script src="js/components/searchFolder.js"></script>
 
   <script src="js/components/navigation/header/library.js"></script>
-  <script src="js/components/navigation/header/prescriber.js"></script>
   <script src="js/components/navigation/header/pdfParameter.js"></script>
   <script src="js/components/navigation/header/reminder.js"></script>
 

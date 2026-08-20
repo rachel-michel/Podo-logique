@@ -153,8 +153,14 @@ function appData() {
       this.formatExaminations();
 
       // Force return to the anamnesis tab
+      const tabContent = document.querySelector("#mainAppTabContent");
+      tabContent.querySelectorAll(".tab-pane").forEach((pane) => {
+        pane.classList.remove("active", "show");
+      });
+
       var tabTrigger = document.querySelector("#anamnesisTab");
       bootstrap.Tab.getOrCreateInstance(tabTrigger).show();
+      document.querySelector("#anamnesis").classList.add("active", "show");
 
       // Show navigation tab
       this.displayTab = true;

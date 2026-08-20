@@ -21,9 +21,6 @@ use App\Repositories\PdfParameterRepository;
 use App\Controllers\LibraryController;
 use App\Repositories\LibraryRepository;
 
-use App\Controllers\PrescriberController;
-use App\Repositories\PrescriberRepository;
-
 class Kernel
 {
   private \PDO $pdo;
@@ -50,9 +47,6 @@ class Kernel
     $followUpNoteController = new FollowUpNoteController(new FollowUpNoteRepository($this->pdo));
     $pdfParamsController = new PdfParameterController(new PdfParameterRepository($this->pdo));
     $libraryController = new LibraryController(new LibraryRepository($this->pdo));
-
-    // Todo remove
-    $prescriberController = new PrescriberController(new PrescriberRepository($this->pdo));
 
     // ====== PATIENT ======
 

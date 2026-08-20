@@ -39,44 +39,6 @@ class PatientRepository
 
     $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_patient_lastname ON patient(lastname)");
     $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_patient_firstname ON patient(firstname)");
-
-    // ---------  Todo remove ------------
-    $tableExists = $this->pdo->query("
-    SELECT EXISTS (
-        SELECT 1
-        FROM sqlite_master
-        WHERE type = 'table'
-          AND name = 'patient'
-      )
-    ")->fetchColumn();
-
-    if ($tableExists) {
-      $columns = $this->pdo->query("PRAGMA table_info(patient)")->fetchAll(PDO::FETCH_ASSOC);
-
-      $addressExists = false;
-      foreach ($columns as $column) {
-        if ($column['name'] === 'address') {
-          $addressExists = true;
-          break;
-        }
-      }
-
-      if ($addressExists) {
-        $this->pdo->exec('ALTER TABLE patient DROP COLUMN address');
-      }
-
-      $lastDeliveryAtExists = false;
-      foreach ($columns as $column) {
-        if ($column['name'] === 'lastDeliveryAt') {
-          $lastDeliveryAtExists = true;
-          break;
-        }
-      }
-
-      if ($lastDeliveryAtExists) {
-        $this->pdo->exec('ALTER TABLE patient DROP COLUMN lastDeliveryAt');
-      }
-    }
   }
 
   public function list(): array

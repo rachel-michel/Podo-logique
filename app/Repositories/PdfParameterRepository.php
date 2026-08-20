@@ -43,64 +43,6 @@ class PdfParameterRepository
           )
       ");
     }
-
-    // ---------  Todo remove ------------
-    $tableExists = $this->pdo->query("
-    SELECT EXISTS (
-        SELECT 1
-        FROM sqlite_master
-        WHERE type = 'table'
-          AND name = 'pdf_parameter'
-      )
-    ")->fetchColumn();
-
-    if ($tableExists) {
-      $columns = $this->pdo->query("PRAGMA table_info(pdf_parameter)")->fetchAll(PDO::FETCH_ASSOC);
-
-      $prescriberFullname = false;
-      foreach ($columns as $column) {
-        if ($column['name'] === 'prescriberFullname') {
-          $prescriberFullname = true;
-          break;
-        }
-      }
-      if ($prescriberFullname) {
-        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberFullname');
-      }
-
-      $prescriberAddress = false;
-      foreach ($columns as $column) {
-        if ($column['name'] === 'prescriberAddress') {
-          $prescriberAddress = true;
-          break;
-        }
-      }
-      if ($prescriberAddress) {
-        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberAddress');
-      }
-
-      $prescriberMail = false;
-      foreach ($columns as $column) {
-        if ($column['name'] === 'prescriberMail') {
-          $prescriberMail = true;
-          break;
-        }
-      }
-      if ($prescriberMail) {
-        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberMail');
-      }
-
-      $prescriberPhoneNumber = false;
-      foreach ($columns as $column) {
-        if ($column['name'] === 'prescriberPhoneNumber') {
-          $prescriberPhoneNumber = true;
-          break;
-        }
-      }
-      if ($prescriberPhoneNumber) {
-        $this->pdo->exec('ALTER TABLE pdf_parameter DROP COLUMN prescriberPhoneNumber');
-      }
-    }
   }
 
   public function find(int $id): ?PdfParameter

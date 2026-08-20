@@ -61,15 +61,4 @@
     tabindex="0">
     <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/pdf-parameter.html'; ?>
   </div>
-  <!--------------------------------------------------------------->
-  <!------------------------- Reminder Tab ------------------->
-  <!--------------------------------------------------------------->
-  <div
-    class="tab-pane fade"
-    id="reminderTab-pane"
-    role="tabpanel"
-    aria-labelledby="reminderTab"
-    tabindex="0">
-    <?php include PUBLIC_PATH . '/includes/navigation/header/tabContent/reminder.html'; ?>
-  </div>
 </div>

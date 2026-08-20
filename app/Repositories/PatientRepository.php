@@ -32,7 +32,6 @@ class PatientRepository
             pathology TEXT NULL,
             medicalHistory TEXT NULL,
             notices TEXT NULL,
-            lastDeliveryAt TEXT NULL,
             createdAt TEXT NOT NULL,
             updatedAt TEXT NULL
         )
@@ -53,8 +52,8 @@ class PatientRepository
 
     if ($tableExists) {
       $columns = $this->pdo->query("PRAGMA table_info(patient)")->fetchAll(PDO::FETCH_ASSOC);
-      $addressExists = false;
 
+      $addressExists = false;
       foreach ($columns as $column) {
         if ($column['name'] === 'address') {
           $addressExists = true;
@@ -64,6 +63,18 @@ class PatientRepository
 
       if ($addressExists) {
         $this->pdo->exec('ALTER TABLE patient DROP COLUMN address');
+      }
+
+      $lastDeliveryAtExists = false;
+      foreach ($columns as $column) {
+        if ($column['name'] === 'lastDeliveryAt') {
+          $lastDeliveryAtExists = true;
+          break;
+        }
+      }
+
+      if ($lastDeliveryAtExists) {
+        $this->pdo->exec('ALTER TABLE patient DROP COLUMN lastDeliveryAt');
       }
     }
   }
@@ -99,13 +110,13 @@ class PatientRepository
             phoneNumber, folderPrefix, folderPrefixFormat,
             weight, height, shoeSize, job,
             physicalActivity, pathology, medicalHistory, notices,
-            lastDeliveryAt, createdAt, updatedAt
+            createdAt, updatedAt
         ) VALUES (
             :gender, :lastname, :firstname, :dateOfBirth,
             :phoneNumber, :folderPrefix, :folderPrefixFormat,
             :weight, :height, :shoeSize, :job,
             :physicalActivity, :pathology, :medicalHistory, :notices,
-            :lastDeliveryAt, :createdAt, :updatedAt
+            :createdAt, :updatedAt
         )
     ");
 
@@ -125,7 +136,6 @@ class PatientRepository
       ':pathology'          => $patient->getPathology(),
       ':medicalHistory'     => $patient->getMedicalHistory(),
       ':notices'            => $patient->getNotices(),
-      ':lastDeliveryAt'     => $patient->getLastDeliveryAt(),
       ':createdAt'          => $patient->getCreatedAt(),
       ':updatedAt'          => $patient->getUpdatedAt(),
     ]);
@@ -160,7 +170,6 @@ class PatientRepository
             pathology         = :pathology,
             medicalHistory    = :medicalHistory,
             notices           = :notices,
-            lastDeliveryAt    = :lastDeliveryAt,
             updatedAt         = :updatedAt
         WHERE id = :id
     ");
@@ -181,7 +190,6 @@ class PatientRepository
       ':pathology'         => $patient->getPathology(),
       ':medicalHistory'    => $patient->getMedicalHistory(),
       ':notices'           => $patient->getNotices(),
-      ':lastDeliveryAt'    => $patient->getLastDeliveryAt(),
       ':updatedAt'         => $patient->getUpdatedAt(),
       ':id'                => $patient->getId(),
     ]);

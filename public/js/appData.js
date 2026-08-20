@@ -25,7 +25,6 @@ function appData() {
       pathology: "",
       medicalHistory: "",
       notices: "",
-      lastDeliveryAt: null,
       createdAt: null,
       updatedAt: null,
     },
@@ -271,7 +270,6 @@ function appData() {
         pathology: "",
         medicalHistory: "",
         notices: "",
-        lastDeliveryAt: null,
         createdAt: null,
         updatedAt: null,
       };

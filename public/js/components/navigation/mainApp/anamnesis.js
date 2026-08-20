@@ -35,8 +35,6 @@ function anamnesis() {
         }
       } else {
         try {
-          this.patient.lastDeliveryAt = now.toLocaleDateString("fr-CA");
-
           const patient = await createPatient({ ...this.patient });
           this.patients.push(patient);
           customDispatch("add-patient", { patient });

@@ -1,10 +1,5 @@
 <form @submit.prevent="onSave">
   <div class="row gy-3">
-    <div class="col-12" x-cloak x-show="patient.id">
-      <label for="lastDeliveryAt" class="form-label">Date de remise des orthèses plantaire</label>
-      <input type="date" id="lastDeliveryAt" class="form-control" x-model="patient.lastDeliveryAt" />
-    </div>
-
     <div class="col-12 col-sm-2">
       <label for="gender" class="form-label">Genre</label>
       <select class="form-select" id="gender" x-model="patient.gender">
